@@ -20,11 +20,11 @@ const Navbar = () => {
 
           <button className="relative">
             <MdEmail />
-            {/* <NotifCounter count={1} /> */}
+            <NotifCounter count={1} />
           </button>
           <button className="relative">
             <MdPerson2 />
-            {/* <NotifCounter count={1} /> */}
+            <NotifCounter count={1} />
           </button>
           <button className="relative">
             <MdNotifications />
