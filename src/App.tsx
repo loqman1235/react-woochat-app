@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import MainMenu from "./components/MainMenu";
+import { MainMenu } from "./components/MainMenu";
 
 const App = () => {
   return (
