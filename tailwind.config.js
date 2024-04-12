@@ -1,0 +1,29 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        roboto: ["var(--font-roboto)", "sans-serif"],
+        pacifico: ["var(--font-pacifico)", "cursive"],
+      },
+      colors: {
+        primary: "var(--color-primary)",
+        background: "var(--color-background)",
+        foreground: "var(--color-foreground)",
+        male: "var(--color-male)",
+        female: "var(--color-female)",
+        danger: "var(--color-danger)",
+        success: "var(--color-success)",
+        warning: "var(--color-warning)",
+        info: "var(--color-info)",
+        secondary: "var(--color-secondary)",
+        "text-foreground": "var(--color-text-foreground)",
+        "text-background": "var(--color-text-background)",
+        "text-muted": "var(--color-text-muted)",
+        border: "var(--color-border)",
+      },
+    },
+  },
+  plugins: [],
+};

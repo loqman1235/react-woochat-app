@@ -1,0 +1,44 @@
+import { MdMenu, MdEmail, MdPerson2, MdNotifications } from "react-icons/md";
+import NotifCounter from "./shared/NotifCounter";
+
+const Navbar = () => {
+  return (
+    <div className="relative z-40 h-12 w-full bg-foreground px-5">
+      <div className="container mx-auto flex h-full max-w-7xl items-center justify-between">
+        <div className="flex h-full items-center gap-5">
+          <button className="text-2xl">
+            <MdMenu />
+          </button>
+          {/* BRAND */}
+          <div className="font-pacifico cursor-pointer text-xl font-bold">
+            Woo<span className="text-primary">chat</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-5 text-2xl">
+          <button className="relative">
+            <MdEmail />
+            {/* <NotifCounter count={1} /> */}
+          </button>
+          <button className="relative">
+            <MdPerson2 />
+            {/* <NotifCounter count={1} /> */}
+          </button>
+          <button className="relative">
+            <MdNotifications />
+            <NotifCounter count={1} />
+          </button>
+          <div className="h-8 w-8 cursor-pointer overflow-hidden rounded-full bg-red-500">
+            <img
+              src="/default_avatar.png"
+              alt="avatar"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
