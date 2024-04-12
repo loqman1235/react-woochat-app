@@ -10,12 +10,14 @@ const Navbar = () => {
             <MdMenu />
           </button>
           {/* BRAND */}
-          <div className="cursor-pointer font-pacifico text-xl font-bold">
+          <div className="cursor-pointer select-none font-pacifico text-xl font-bold">
             Woo<span className="text-primary">chat</span>
           </div>
         </div>
 
         <div className="flex items-center gap-5 text-2xl">
+          {/* Theme toggle button here */}
+
           <button className="relative">
             <MdEmail />
             {/* <NotifCounter count={1} /> */}

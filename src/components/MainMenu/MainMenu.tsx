@@ -25,7 +25,7 @@ const MainMenu = () => {
   };
 
   return (
-    <div className="fixed left-0 top-12 h-[calc(100vh-48px)] w-40 border-r border-r-border">
+    <div className="fixed left-0 top-12 h-[calc(100vh-48px)] w-[var(--main-menu-width)] border-r border-r-border bg-foreground">
       <ul>
         <li className={listStyles} onClick={toggleStatus}>
           <button className="flex items-center gap-2">
@@ -36,7 +36,7 @@ const MainMenu = () => {
           </button>
 
           <ul
-            className={`max-h-0 transition-all duration-300 ease-in-out  ${isStatusOpen && "max-h-96"}`}
+            className={`max-h-0 transition-all duration-500 ease-in-out  ${isStatusOpen && "max-h-96"}`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -73,7 +73,7 @@ const MainMenu = () => {
             <span className="text-text-muted">
               <MdStorage />
             </span>
-            <span>Room list</span>
+            <span>Rooms</span>
           </button>
         </li>
 
@@ -82,7 +82,7 @@ const MainMenu = () => {
             <span className="text-text-muted">
               <MdAccountBox />
             </span>
-            <span>My Profile</span>
+            <span>My rofile</span>
           </button>
         </li>
 

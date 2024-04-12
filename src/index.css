@@ -7,27 +7,36 @@
 
 :root {
   /* Color Scheme */
-  --color-background: #ffffff;
-  --color-foreground: #f8f8f8; /*f2f2f2*/
+  --color-background: #f8f8f8;
+  --color-foreground: #ffffff; /*f2f2f2*/
   --color-primary: #e91e63; /* E91E63 */
   --color-secondary: #ffffff;
   --color-text-foreground: #444444;
   --color-text-background: #ffffff;
-  --color-text-muted: #666666;
+  --color-text-muted: #999;
 
   --color-border: #ededed;
 
-  --color-male: #00ff00;
-  --color-female: #ff00ff;
+  --color-male: #03add8;
+  --color-female: #ff99ff;
 
   --color-danger: #ff0000;
   --color-success: #74b20e;
   --color-warning: #fcbd1f;
   --color-info: #00ffff;
 
+  /* ROLES  */
+  --color-admin: #d32f2f;
+  --color-mod: #1976d2;
+  --color-premium: #ffd700;
+  --color-user: #757575;
+
   /* Typography */
   --font-roboto: "Roboto", sans-serif;
   --font-pacifico: "Pacifico", cursive;
+
+  --main-menu-width: 160px;
+  --users-area-width: 260px;
 }
 
 @layer base {
