@@ -1,4 +1,5 @@
 import { MdGavel, MdPerson, MdSecurity, MdEmojiEvents } from "react-icons/md";
+import Flag from "react-world-flags";
 
 interface UserProps {
   username: string;
@@ -14,26 +15,34 @@ const getRoleIcon = (role: string) => {
   switch (role) {
     case "admin":
       return (
-        <span className="text-admin" title="Admin">
+        <span className="text-sm text-admin" title="Admin">
           <MdSecurity />
         </span>
       );
     case "mod":
       return (
-        <span className="text-mod" title="Moderator">
+        <span className="text-sm text-mod" title="Moderator">
           <MdGavel />
         </span>
       );
     case "premium":
       return (
-        <span className="text-premium" title="Premium">
+        <span className="text-sm text-premium" title="Premium">
           <MdEmojiEvents />
         </span>
       );
     case "user":
-      return <MdPerson />;
+      return (
+        <span className="text-sm text-user" title="User">
+          <MdPerson />
+        </span>
+      );
     default:
-      return <MdPerson />;
+      return (
+        <span className="text-sm text-user" title="User">
+          <MdPerson />
+        </span>
+      );
   }
 };
 
@@ -61,9 +70,13 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
       </div>
       <div>
         {/* ROLE AND COUNTRY */}
-        <div>
+        <div className="flex items-center gap-2">
           {getRoleIcon(role)}
-          {country && <span>{country}</span>}
+          {country && (
+            <span className="w-5">
+              <Flag code={country} fallback="🏳️‍🌈" className="rounded-sm" />
+            </span>
+          )}
         </div>
       </div>
     </div>

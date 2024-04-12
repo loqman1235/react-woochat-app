@@ -50,6 +50,7 @@ const UsersMenu = () => {
         role="admin"
         gender="male"
         mood="I'm the king here"
+        country="US"
       />
       <User
         username="JaneDoe"
@@ -57,6 +58,7 @@ const UsersMenu = () => {
         role="mod"
         gender="female"
         mood="Doing stuff"
+        country="DZ"
       />
 
       <User
@@ -65,6 +67,7 @@ const UsersMenu = () => {
         role="premium"
         gender="male"
         mood="Doing stuff"
+        country="FR"
       />
 
       <User
@@ -73,6 +76,7 @@ const UsersMenu = () => {
         role="premium"
         gender="male"
         mood="Doing stuff"
+        country="CA"
       />
 
       <User
@@ -81,6 +85,7 @@ const UsersMenu = () => {
         role="premium"
         gender="male"
         mood="Doing stuff"
+        country="US"
       />
 
       <User
@@ -89,6 +94,7 @@ const UsersMenu = () => {
         role="user"
         gender="male"
         mood="Doing stuff"
+        country="US"
       />
     </div>
   );
