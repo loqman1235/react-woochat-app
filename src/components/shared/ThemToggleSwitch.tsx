@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 const ThemToggleSwitch = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
+  console.log(theme, "Current theme");
   return (
     <div
-      className={`relative h-4 w-12 overflow-hidden rounded-full ${isChecked ? "bg-sky-500" : "bg-muted"}`}
+      className={`relative h-4 w-10 overflow-hidden rounded-full ${theme === "light" ? "bg-sky-500" : "bg-muted"}`}
     >
       <input
         type="checkbox"
         id="toggle-theme"
         className="peer absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 cursor-pointer opacity-0"
-        checked={isChecked}
-        onChange={() => setIsChecked(!isChecked)}
+        checked={theme === "light"}
+        onChange={() => toggleTheme()}
       />
       <label
         htmlFor="toggle-theme"
