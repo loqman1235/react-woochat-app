@@ -3,7 +3,7 @@ import {
   MdEmail,
   MdPerson2,
   MdNotifications,
-  MdDarkMode,
+  // MdDarkMode,
   MdLightMode,
 } from "react-icons/md";
 import NotifCounter from "./shared/NotifCounter";
