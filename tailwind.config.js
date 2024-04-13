@@ -18,6 +18,7 @@ export default {
         warning: "var(--color-warning)",
         info: "var(--color-info)",
         secondary: "var(--color-secondary)",
+        muted: "var(--color-muted)",
         "text-foreground": "var(--color-text-foreground)",
         "text-background": "var(--color-text-background)",
         "text-muted": "var(--color-text-muted)",

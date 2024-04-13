@@ -16,7 +16,12 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-5 text-2xl">
-          {/* Theme toggle button here */}
+          {/* Theme toggle button here  */}
+
+          <label className="inline-flex cursor-pointer items-center  ">
+            <input type="checkbox" value="" className="peer sr-only" />
+            <div className="peer relative h-5 w-9 rounded-full bg-background after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-foreground after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none rtl:peer-checked:after:-translate-x-full"></div>
+          </label>
 
           <button className="relative">
             <MdEmail />
