@@ -9,7 +9,7 @@ import User from "./User";
 
 const UsersMenu = () => {
   return (
-    <div className="fixed right-0 top-12 h-[calc(100vh-48px)] w-[var(--users-area-width)] border-l border-l-border bg-foreground">
+    <div className="fixed right-0 top-12 h-[calc(100vh-48px)] w-[var(--users-area-width)] overflow-auto border-l border-l-border bg-foreground">
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
         <button className="h-full px-5">
@@ -83,6 +83,42 @@ const UsersMenu = () => {
         username="thedude"
         avatar="https://i.pravatar.cc/300"
         role="premium"
+        gender="male"
+        mood="Doing stuff"
+        country="US"
+      />
+
+      <User
+        username="Way007"
+        avatar="https://i.pravatar.cc/300"
+        role="user"
+        gender="male"
+        mood="Doing stuff"
+        country="US"
+      />
+
+      <User
+        username="Way007"
+        avatar="https://i.pravatar.cc/300"
+        role="user"
+        gender="male"
+        mood="Doing stuff"
+        country="US"
+      />
+
+      <User
+        username="Way007"
+        avatar="https://i.pravatar.cc/300"
+        role="user"
+        gender="male"
+        mood="Doing stuff"
+        country="US"
+      />
+
+      <User
+        username="Way007"
+        avatar="https://i.pravatar.cc/300"
+        role="user"
         gender="male"
         mood="Doing stuff"
         country="US"

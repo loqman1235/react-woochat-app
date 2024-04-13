@@ -1,5 +1,8 @@
-import { MdGavel, MdPerson, MdSecurity, MdEmojiEvents } from "react-icons/md";
 import Flag from "react-world-flags";
+import ModeratorIcon from "../icons/roles/ModeratorIcon";
+import PremiumIcon from "../icons/roles/PremiumIcon";
+import AdminIcon from "../icons/roles/AdminIcon";
+import UserIcon from "../icons/roles/UserIcon";
 
 interface UserProps {
   username: string;
@@ -16,31 +19,31 @@ const getRoleIcon = (role: string) => {
     case "admin":
       return (
         <span className="text-sm text-admin" title="Admin">
-          <MdSecurity />
+          <AdminIcon />
         </span>
       );
     case "mod":
       return (
         <span className="text-sm text-mod" title="Moderator">
-          <MdGavel />
+          <ModeratorIcon />
         </span>
       );
     case "premium":
       return (
         <span className="text-sm text-premium" title="Premium">
-          <MdEmojiEvents />
+          <PremiumIcon />
         </span>
       );
     case "user":
       return (
         <span className="text-sm text-user" title="User">
-          <MdPerson />
+          <UserIcon />
         </span>
       );
     default:
       return (
         <span className="text-sm text-user" title="User">
-          <MdPerson />
+          <UserIcon />
         </span>
       );
   }
@@ -64,8 +67,8 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
         </div>
         {/* USERNAME AND MOOD */}
         <ul>
-          <li className="font-bold lowercase">{username}</li>
-          {mood && <li className="text-sm text-text-muted">{mood}</li>}
+          <li className="text-sm font-bold lowercase">{username}</li>
+          {mood && <li className="text-[11px] text-text-muted">{mood}</li>}
         </ul>
       </div>
       <div>
@@ -73,8 +76,13 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
         <div className="flex items-center gap-2">
           {getRoleIcon(role)}
           {country && (
-            <span className="w-5">
-              <Flag code={country} fallback="🏳️‍🌈" className="rounded-sm" />
+            <span>
+              <Flag
+                code={country}
+                fallback="🏳️‍🌈"
+                className="rounded-sm"
+                style={{ width: "20px", height: "15px", borderRadius: "4px" }}
+              />
             </span>
           )}
         </div>
