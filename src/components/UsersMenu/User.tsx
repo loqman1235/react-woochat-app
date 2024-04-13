@@ -54,7 +54,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
       <div className="flex items-center gap-2">
         {/* AVATAR */}
         <div
-          className={`h-10 w-10 overflow-hidden rounded-full border-2 bg-slate-400 ${avatarBorder}`}
+          className={`relative h-10 w-10 overflow-hidden rounded-full border-2 bg-slate-400 ${avatarBorder}`}
         >
           <img
             src={avatar}

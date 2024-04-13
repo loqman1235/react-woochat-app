@@ -3,7 +3,7 @@ import NotifCounter from "./shared/NotifCounter";
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5">
+    <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5 text-text-foreground">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
         <div className="flex h-full items-center gap-5">
           <button className="text-2xl">

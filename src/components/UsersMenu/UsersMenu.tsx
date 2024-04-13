@@ -38,7 +38,7 @@ const UsersMenu = () => {
       {/* ROOM NAME */}
       <div className="flex items-center gap-2 px-5 py-2">
         <h5 className="font-bold text-primary">Main Room</h5>
-        <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-text-background">
+        <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
           122
         </span>
       </div>
