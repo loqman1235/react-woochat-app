@@ -1,8 +1,5 @@
 import Flag from "react-world-flags";
-import ModeratorIcon from "../icons/roles/ModeratorIcon";
-import PremiumIcon from "../icons/roles/PremiumIcon";
-import AdminIcon from "../icons/roles/AdminIcon";
-import UserIcon from "../icons/roles/UserIcon";
+import { AdminIcon, ModeratorIcon, PremiumIcon, UserIcon } from "../icons";
 
 interface UserProps {
   username: string;
@@ -67,7 +64,9 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
         </div>
         {/* USERNAME AND MOOD */}
         <ul>
-          <li className="text-sm font-bold lowercase">{username}</li>
+          <li className="text-sm font-bold lowercase text-text-foreground">
+            {username}
+          </li>
           {mood && <li className="text-[11px] text-text-muted">{mood}</li>}
         </ul>
       </div>

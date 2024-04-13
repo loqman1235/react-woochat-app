@@ -3,14 +3,14 @@ import NotifCounter from "./shared/NotifCounter";
 
 const Navbar = () => {
   return (
-    <div className="relative z-40 h-12 w-full border-b border-b-border bg-foreground px-5">
+    <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
         <div className="flex h-full items-center gap-5">
           <button className="text-2xl">
             <MdMenu />
           </button>
           {/* BRAND */}
-          <div className="cursor-pointer select-none text-xl font-extrabold tracking-tight">
+          <div className="cursor-pointer select-none text-xl font-extrabold tracking-tight text-text-foreground">
             Woo<span className="text-primary">chat</span>
           </div>
         </div>

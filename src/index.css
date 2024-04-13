@@ -14,7 +14,6 @@
   --color-text-foreground: #444444;
   --color-text-background: #ffffff;
   --color-text-muted: #999;
-
   --color-border: #ededed;
 
   --color-male: #03add8;
@@ -38,6 +37,28 @@
 
   --main-menu-width: 160px;
   --users-area-width: 260px;
+}
+
+/* Light and Dark Mode */
+
+.light-mode {
+  --color-background: #f8f8f8;
+  --color-foreground: #ffffff; /*f2f2f2*/
+  --color-secondary: #ffffff;
+  --color-text-foreground: #444444;
+  --color-text-background: #ffffff;
+  --color-text-muted: #999;
+  --color-border: #ededed;
+}
+
+.dark-mode {
+  --color-background: #121212;
+  --color-foreground: #1a1a1a; /*f2f2f2*/
+  --color-secondary: #ffffff;
+  --color-text-foreground: #ffffff;
+  --color-text-background: #444444;
+  --color-text-muted: #999;
+  --color-border: #2b2b2b;
 }
 
 @layer base {

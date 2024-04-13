@@ -8,7 +8,7 @@ const App = () => {
       <Navbar />
       <main className="relative">
         <MainMenu />
-        <div>Chat Area</div>
+        <div className="min-h-screen bg-background">Chat Area</div>
         <UsersMenu />
       </main>
     </>
