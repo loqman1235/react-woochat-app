@@ -1,12 +1,6 @@
-import {
-  MdMenu,
-  MdEmail,
-  MdPerson2,
-  MdNotifications,
-  // MdDarkMode,
-  MdLightMode,
-} from "react-icons/md";
+import { MdMenu, MdEmail, MdPerson2, MdNotifications } from "react-icons/md";
 import NotifCounter from "./shared/NotifCounter";
+import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 
 const Navbar = () => {
   return (
@@ -25,9 +19,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5 text-2xl">
           {/* Theme toggle button here  */}
 
-          <button className="rounded-full bg-secondary p-1 text-text-foreground">
-            <MdLightMode />
-          </button>
+          <ThemToggleSwitch />
 
           <button className="relative">
             <MdEmail />
