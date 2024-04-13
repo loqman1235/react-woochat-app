@@ -9,7 +9,7 @@ interface UserProps {
   avatar: string;
   gender: "male" | "female";
   mood?: string;
-  role: string;
+  role: "admin" | "mod" | "premium" | "user";
   country?: string;
 }
 

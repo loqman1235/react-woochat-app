@@ -10,7 +10,7 @@ const Navbar = () => {
             <MdMenu />
           </button>
           {/* BRAND */}
-          <div className="cursor-pointer select-none font-pacifico text-xl font-bold">
+          <div className="cursor-pointer select-none text-xl font-extrabold tracking-tight">
             Woo<span className="text-primary">chat</span>
           </div>
         </div>
