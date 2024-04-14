@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+// ICONS
 import {
   MdMenu,
   MdEmail,
@@ -6,10 +9,10 @@ import {
   MdAccountCircle,
   MdLogout,
 } from "react-icons/md";
+
 import NotifCounter from "./shared/NotifCounter";
-import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 import { Dropdown, DropdownItem } from "./shared/Dropdown";
-import { useState } from "react";
+import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
