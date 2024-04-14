@@ -101,29 +101,29 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
 
       {/* DROPDOWN ACTIONS */}
       <ul
-        className={`max-h-0 w-full bg-muted text-text-foreground transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
+        className={`max-h-0 w-full bg-muted text-text-muted transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
       >
-        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="hover:bg-muted-hover cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
           <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+            <span>
               <MdEmail />
             </span>
             <span>Private</span>
           </button>
         </li>
 
-        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="hover:bg-muted-hover cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
           <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+            <span>
               <MdAccountCircle />
             </span>
             <span>View profile</span>
           </button>
         </li>
 
-        <li className="cursor-pointer px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="hover:bg-muted-hover cursor-pointer px-5 py-2 transition duration-300 hover:text-text-foreground">
           <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+            <span>
               <MdBolt />
             </span>
             <span>Action</span>

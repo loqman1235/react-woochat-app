@@ -19,6 +19,7 @@ export default {
         info: "var(--color-info)",
         secondary: "var(--color-secondary)",
         muted: "var(--color-muted)",
+        "muted-hover": "var(--color-muted-hover)",
         "text-foreground": "var(--color-text-foreground)",
         "text-background": "var(--color-text-background)",
         "text-muted": "var(--color-text-muted)",
