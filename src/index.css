@@ -53,6 +53,7 @@
   --color-text-foreground: #444444;
   --color-text-background: #ffffff;
   --color-text-muted: #999;
+  --color-text-muted-2: #666;
   --color-border: #ededed;
   --color-muted: #f5f5f5;
   --color-muted-hover: #ececec;
@@ -65,6 +66,7 @@
   --color-text-foreground: #ffffff;
   --color-text-background: #444444;
   --color-text-muted: #999;
+  --color-text-muted-2: #666;
   --color-border: #2b2b2b;
   --color-muted: #242424;
   --color-muted-hover: #292929;

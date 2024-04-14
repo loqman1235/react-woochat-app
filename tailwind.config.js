@@ -23,6 +23,7 @@ export default {
         "text-foreground": "var(--color-text-foreground)",
         "text-background": "var(--color-text-background)",
         "text-muted": "var(--color-text-muted)",
+        "text-muted-2": "var(--color-text-muted-2)",
         border: "var(--color-border)",
         admin: "var(--color-admin)",
         mod: "var(--color-mod)",
