@@ -8,9 +8,11 @@ const App = () => {
     <>
       <ThemeProvider>
         <Navbar />
-        <main className="relative">
+        <main className="relative top-[48px] h-[calc(100vh-48px)] w-full bg-red-600">
           <MainMenu />
-          <div className="min-h-screen bg-background">Chat Area</div>
+          <div className="absolute right-[--users-area-width] min-h-full w-[--chat-area-width] bg-background p-5">
+            Chat Area
+          </div>
           <UsersMenu />
         </main>
       </ThemeProvider>
