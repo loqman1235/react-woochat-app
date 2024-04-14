@@ -1,8 +1,23 @@
-import { MdMenu, MdEmail, MdPerson2, MdNotifications } from "react-icons/md";
+import {
+  MdMenu,
+  MdEmail,
+  MdPerson2,
+  MdNotifications,
+  MdAccountCircle,
+  MdLogout,
+} from "react-icons/md";
 import NotifCounter from "./shared/NotifCounter";
 import ThemToggleSwitch from "./shared/ThemToggleSwitch";
+import { Dropdown, DropdownItem } from "./shared/Dropdown";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen((prev) => !prev);
+  };
+
   return (
     <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5 text-text-foreground">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
@@ -33,12 +48,22 @@ const Navbar = () => {
             <MdNotifications />
             <NotifCounter count={1} />
           </button>
-          <div className="h-8 w-8 cursor-pointer overflow-hidden rounded-full bg-red-500">
-            <img
-              src="/default_avatar.png"
-              alt="avatar"
-              className="h-full w-full object-cover"
-            />
+          <div className="relative">
+            <div
+              className="h-8 w-8 cursor-pointer overflow-hidden rounded-full bg-red-500"
+              onClick={toggleProfileDropdown}
+            >
+              <img
+                src="/default_avatar.png"
+                alt="avatar"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <Dropdown isOpen={isProfileDropdownOpen}>
+              <DropdownItem text="profile" icon={<MdAccountCircle />} />
+              <DropdownItem text="logout" icon={<MdLogout />} />
+            </Dropdown>
           </div>
         </div>
       </div>
