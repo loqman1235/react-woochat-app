@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -15,14 +15,6 @@ export const ThemeContext = createContext<ThemeContext>({
   theme: "light",
   toggleTheme: () => {},
 });
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-};
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const storedTheme =
