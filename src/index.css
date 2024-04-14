@@ -54,6 +54,7 @@
   --color-text-background: #ffffff;
   --color-text-muted: #999;
   --color-border: #ededed;
+  --color-muted: #f5f5f5;
 }
 
 .dark-mode {
@@ -64,6 +65,7 @@
   --color-text-background: #444444;
   --color-text-muted: #999;
   --color-border: #2b2b2b;
+  --color-muted: #242424;
 }
 
 @layer base {
