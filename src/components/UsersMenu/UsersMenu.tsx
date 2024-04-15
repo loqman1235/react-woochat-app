@@ -9,7 +9,7 @@ import User from "./User";
 
 const UsersMenu = () => {
   return (
-    <div className="fixed right-0 top-12 h-[calc(100vh-48px)] w-[var(--users-area-width)] border-l border-l-border bg-foreground">
+    <div className="fixed right-0 top-12 h-[calc(100%-48px)] w-[var(--users-area-width)] border-l border-l-border bg-foreground">
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
         <button className="h-full px-5">
@@ -42,7 +42,7 @@ const UsersMenu = () => {
           122
         </span>
       </div>
-      <div className="h-[calc(100vh-120px)] overflow-y-auto pb-5">
+      <div className="h-[calc(100%-120px)] overflow-y-auto pb-5">
         <User
           username="axeldjefafla"
           avatar="https://i.pravatar.cc/300"

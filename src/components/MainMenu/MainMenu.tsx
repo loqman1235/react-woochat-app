@@ -25,7 +25,7 @@ const MainMenu = () => {
   };
 
   return (
-    <div className="fixed left-0 top-12 h-[calc(100vh-48px)] w-[var(--main-menu-width)] border-r border-r-border bg-foreground text-text-foreground">
+    <div className="fixed left-0 top-12 h-[calc(100%-48px)] w-[var(--main-menu-width)] border-r border-r-border bg-foreground text-text-foreground">
       <ul>
         <li className={listStyles} onClick={toggleStatus}>
           <button className="flex items-center gap-2">
