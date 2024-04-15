@@ -2,6 +2,7 @@ import Flag from "react-world-flags";
 import { AdminIcon, ModeratorIcon, PremiumIcon, UserIcon } from "../icons";
 import { MdAccountCircle, MdBolt, MdEmail } from "react-icons/md";
 import { useState } from "react";
+import Avatar from "../shared/Avatar";
 
 interface UserProps {
   username: string;
@@ -50,7 +51,6 @@ const getRoleIcon = (role: string) => {
 
 const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const avatarBorder = gender === "male" ? "border-male" : "border-female";
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen((prev) => !prev);
@@ -64,15 +64,14 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
       >
         <div className="flex items-center gap-2">
           {/* AVATAR */}
-          <div
-            className={`relative h-10 w-10 overflow-hidden rounded-full border-2 bg-slate-400 ${avatarBorder}`}
-          >
-            <img
-              src={avatar}
-              alt={username}
-              className="h-full w-full object-cover"
-            />
-          </div>
+
+          <Avatar
+            src={avatar}
+            username={username}
+            gender={gender}
+            size="md"
+            isBordered
+          />
           {/* USERNAME AND MOOD */}
           <ul>
             <li className="text-sm font-bold lowercase text-text-foreground">
@@ -101,9 +100,9 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
 
       {/* DROPDOWN ACTIONS */}
       <ul
-        className={`text-text-muted-2 max-h-0 w-full bg-muted transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
+        className={`max-h-0 w-full bg-muted text-text-muted-2 transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
       >
-        <li className="hover:bg-muted-hover cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
           <button className="flex items-center gap-2">
             <span>
               <MdEmail />
@@ -112,7 +111,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           </button>
         </li>
 
-        <li className="hover:bg-muted-hover cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
           <button className="flex items-center gap-2">
             <span>
               <MdAccountCircle />
@@ -121,7 +120,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           </button>
         </li>
 
-        <li className="hover:bg-muted-hover cursor-pointer px-5 py-2 transition duration-300 hover:text-text-foreground">
+        <li className="cursor-pointer px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
           <button className="flex items-center gap-2">
             <span>
               <MdBolt />

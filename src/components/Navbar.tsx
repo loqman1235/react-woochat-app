@@ -13,6 +13,7 @@ import {
 import NotifCounter from "./shared/NotifCounter";
 import { Dropdown, DropdownItem } from "./shared/Dropdown";
 import ThemToggleSwitch from "./shared/ThemToggleSwitch";
+import Avatar from "./shared/Avatar";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -52,8 +53,8 @@ const Navbar = () => {
             <NotifCounter count={1} />
           </button>
           <div className="relative">
-            <div
-              className="h-8 w-8 cursor-pointer overflow-hidden rounded-full bg-red-500"
+            {/* <div
+              className="h-8 w-8 cursor-pointer overflow-hidden rounded-full"
               onClick={toggleProfileDropdown}
             >
               <img
@@ -61,7 +62,14 @@ const Navbar = () => {
                 alt="avatar"
                 className="h-full w-full object-cover"
               />
-            </div>
+            </div> */}
+
+            <Avatar
+              src="/default_avatar.png"
+              gender="male"
+              onClick={toggleProfileDropdown}
+              size="sm"
+            />
 
             <Dropdown isOpen={isProfileDropdownOpen}>
               <DropdownItem text="profile" icon={<MdAccountCircle />} />

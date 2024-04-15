@@ -1,6 +1,7 @@
 interface DropdownProps {
   children: React.ReactNode;
   isOpen: boolean;
+  // position?: "left" | "right";
 }
 
 const Dropdown = ({ children, isOpen }: DropdownProps) => {
