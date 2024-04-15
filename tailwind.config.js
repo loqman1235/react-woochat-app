@@ -11,6 +11,7 @@ export default {
         primary: "var(--color-primary)",
         background: "var(--color-background)",
         foreground: "var(--color-foreground)",
+        "foreground-light": "var(--color-foregrond-light)",
         male: "var(--color-male)",
         female: "var(--color-female)",
         danger: "var(--color-danger)",
