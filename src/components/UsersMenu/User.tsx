@@ -1,10 +1,11 @@
 import Flag from "react-world-flags";
-import { AdminIcon, ModeratorIcon, PremiumIcon, UserIcon } from "../icons";
 import { MdAccountCircle, MdBolt, MdEmail } from "react-icons/md";
 import { useState } from "react";
 import Avatar from "../shared/Avatar";
+import { getRoleIcon } from "@/utils";
 
-interface UserProps {
+export interface UserProps {
+  id?: string;
   username: string;
   avatar: string;
   gender: "male" | "female";
@@ -12,42 +13,6 @@ interface UserProps {
   role: "admin" | "mod" | "premium" | "user";
   country?: string;
 }
-
-// Manage roles icons
-const getRoleIcon = (role: string) => {
-  switch (role) {
-    case "admin":
-      return (
-        <span className="text-sm text-admin" title="Admin">
-          <AdminIcon />
-        </span>
-      );
-    case "mod":
-      return (
-        <span className="text-sm text-mod" title="Moderator">
-          <ModeratorIcon />
-        </span>
-      );
-    case "premium":
-      return (
-        <span className="text-sm text-premium" title="Premium">
-          <PremiumIcon />
-        </span>
-      );
-    case "user":
-      return (
-        <span className="text-sm text-user" title="User">
-          <UserIcon />
-        </span>
-      );
-    default:
-      return (
-        <span className="text-sm text-user" title="User">
-          <UserIcon />
-        </span>
-      );
-  }
-};
 
 const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);

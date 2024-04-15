@@ -38,7 +38,7 @@
   --font-roboto: "Roboto", sans-serif;
   --font-pacifico: "Pacifico", cursive;
 
-  --main-menu-width: 260px; /* 160px */
+  --main-menu-width: 160px; /* 260px */
   --users-area-width: 260px;
   --chat-area-width: calc(
     100% - var(--main-menu-width) - var(--users-area-width)

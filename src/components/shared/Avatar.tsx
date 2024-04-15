@@ -20,15 +20,19 @@ const Avatar = ({
     size === "sm" ? "h-8 w-8" : size === "md" ? "h-10 w-10" : "h-12 w-12";
 
   return (
-    <div
-      className={`relative cursor-pointer overflow-hidden rounded-full bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} ${avatarSize}`}
-      onClick={onClick}
-    >
-      <img
-        src={src}
-        alt={username || "Avatar"}
-        className="h-full w-full object-cover"
-      />
+    <div className={`relative ${avatarSize}`}>
+      <div
+        className={`relative cursor-pointer overflow-hidden rounded-full bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} h-full w-full`}
+        onClick={onClick}
+      >
+        <img
+          src={src}
+          alt={username || "Avatar"}
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      {/* LEVEL  */}
     </div>
   );
 };
