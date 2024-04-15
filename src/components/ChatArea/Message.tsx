@@ -1,4 +1,4 @@
-import { MdFlag, MdThumbUp } from "react-icons/md";
+// import { MdFlag, MdThumbUp } from "react-icons/md";
 import Avatar from "../shared/Avatar";
 
 const Message = () => {
@@ -16,14 +16,13 @@ const Message = () => {
         <div className="flex items-center justify-between">
           <h5 className="text-sm font-bold text-text-foreground">Username</h5>
           <div className="flex items-center gap-2 text-xs">
-            <button className="text-text-muted transition duration-300 hover:text-text-foreground">
+            {/* <button className="text-text-muted transition duration-300 hover:text-text-foreground">
               <MdThumbUp />
             </button>
-            <span className=" text-text-muted">15/04 7:45</span>
-
             <button className="text-text-muted transition duration-300 hover:text-text-foreground">
               <MdFlag />
-            </button>
+            </button> */}
+            <span className=" text-text-muted">15/04 7:45</span>
           </div>
         </div>
         {/* MESSAGE */}
