@@ -9,6 +9,7 @@ export default {
       },
       colors: {
         primary: "var(--color-primary)",
+        "primary-hover": "var(--color-primary-hover)",
         background: "var(--color-background)",
         foreground: "var(--color-foreground)",
         "foreground-light": "var(--color-foregrond-light)",
