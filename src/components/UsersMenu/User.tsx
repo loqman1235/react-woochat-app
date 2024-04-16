@@ -29,7 +29,6 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
       >
         <div className="flex items-center gap-2">
           {/* AVATAR */}
-
           <Avatar
             src={avatar}
             username={username}

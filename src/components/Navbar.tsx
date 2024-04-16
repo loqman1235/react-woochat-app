@@ -14,9 +14,11 @@ import NotifCounter from "./shared/NotifCounter";
 import { Dropdown, DropdownItem } from "./shared/Dropdown";
 import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 import Avatar from "./shared/Avatar";
+import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const { toggleMainMenu, setUsersMenuOpen } = useSidebarToggle();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
@@ -26,7 +28,22 @@ const Navbar = () => {
     <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5 text-text-foreground">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
         <div className="flex h-full items-center gap-5">
-          <button className="text-2xl">
+          <button
+            className="hidden text-2xl md:block"
+            onClick={() => {
+              toggleMainMenu();
+            }}
+          >
+            <MdMenu />
+          </button>
+
+          <button
+            className="block text-2xl md:hidden"
+            onClick={() => {
+              toggleMainMenu();
+              setUsersMenuOpen(false);
+            }}
+          >
             <MdMenu />
           </button>
           {/* BRAND */}
@@ -36,8 +53,6 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-5 text-2xl">
-          {/* Theme toggle button here  */}
-
           <ThemToggleSwitch />
 
           <button className="relative">

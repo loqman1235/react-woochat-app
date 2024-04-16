@@ -6,13 +6,33 @@ import {
   MdSearch,
 } from "react-icons/md";
 import User from "./User";
+import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
 const UsersMenu = () => {
+  const { usersMenuOpen, toggleUsersMenu, setMainMenuOpen } =
+    useSidebarToggle();
   return (
-    <div className="fixed right-0 top-12 h-[calc(100%-48px)] w-[var(--users-area-width)] border-l border-l-border bg-foreground">
+    <div
+      className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "block" : "hidden"} transition duration-300 ease-in-out`}
+    >
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
-        <button className="h-full px-5">
+        <button
+          className="hidden h-full px-5 transition duration-300 hover:text-text-foreground md:block"
+          onClick={() => {
+            toggleUsersMenu();
+          }}
+        >
+          <MdClose />
+        </button>
+
+        <button
+          className="block h-full px-5 transition duration-300 hover:text-text-foreground md:hidden"
+          onClick={() => {
+            toggleUsersMenu();
+            setMainMenuOpen(false);
+          }}
+        >
           <MdClose />
         </button>
 

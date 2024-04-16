@@ -1,4 +1,5 @@
 // Icons
+import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import { useState } from "react";
 import {
   MdCheckCircle,
@@ -13,6 +14,8 @@ import {
 } from "react-icons/md";
 
 const MainMenu = () => {
+  const { mainMenuOpen } = useSidebarToggle();
+
   const listStyles =
     "w-full border-b border-border px-5 py-2 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";
   const subListStyles =
@@ -25,7 +28,9 @@ const MainMenu = () => {
   };
 
   return (
-    <div className="fixed left-0 top-12 h-[calc(100%-48px)] w-[var(--main-menu-width)] border-r border-r-border bg-foreground text-text-foreground">
+    <div
+      className={`fixed top-12 h-full w-[var(--main-menu-width)] flex-[1] border-r border-r-border bg-foreground text-text-foreground md:relative md:top-0 ${mainMenuOpen ? "block" : "hidden"} z-50 transition duration-300 ease-in-out`}
+    >
       <ul>
         <li className={listStyles} onClick={toggleStatus}>
           <button className="flex items-center gap-2">
@@ -82,7 +87,7 @@ const MainMenu = () => {
             <span className="text-text-muted">
               <MdAccountBox />
             </span>
-            <span>My rofile</span>
+            <span>My profile</span>
           </button>
         </li>
 
