@@ -9,28 +9,17 @@ import User from "./User";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
 const UsersMenu = () => {
-  const { usersMenuOpen, toggleUsersMenu, setMainMenuOpen } =
-    useSidebarToggle();
+  const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
   return (
     <div
-      className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "block" : "hidden"} transition duration-300 ease-in-out`}
+      className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "hidden md:block" : "block md:hidden"} transition duration-300 ease-in-out`}
     >
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
         <button
-          className="hidden h-full px-5 transition duration-300 hover:text-text-foreground md:block"
+          className="h-full px-5 transition duration-300 hover:text-text-foreground"
           onClick={() => {
             toggleUsersMenu();
-          }}
-        >
-          <MdClose />
-        </button>
-
-        <button
-          className="block h-full px-5 transition duration-300 hover:text-text-foreground md:hidden"
-          onClick={() => {
-            toggleUsersMenu();
-            setMainMenuOpen(false);
           }}
         >
           <MdClose />

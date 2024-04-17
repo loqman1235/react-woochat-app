@@ -2,7 +2,7 @@ import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import { MdMenu, MdVolumeUp } from "react-icons/md";
 
 const Footer = () => {
-  const { toggleUsersMenu, setMainMenuOpen } = useSidebarToggle();
+  const { toggleUsersMenu } = useSidebarToggle();
   return (
     <footer className="fixed bottom-0 z-40 flex h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-5 text-2xl text-text-foreground">
       {/* COPYRIGHT */}
@@ -12,18 +12,8 @@ const Footer = () => {
           <MdVolumeUp />
         </button>
         <button
-          className="hidden md:block"
           onClick={() => {
             toggleUsersMenu();
-          }}
-        >
-          <MdMenu />
-        </button>
-        <button
-          className="block md:hidden"
-          onClick={() => {
-            toggleUsersMenu();
-            setMainMenuOpen(false);
           }}
         >
           <MdMenu />

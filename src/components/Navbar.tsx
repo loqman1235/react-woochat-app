@@ -18,7 +18,7 @@ import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const { toggleMainMenu, setUsersMenuOpen } = useSidebarToggle();
+  const { toggleMainMenu } = useSidebarToggle();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
         <div className="flex h-full items-center gap-5">
           <button
-            className="hidden text-2xl md:block"
+            className="text-2xl"
             onClick={() => {
               toggleMainMenu();
             }}
@@ -37,15 +37,6 @@ const Navbar = () => {
             <MdMenu />
           </button>
 
-          <button
-            className="block text-2xl md:hidden"
-            onClick={() => {
-              toggleMainMenu();
-              setUsersMenuOpen(false);
-            }}
-          >
-            <MdMenu />
-          </button>
           {/* BRAND */}
           <div className="cursor-pointer select-none text-xl font-extrabold tracking-tight text-text-foreground">
             Woo<span className="text-primary">chat</span>
