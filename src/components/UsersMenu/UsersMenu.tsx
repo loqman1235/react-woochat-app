@@ -30,15 +30,15 @@ const UsersMenu = () => {
             <MdPeopleAlt />
           </button>
 
-          <button>
+          <button className="transition duration-300 hover:text-text-foreground">
             <MdPersonAdd />
           </button>
 
-          <button>
+          <button className="transition duration-300 hover:text-text-foreground">
             <MdHome />
           </button>
 
-          <button>
+          <button className="transition duration-300 hover:text-text-foreground">
             <MdSearch />
           </button>
         </div>
