@@ -38,7 +38,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           />
           {/* USERNAME AND MOOD */}
           <ul>
-            <li className="text-sm font-bold lowercase text-text-foreground">
+            <li className="text-sm font-bold text-text-foreground">
               {username}
             </li>
             {mood && <li className="text-[11px] text-text-muted">{mood}</li>}

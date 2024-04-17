@@ -2,8 +2,9 @@ export const messages = [
   {
     user: {
       id: "1",
-      username: "JohnDoe",
-      avatar: "https://i.pravatar.cc/300",
+      username: "Loqmane Djefafla",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "male",
       mood: "I'm feeling great",
       role: "admin",
@@ -16,7 +17,8 @@ export const messages = [
     user: {
       id: "2",
       username: "JaneDoe",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://plus.unsplash.com/premium_photo-1681489930334-b0d26fdb9ed8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "female",
       mood: "I'm doing great",
       role: "mod",
@@ -29,7 +31,8 @@ export const messages = [
     user: {
       id: "3",
       username: "BobSmith",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "male",
       mood: "I'm feeling tired",
       role: "user",
@@ -42,7 +45,8 @@ export const messages = [
     user: {
       id: "4",
       username: "Alice",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=1727&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "female",
       mood: "I'm having a bad day",
       role: "premium",
@@ -55,7 +59,8 @@ export const messages = [
     user: {
       id: "5",
       username: "Charlie",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://images.unsplash.com/photo-1544435253-f0ead49638fa?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "male",
       mood: "I'm feeling great",
       role: "admin",
@@ -68,7 +73,8 @@ export const messages = [
     user: {
       id: "6",
       username: "David",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=1889&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "male",
       mood: "I'm feeling great",
       role: "mod",
@@ -81,7 +87,8 @@ export const messages = [
     user: {
       id: "7",
       username: "Eve",
-      avatar: "https://i.pravatar.cc/300",
+      avatar:
+        "https://images.unsplash.com/photo-1605993439219-9d09d2020fa5?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       gender: "female",
       mood: "I'm doing well",
       role: "user",
@@ -94,7 +101,7 @@ export const messages = [
     user: {
       id: "8",
       username: "Frank",
-      avatar: "https://i.pravatar.cc/300",
+      avatar: "",
       gender: "male",
       mood: "I'm feeling tired",
       role: "user",
@@ -107,7 +114,7 @@ export const messages = [
     user: {
       id: "9",
       username: "LoremIpsum",
-      avatar: "https://i.pravatar.cc/300",
+      avatar: "",
       gender: "male",
       mood: "I'm feeling great",
       role: "user",
@@ -121,7 +128,7 @@ export const messages = [
     user: {
       id: "10",
       username: "DolorSitAmet",
-      avatar: "https://i.pravatar.cc/300",
+      avatar: "",
       gender: "female",
       mood: "I'm doing well",
       role: "user",

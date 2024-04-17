@@ -1,5 +1,5 @@
 interface AvatarProps {
-  src: string;
+  src?: string;
   username?: string;
   gender: "male" | "female";
   isBordered?: boolean;
@@ -26,7 +26,7 @@ const Avatar = ({
         onClick={onClick}
       >
         <img
-          src={src}
+          src={src || "/default_avatar.png"}
           alt={username || "Avatar"}
           className="h-full w-full object-cover"
         />

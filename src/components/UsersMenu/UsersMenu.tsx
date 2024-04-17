@@ -53,16 +53,16 @@ const UsersMenu = () => {
       </div>
       <div className="h-[calc(100%-120px)] overflow-y-auto pb-5">
         <User
-          username="axeldjefafla"
-          avatar="https://i.pravatar.cc/300"
+          username="Loqmane Djefafla"
+          avatar="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           role="admin"
           gender="male"
-          mood="I'm the king here"
+          mood="Chat developer"
           country="US"
         />
         <User
           username="JaneDoe"
-          avatar="https://i.pravatar.cc/300"
+          avatar="https://plus.unsplash.com/premium_photo-1681489930334-b0d26fdb9ed8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           role="mod"
           gender="female"
           mood="Doing stuff"
@@ -70,7 +70,7 @@ const UsersMenu = () => {
         />
 
         <User
-          username="thedude"
+          username="Someone11"
           avatar="https://i.pravatar.cc/300"
           role="premium"
           gender="male"
