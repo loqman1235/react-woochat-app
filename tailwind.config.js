@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         roboto: ["var(--font-roboto)", "sans-serif"],
-        pacifico: ["var(--font-pacifico)", "cursive"],
+        kaushan: ["var(--font-kaushan)", "cursive"],
       },
       colors: {
         primary: "var(--color-primary)",
