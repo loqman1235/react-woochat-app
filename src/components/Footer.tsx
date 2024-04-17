@@ -6,7 +6,16 @@ const Footer = () => {
   return (
     <footer className="fixed bottom-0 z-40 flex h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-5 text-2xl text-text-foreground">
       {/* COPYRIGHT */}
-      <p className="text-sm text-text-muted">WooChat © 2024</p>
+      <p className="text-sm text-text-muted">
+        WooChat © 2024{" "}
+        <a
+          href="https://www.facebook.com/loqman.axel.djefafla/"
+          target="_blank"
+          className="text-primary"
+        >
+          by Loqmane
+        </a>
+      </p>
       <div className="flex h-full items-center gap-5">
         <button>
           <MdVolumeUp />
