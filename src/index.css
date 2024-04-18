@@ -39,6 +39,7 @@
   --font-kaushan: "Kaushan Script", cursive;
 
   --main-menu-width: 260px; /* 160px */
+  --main-menu-mobile-width: 180px;
   --users-area-width: 260px;
   --chat-area-width: calc(
     100% - var(--main-menu-width) - var(--users-area-width)

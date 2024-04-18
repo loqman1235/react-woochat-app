@@ -68,7 +68,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
       <ul
         className={`max-h-0 w-full bg-muted text-text-muted-2 transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
       >
-        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
+        <li className="cursor-pointer border-b border-b-border px-2 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground md:px-5">
           <button
             className="flex items-center gap-2"
             onClick={() => {
@@ -90,7 +90,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           </button>
         </li>
 
-        <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
+        <li className="cursor-pointer border-b border-b-border px-2 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground md:px-5">
           <button className="flex items-center gap-2">
             <span>
               <MdAccountCircle />
@@ -99,7 +99,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           </button>
         </li>
 
-        <li className="cursor-pointer px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
+        <li className="cursor-pointer px-2 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground md:px-5">
           <button className="flex items-center gap-2">
             <span>
               <MdBolt />

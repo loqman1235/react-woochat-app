@@ -29,7 +29,7 @@ const MainMenu = () => {
 
   return (
     <div
-      className={`fixed top-12 h-full w-[var(--main-menu-width)] flex-[1] border-r border-r-border bg-foreground text-text-foreground md:relative md:top-0 ${mainMenuOpen ? "hidden md:block" : "block md:hidden"} z-50 transition duration-300 ease-in-out`}
+      className={`fixed top-12 h-full w-[var(--main-menu-mobile-width)] flex-[1] border-r border-r-border bg-foreground text-text-foreground md:relative md:top-0 md:w-[var(--main-menu-width)] ${mainMenuOpen ? "hidden md:block" : "block md:hidden"} z-30 transition duration-300 ease-in-out`}
     >
       <ul>
         <li className={listStyles} onClick={toggleStatus}>
