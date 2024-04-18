@@ -5,7 +5,6 @@ const ThemToggleSwitch = () => {
   // const [isChecked, setIsChecked] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  console.log(theme, "Current theme");
   return (
     <div
       className={`relative h-4 w-10 overflow-hidden rounded-full ${theme === "light" ? "bg-sky-500" : "bg-muted"}`}
