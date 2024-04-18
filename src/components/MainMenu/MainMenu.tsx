@@ -17,9 +17,9 @@ const MainMenu = () => {
   const { mainMenuOpen } = useSidebarToggle();
 
   const listStyles =
-    "w-full border-b border-border px-5 py-2 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";
+    "w-full border-b border-border px-2 md:px-5 py-2 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";
   const subListStyles =
-    "w-full  py-2 last:border-0 last:pb-0 grayscale hover:grayscale-0 transition duration-300 ease-in-out";
+    "w-full py-2 last:border-0 last:pb-0 grayscale hover:grayscale-0 transition duration-300 ease-in-out";
 
   const [isStatusOpen, setIsStatusOpen] = useState(false);
 

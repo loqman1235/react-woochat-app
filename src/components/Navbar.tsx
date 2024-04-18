@@ -25,9 +25,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-5 text-text-foreground">
+    <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-2 text-text-foreground md:px-5">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
-        <div className="flex h-full items-center gap-5">
+        <div className="flex h-full items-center gap-2 md:gap-5">
           <button
             className="text-2xl"
             onClick={() => {
@@ -38,12 +38,12 @@ const Navbar = () => {
           </button>
 
           {/* BRAND */}
-          <div className="cursor-pointer select-none font-kaushan text-2xl font-extrabold tracking-tight text-text-foreground">
+          <div className="cursor-pointer select-none font-kaushan text-xl font-extrabold tracking-tight text-text-foreground md:text-2xl">
             Woo<span className="text-primary">chat</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-5 text-2xl">
+        <div className="flex items-center gap-2 text-2xl md:gap-5">
           <ThemToggleSwitch />
 
           <button className="relative">

@@ -17,7 +17,7 @@ const UsersMenu = () => {
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
         <button
-          className="h-full px-5 transition duration-300 hover:text-text-foreground"
+          className="h-full px-2 transition duration-300 hover:text-text-foreground md:px-5"
           onClick={() => {
             toggleUsersMenu();
           }}
@@ -25,7 +25,7 @@ const UsersMenu = () => {
           <MdClose />
         </button>
 
-        <div className="flex h-full flex-[1] justify-end gap-5 pr-5 text-text-muted">
+        <div className="flex h-full flex-[1] justify-end gap-5 pr-2 text-text-muted md:pr-5">
           <button className="text-text-foreground">
             <MdPeopleAlt />
           </button>
@@ -45,8 +45,10 @@ const UsersMenu = () => {
       </div>
 
       {/* ROOM NAME */}
-      <div className="flex items-center gap-2 px-5 py-2">
-        <h5 className="font-bold text-primary">Main Room</h5>
+      <div className="flex items-center gap-2 px-2 py-2 md:px-5">
+        <h5 className="text-sm font-bold text-primary md:text-base">
+          Main Room
+        </h5>
         <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
           122
         </span>

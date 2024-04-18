@@ -23,7 +23,7 @@ const Message = ({
 }: MessageProps) => {
   const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
   return (
-    <div className="flex w-full items-start gap-2 bg-transparent px-5 py-2 odd:bg-muted">
+    <div className="flex w-full items-start gap-2 bg-transparent px-2 py-2 odd:bg-muted md:px-5">
       <div className="relative" onClick={toggleUserDropdown}>
         <Avatar src={user.avatar} gender={user.gender} isBordered size="md" />
         <Dropdown isOpen={isUserDropdownOpen} position="left">

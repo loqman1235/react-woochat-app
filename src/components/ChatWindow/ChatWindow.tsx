@@ -17,7 +17,7 @@ const ChatWindow = () => {
       className={`absolute bottom-0 right-0 z-40 w-full cursor-pointer shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] md:w-[380px] ${isChatWindowOpen ? "block" : "hidden"} ${isMinimized ? "translate-y-[calc(100%-40px)]" : "translate-y-0"} `}
     >
       {/* HEADER */}
-      <div className="flex items-center justify-between overflow-hidden rounded-tl-md rounded-tr-md border border-border bg-muted px-5 py-1">
+      <div className="flex items-center justify-between overflow-hidden rounded-tl-md rounded-tr-md border border-border bg-muted px-2 py-1 md:px-5">
         <div className="flex items-center gap-2">
           <Avatar
             size="sm"
@@ -32,7 +32,7 @@ const ChatWindow = () => {
         </div>
 
         {/* CTAS */}
-        <div className="flex h-full items-center gap-5 text-xl text-text-foreground">
+        <div className="text-text-foregroundnp flex h-full items-center gap-5 text-xl">
           <button className="transition duration-300 hover:text-text-foreground">
             <MdOpenInFull />
           </button>

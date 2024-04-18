@@ -26,7 +26,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
   return (
     <div className="relative overflow-hidden">
       <div
-        className="flex cursor-pointer items-center justify-between border-b border-b-border px-5 py-2 last:border-0"
+        className="flex cursor-pointer items-center justify-between border-b border-b-border px-2 py-2 last:border-0 md:px-5"
         onClick={toggleUserMenu}
       >
         <div className="flex items-center gap-2">
@@ -41,7 +41,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           {/* USERNAME AND MOOD */}
           <ul>
             <li className="text-sm font-bold text-text-foreground">
-              {username}
+              {username.length > 8 ? username.slice(0, 8) + "..." : username}
             </li>
             {mood && <li className="text-[11px] text-text-muted">{mood}</li>}
           </ul>
