@@ -3,6 +3,7 @@ import { MdAccountCircle, MdBolt, MdEmail } from "react-icons/md";
 import { useState } from "react";
 import Avatar from "../shared/Avatar";
 import { getRoleIcon } from "@/utils";
+import useChatWindow from "@/hooks/useChatWindow";
 
 export interface UserProps {
   id?: string;
@@ -16,6 +17,7 @@ export interface UserProps {
 
 const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen((prev) => !prev);
@@ -67,7 +69,20 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
         className={`max-h-0 w-full bg-muted text-text-muted-2 transition-all duration-500 ease-in-out ${isUserMenuOpen && "max-h-96"}`}
       >
         <li className="cursor-pointer border-b border-b-border px-5 py-2 transition duration-300 hover:bg-muted-hover hover:text-text-foreground">
-          <button className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-2"
+            onClick={() => {
+              setIsChatWindowOpen(true);
+              setCurrentUser({
+                username,
+                avatar,
+                gender,
+                mood,
+                role,
+                country,
+              });
+            }}
+          >
             <span>
               <MdEmail />
             </span>
