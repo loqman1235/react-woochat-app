@@ -8,7 +8,7 @@ const ChatWindow = () => {
 
   return (
     <div
-      className={`absolute bottom-0 right-0 z-50 w-full shadow md:w-[400px] ${isChatWindowOpen ? "block" : "hidden"}`}
+      className={`absolute bottom-0 right-0 z-40 w-full shadow-2xl  md:w-[400px] ${isChatWindowOpen ? "block" : "hidden"}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between overflow-hidden rounded-tl-md rounded-tr-md border border-border bg-muted px-5 py-1">

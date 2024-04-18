@@ -12,7 +12,7 @@ const UsersMenu = () => {
   const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
   return (
     <div
-      className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "hidden md:block" : "block md:hidden"} transition duration-300 ease-in-out`}
+      className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "hidden md:block" : "block md:hidden"} z-40 transition duration-300 ease-in-out`}
     >
       {/* USERS MENU HEADER  */}
       <div className="flex h-10 w-full items-center justify-between border-b border-b-border text-2xl">
