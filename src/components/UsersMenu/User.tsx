@@ -71,7 +71,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
             <span>
               <MdEmail />
             </span>
-            <span>Private</span>
+            <span className="text-text-foreground">Private</span>
           </button>
         </li>
 
@@ -80,7 +80,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
             <span>
               <MdAccountCircle />
             </span>
-            <span>View profile</span>
+            <span className="text-text-foreground">View profile</span>
           </button>
         </li>
 
@@ -89,7 +89,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
             <span>
               <MdBolt />
             </span>
-            <span>Action</span>
+            <span className="text-text-foreground">Action</span>
           </button>
         </li>
       </ul>

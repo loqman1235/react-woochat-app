@@ -1,8 +1,18 @@
 import Message from "./Message";
 import ChatInput from "./ChatInput";
 import { messages } from "@/data/messages";
+import { useState } from "react";
 
 const ChatArea = () => {
+  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+
+  const toggleDropdown = (id: string) => {
+    if (openDropdownId === id) {
+      setOpenDropdownId(null);
+    } else {
+      setOpenDropdownId(id);
+    }
+  };
   return (
     <div
       className={`
@@ -17,7 +27,12 @@ const ChatArea = () => {
       {/*  MESSAGES CONTAINER */}
       <div className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background">
         {messages.map((message) => (
-          <Message key={message.user.id} {...message} />
+          <Message
+            key={message.user.id}
+            {...message}
+            isUserDropdownOpen={openDropdownId === message.user.id}
+            toggleUserDropdown={() => toggleDropdown(message.user.id)}
+          />
         ))}
       </div>
 

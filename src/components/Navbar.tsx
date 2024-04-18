@@ -38,7 +38,7 @@ const Navbar = () => {
           </button>
 
           {/* BRAND */}
-          <div className="font-kaushan cursor-pointer select-none text-2xl font-extrabold tracking-tight text-text-foreground">
+          <div className="cursor-pointer select-none font-kaushan text-2xl font-extrabold tracking-tight text-text-foreground">
             Woo<span className="text-primary">chat</span>
           </div>
         </div>
