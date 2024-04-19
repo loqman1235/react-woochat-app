@@ -11,7 +11,7 @@ export const messages = [
       country: "GB",
     },
     message: "Hello, how are you?",
-    time: "15/04 12:23 PM",
+    time: "5 minutes ago",
   },
   {
     user: {
@@ -25,7 +25,7 @@ export const messages = [
       country: "US",
     },
     message: "Hi John, I'm doing well, thanks for asking",
-    time: "15/04 1:45 PM",
+    time: "2 minutes ago",
   },
   {
     user: {
@@ -39,7 +39,7 @@ export const messages = [
       country: "FR",
     },
     message: "Hey, what's up?",
-    time: "15/04 10:22 AM",
+    time: "2 minutes ago",
   },
   {
     user: {
@@ -53,7 +53,7 @@ export const messages = [
       country: "BR",
     },
     message: "I'm not feeling well today",
-    time: "15/04 12:22 PM",
+    time: "2 minutes ago",
   },
   {
     user: {
@@ -67,7 +67,7 @@ export const messages = [
       country: "GB",
     },
     message: "Hello, how are you?",
-    time: "15/04 12:23 PM",
+    time: "1 minute ago",
   },
   {
     user: {
@@ -81,7 +81,7 @@ export const messages = [
       country: "US",
     },
     message: "Hey guys, what's up?",
-    time: "15/04 12:25 PM",
+    time: "1 minute ago",
   },
   {
     user: {
@@ -95,7 +95,7 @@ export const messages = [
       country: "DE",
     },
     message: "Not much, just chillin'",
-    time: "15/04 12:31 PM",
+    time: "1 minute ago",
   },
   {
     user: {
@@ -108,7 +108,7 @@ export const messages = [
       country: "IT",
     },
     message: "I'm good, just trying to relax",
-    time: "15/04 1:15 PM",
+    time: "just now",
   },
   {
     user: {
@@ -122,7 +122,7 @@ export const messages = [
     },
     message:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    time: "15/04 2:15 PM",
+    time: "just now",
   },
   {
     user: {
@@ -136,6 +136,6 @@ export const messages = [
     },
     message:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit?",
-    time: "15/04 3:15 PM",
+    time: "just now",
   },
 ] as const;

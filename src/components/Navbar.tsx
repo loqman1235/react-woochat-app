@@ -15,6 +15,7 @@ import { Dropdown, DropdownItem } from "./shared/Dropdown";
 import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 import Avatar from "./shared/Avatar";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
+import Brand from "./shared/Brand";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -38,9 +39,7 @@ const Navbar = () => {
           </button>
 
           {/* BRAND */}
-          <div className="cursor-pointer select-none font-kaushan text-xl font-extrabold tracking-tight text-text-foreground md:text-2xl">
-            Woo<span className="text-primary">chat</span>
-          </div>
+          <Brand />
         </div>
 
         <div className="flex items-center gap-2 text-2xl md:gap-5">

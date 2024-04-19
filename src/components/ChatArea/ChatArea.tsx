@@ -25,7 +25,7 @@ const ChatArea = () => {
       `}
     >
       {/*  MESSAGES CONTAINER */}
-      <div className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background">
+      <div className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background py-2 md:py-5">
         {messages.map((message) => (
           <Message
             key={message.user.id}

@@ -23,7 +23,7 @@ const Message = ({
 }: MessageProps) => {
   const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
   return (
-    <div className="flex w-full items-start gap-2 bg-transparent px-2 py-2 odd:bg-muted md:px-5">
+    <div className="flex w-full items-start gap-2 px-2 py-2 md:px-5">
       <div className="relative" onClick={toggleUserDropdown}>
         <Avatar src={user.avatar} gender={user.gender} isBordered size="md" />
         <Dropdown isOpen={isUserDropdownOpen} position="left">
@@ -42,7 +42,7 @@ const Message = ({
 
       <div className="flex-[1]">
         {/* HEADER */}
-        <div className="flex items-center justify-between">
+        <div className="mb-2 flex items-center gap-2">
           <div className="flex items-center gap-1">
             <span>{getRoleIcon(user.role, "xs")}</span>
             <h5 className="text-sm font-bold text-text-foreground">
@@ -54,7 +54,7 @@ const Message = ({
           </div>
         </div>
         {/* MESSAGE */}
-        <div className="w-full">
+        <div className="w-fit rounded-2xl rounded-tl-none bg-foreground p-4 shadow-sm">
           <p className="text-sm text-text-foreground">{message}</p>
         </div>
       </div>
