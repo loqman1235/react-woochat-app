@@ -11,6 +11,8 @@ export const messages = [
       country: "GB",
     },
     message: "Hello, how are you?",
+    media:
+      "https://images.pexels.com/photos/20861047/pexels-photo-20861047/free-photo-of-neige-ville-paysage-eau.jpeg",
     time: "5 minutes ago",
   },
   {

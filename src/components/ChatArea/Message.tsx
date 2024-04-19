@@ -12,12 +12,14 @@ interface MessageProps {
   time: string;
   isUserDropdownOpen: boolean;
   toggleUserDropdown: () => void;
+  media?: string;
 }
 
 const Message = ({
   user,
   message,
   time,
+  media,
   isUserDropdownOpen,
   toggleUserDropdown,
 }: MessageProps) => {
@@ -50,12 +52,18 @@ const Message = ({
             </h5>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <span className=" text-text-muted">{time}</span>
+            <span className=" italic text-text-muted">{time}</span>
           </div>
         </div>
         {/* MESSAGE */}
         <div className="w-fit rounded-2xl rounded-tl-none bg-foreground p-4 shadow-sm">
           <p className="text-sm text-text-foreground">{message}</p>
+          {media && (
+            <img
+              src={media}
+              className="mt-2 h-[200px] w-full rounded-md object-cover md:w-[300px]"
+            />
+          )}
         </div>
       </div>
     </div>
