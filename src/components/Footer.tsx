@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="fixed bottom-0 z-40 flex h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-2 text-2xl text-text-foreground md:px-5">
       {/* COPYRIGHT */}
       <p className="text-sm text-text-muted">
-        WooChat © 2024{" "}
+        SomthinChat © 2024{" "}
         <a
           href="https://www.facebook.com/loqman.axel.djefafla/"
           target="_blank"
