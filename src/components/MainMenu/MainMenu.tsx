@@ -12,6 +12,7 @@ import {
   MdDoNotDisturbOnTotalSilence,
   MdAccessTimeFilled,
 } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const MainMenu = () => {
   const { mainMenuOpen } = useSidebarToggle();
@@ -74,12 +75,12 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="text-text-muted">
               <MdStorage />
             </span>
             <span>Rooms</span>
-          </button>
+          </Link>
         </li>
 
         <li className={listStyles}>

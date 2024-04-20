@@ -1,18 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import ChatLayout from "./layouts/ChatLayout";
-import { ThemeProvider } from "./context/ThemeContext";
 import { LoginPage, RegisterPage } from "./pages/Auth";
+import AppLayout from "./layouts/AppLayout";
+import { RoomsPage } from "./pages/Rooms";
 
 const App = () => {
   return (
     <>
-      <ThemeProvider>
-        <Routes>
-          <Route path="/" element={<ChatLayout />} />
-          <Route path="/sign-in" element={<LoginPage />} />
-          <Route path="/sign-up" element={<RegisterPage />} />
-        </Routes>
-      </ThemeProvider>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<RoomsPage />} />
+          <Route path="/chat" element={<ChatLayout />} />
+        </Route>
+        <Route path="/sign-in" element={<LoginPage />} />
+        <Route path="/sign-up" element={<RegisterPage />} />
+      </Routes>
     </>
   );
 };
