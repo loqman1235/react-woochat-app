@@ -52,7 +52,7 @@ const Message = ({
             </h5>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <span className=" italic text-text-muted">{time}</span>
+            <span className="text-text-muted">{time}</span>
           </div>
         </div>
         {/* MESSAGE */}
