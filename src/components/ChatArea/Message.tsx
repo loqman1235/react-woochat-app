@@ -51,6 +51,8 @@ const Message = ({
               {user.username}
             </h5>
           </div>
+          {/* Add an html dot */}
+          {/* <span className="text-xs text-text-muted">•</span> */}
           <div className="flex items-center gap-2 text-xs">
             <span className="text-text-muted">{time}</span>
           </div>
