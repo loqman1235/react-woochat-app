@@ -13,25 +13,27 @@ const RoomsPage = () => {
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
           <RoomCard
             image="https://picsum.photos/200"
-            name="Tech talk"
+            name="main room"
             description="Dive into the latest in technology, share tips, discuss trends, and explore innovations with fellow tech enthusiasts."
             totalMembers={150}
+            isPinned
           />
           <RoomCard
             image="https://picsum.photos/200"
-            name="Global Gourmet"
+            name="global gourmet"
             description="A place for foodies to exchange recipes, discuss cooking techniques, and explore culinary cultures from around the world."
             totalMembers={134}
+            isPinned
           />
           <RoomCard
             image="https://picsum.photos/200"
-            name="Book Buds"
+            name="book buds"
             description=" Join book lovers as we discuss our latest reads, share recommendations, and occasionally host author Q&A sessions."
             totalMembers={22}
           />
           <RoomCard
             image="https://picsum.photos/200"
-            name="Fitness Friends"
+            name="fitness friends"
             description="Whether you’re a gym rat or a yoga newbie, find motivation, workout tips, and health advice in a supportive community."
             totalMembers={20}
           />
