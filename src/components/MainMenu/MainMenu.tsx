@@ -84,12 +84,12 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
+          <Link to="/profile" className="flex items-center gap-2">
             <span className="text-text-muted">
               <MdAccountBox />
             </span>
             <span>My profile</span>
-          </button>
+          </Link>
         </li>
 
         <li className={listStyles}>

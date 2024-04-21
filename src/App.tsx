@@ -3,6 +3,7 @@ import ChatLayout from "./layouts/ChatLayout";
 import { LoginPage, RegisterPage } from "./pages/Auth";
 import AppLayout from "./layouts/AppLayout";
 import { RoomsPage } from "./pages/Rooms";
+import { ProfilePage } from "./pages/Profile";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<RoomsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/chat" element={<ChatLayout />} />
         </Route>
         <Route path="/sign-in" element={<LoginPage />} />

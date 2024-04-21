@@ -35,7 +35,10 @@ const RoomCard = ({
         <p className="flex items-center gap-2 text-sm font-semibold capitalize text-text-foreground">
           {name}{" "}
           {isPinned && (
-            <span className="rounded-full bg-secondary p-0.5 text-xs text-text-foreground">
+            <span
+              className="rounded-full bg-secondary p-0.5 text-xs text-text-foreground"
+              title="pinned"
+            >
               <MdPushPin />
             </span>
           )}

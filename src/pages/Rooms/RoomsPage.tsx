@@ -6,7 +6,7 @@ const RoomsPage = () => {
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
       <MainMenu />
 
-      <div className="h-full w-[calc(100%-var(--main-menu-width))] flex-[3] overflow-y-auto bg-background p-2 md:p-5">
+      <div className="h-full w-[calc(100%-var(--main-menu-width))] flex-[3] overflow-y-auto bg-background p-2 py-5 md:p-5">
         <div className="flex w-full items-center justify-between">
           <h3 className="mb-5 text-xl font-semibold text-text-foreground">
             Rooms

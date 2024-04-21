@@ -3,8 +3,9 @@ interface AvatarProps {
   username?: string;
   gender: "male" | "female";
   isBordered?: boolean;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
   onClick?: () => void;
+  rounded?: boolean;
 }
 
 const Avatar = ({
@@ -14,15 +15,25 @@ const Avatar = ({
   isBordered = false,
   size,
   onClick,
+  rounded = true,
 }: AvatarProps) => {
   const avatarBorder = gender === "male" ? "border-male" : "border-female";
-  const avatarSize =
-    size === "sm" ? "h-8 w-8" : size === "md" ? "h-10 w-10" : "h-12 w-12";
+  const avatarSize = {
+    sm: "h-8 w-8",
+    md: "h-10 w-10",
+    lg: "h-12 w-12",
+    xl: "h-16 w-16",
+    "2xl": "h-20 w-20",
+    "3xl": "h-24 w-24",
+    "4xl": "h-32 w-32",
+    "5xl": "h-40 w-40",
+    "6xl": "h-48 w-48",
+  }[size];
 
   return (
     <div className={`relative ${avatarSize}`}>
       <div
-        className={`relative cursor-pointer overflow-hidden rounded-full bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} h-full w-full`}
+        className={`relative cursor-pointer overflow-hidden bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} h-full w-full ${rounded ? "rounded-full" : "rounded-md"}`}
         onClick={onClick}
       >
         <img
