@@ -7,9 +7,13 @@ const RoomsPage = () => {
       <MainMenu />
 
       <div className="h-full w-[calc(100%-var(--main-menu-width))] flex-[3] overflow-y-auto bg-background p-2 md:p-5">
-        <h3 className="mb-5 text-xl font-semibold text-text-foreground">
-          Rooms
-        </h3>
+        <div className="flex w-full items-center justify-between">
+          <h3 className="mb-5 text-xl font-semibold text-text-foreground">
+            Rooms
+          </h3>
+
+          {/* TODO: SEARCH FORM */}
+        </div>
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
           <RoomCard
             image="https://picsum.photos/200"
