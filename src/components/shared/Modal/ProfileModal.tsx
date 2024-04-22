@@ -1,13 +1,14 @@
 import { MdCameraAlt, MdClose, MdVerified } from "react-icons/md";
 import Avatar from "../Avatar";
 import { useState } from "react";
+import AboutForm from "./AboutForm";
+import OptionsForm from "./OptionsForm";
+import LevelForm from "./LevelForm";
+import useProfile from "@/hooks/useProfile";
 
-interface ProfileModalProps {
-  onClose?: () => void;
-  isOpen?: boolean;
-}
+const ProfileModal = () => {
+  const { isProfileOpen, setIsProfileOpen } = useProfile();
 
-const ProfileModal = ({ isOpen = false }: ProfileModalProps) => {
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
   const [isOptionsTabActive, setIsOptionsTabActive] = useState(false);
   const [isLevelsTabActive, setIsLevelsTabActive] = useState(false);
@@ -30,16 +31,20 @@ const ProfileModal = ({ isOpen = false }: ProfileModalProps) => {
     setIsLevelsTabActive(true);
   };
 
-  const activeTabStyles = "bg-muted !text-text-foreground";
+  const activeTabStyles = "bg-secondary !text-text-foreground";
   const inactiveTabStyles =
     "flex h-full cursor-pointer items-center px-5 text-text-muted transition duration-300 hover:text-text-foreground";
 
   return (
     // MODAL CONTAINER
     <div
-      className={`fixed inset-0 z-50 flex h-screen w-full items-center justify-center bg-black/50 backdrop-blur-sm ${isOpen ? "block" : "hidden"}`}
+      onClick={() => setIsProfileOpen(false)}
+      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center bg-black/50 backdrop-blur-sm ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5`}
     >
-      <div className="w-[90%] max-w-[580px] overflow-hidden rounded-md border border-border bg-foreground shadow-lg">
+      <div
+        className="w-[100%] max-w-[580px] overflow-hidden rounded-md border border-border bg-foreground shadow-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* MODAL HEADER */}
         <div>
           <div className="relative h-[200px] w-full bg-secondary before:absolute before:inset-0 before:bg-black before:opacity-70 before:shadow">
@@ -81,7 +86,7 @@ const ProfileModal = ({ isOpen = false }: ProfileModalProps) => {
                 </div>
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <h3 className="text-xl font-bold text-white">
                     Loqmane Djefafla
                   </h3>
@@ -98,7 +103,7 @@ const ProfileModal = ({ isOpen = false }: ProfileModalProps) => {
           </div>
         </div>
         {/* MODAL TABS */}
-        <ul className="flex h-10 w-full items-center bg-foreground">
+        <ul className="flex h-10 w-full items-center bg-muted">
           <li
             className={`${inactiveTabStyles} ${isAboutTabActive && activeTabStyles}`}
             onClick={toggleAboutTab}
@@ -119,24 +124,9 @@ const ProfileModal = ({ isOpen = false }: ProfileModalProps) => {
           </li>
         </ul>
 
-        {/* ABOUT SECTION */}
-        <div
-          className={`w-full bg-red-400 p-5 ${isAboutTabActive ? "block" : "hidden"}`}
-        >
-          About
-        </div>
-        {/* OPTIONS SECTION */}
-        <div
-          className={`w-full bg-red-400 p-5 ${isOptionsTabActive ? "block" : "hidden"}`}
-        >
-          Options
-        </div>
-        {/* LEVEL SECTION */}
-        <div
-          className={`w-full bg-red-400 p-5 ${isLevelsTabActive ? "block" : "hidden"}`}
-        >
-          Level
-        </div>
+        <AboutForm isOpen={isAboutTabActive} />
+        <OptionsForm isOpen={isOptionsTabActive} />
+        <LevelForm isOpen={isLevelsTabActive} />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 // Icons
+import useProfile from "@/hooks/useProfile";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import { useState } from "react";
 import {
@@ -16,6 +17,9 @@ import { Link } from "react-router-dom";
 
 const MainMenu = () => {
   const { mainMenuOpen } = useSidebarToggle();
+  const { setIsProfileOpen, isProfileOpen } = useProfile();
+
+  console.log(isProfileOpen, "this is profile open");
 
   const listStyles =
     "w-full border-b border-border px-2 md:px-5 py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";
@@ -84,12 +88,15 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <Link to="/profile" className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-2"
+            onClick={() => setIsProfileOpen(true)}
+          >
             <span className="text-text-muted">
               <MdAccountBox />
             </span>
             <span>My profile</span>
-          </Link>
+          </button>
         </li>
 
         <li className={listStyles}>
