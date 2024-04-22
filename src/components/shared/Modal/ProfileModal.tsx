@@ -69,7 +69,7 @@ const ProfileModal = () => {
               <div className="relative shadow-md">
                 <Avatar
                   size="4xl"
-                  src="https://picsum.photos/200"
+                  src="/default_avatar.png"
                   username="Loqmane Djefafla"
                   gender="male"
                   isBordered
@@ -103,7 +103,7 @@ const ProfileModal = () => {
           </div>
         </div>
         {/* MODAL TABS */}
-        <ul className="flex h-10 w-full items-center bg-muted">
+        <ul className="flex h-9 w-full items-center bg-muted">
           <li
             className={`${inactiveTabStyles} ${isAboutTabActive && activeTabStyles}`}
             onClick={toggleAboutTab}
