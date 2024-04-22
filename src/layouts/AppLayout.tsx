@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { ProfileModal } from "@/components/shared/Modal";
 import { ChatWindoProvider } from "@/context/ChatWindowContext";
 import { SidebarToggleProvider } from "@/context/SidebarToggleContext";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -14,6 +15,7 @@ const AppLayout = () => {
             <Navbar />
             <Outlet />
             <Footer />
+            <ProfileModal isOpen />
           </ChatWindoProvider>
         </SidebarToggleProvider>
       </ThemeProvider>
