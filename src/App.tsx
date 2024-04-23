@@ -4,19 +4,22 @@ import { LoginPage, RegisterPage } from "./pages/Auth";
 import AppLayout from "./layouts/AppLayout";
 import { RoomsPage } from "./pages/Rooms";
 import { ProfilePage } from "./pages/Profile";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const App = () => {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<RoomsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/chat" element={<ChatLayout />} />
-        </Route>
-        <Route path="/sign-in" element={<LoginPage />} />
-        <Route path="/sign-up" element={<RegisterPage />} />
-      </Routes>
+      <ThemeProvider>
+        <Routes>
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<RoomsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/chat" element={<ChatLayout />} />
+          </Route>
+          <Route path="/sign-in" element={<LoginPage />} />
+          <Route path="/sign-up" element={<RegisterPage />} />
+        </Routes>
+      </ThemeProvider>
     </>
   );
 };

@@ -79,7 +79,7 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex w-full items-center gap-2">
             <span className="text-text-muted">
               <MdStorage />
             </span>
@@ -89,7 +89,7 @@ const MainMenu = () => {
 
         <li className={listStyles}>
           <button
-            className="flex items-center gap-2"
+            className="flex w-full items-center gap-2"
             onClick={() => setIsProfileOpen(true)}
           >
             <span className="text-text-muted">

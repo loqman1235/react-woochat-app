@@ -25,7 +25,7 @@ const Input = ({
         name={name}
         id={id}
         placeholder={placeholder}
-        className={`w-full rounded-md border border-border bg-background p-3 text-text-foreground outline-none placeholder:text-text-muted ${className}`}
+        className={`w-full rounded-md border border-border bg-background p-2 outline-none placeholder:text-text-muted ${className}`}
       />
     </div>
   );

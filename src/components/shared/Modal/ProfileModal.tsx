@@ -55,12 +55,21 @@ const ProfileModal = () => {
             />
 
             {/* CTAs */}
-            <div className="absolute right-2 top-2 flex gap-5 rounded-full bg-muted px-2 py-1 text-xl text-text-foreground opacity-80 shadow md:right-5 md:top-5">
-              <button>
+            <div className="absolute right-2 top-2 flex items-center gap-3">
+              <div className="flex gap-5 rounded-full bg-muted px-2 py-1 text-xl text-text-foreground opacity-80 shadow md:right-5 md:top-5">
+                <button>
+                  <MdClose />
+                </button>
+                <button>
+                  <MdCameraAlt />
+                </button>
+              </div>
+
+              <button
+                className="text-2xl text-white"
+                onClick={() => setIsProfileOpen(false)}
+              >
                 <MdClose />
-              </button>
-              <button>
-                <MdCameraAlt />
               </button>
             </div>
 
