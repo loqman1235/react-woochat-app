@@ -43,7 +43,7 @@ const RegisterPage = () => {
             type="password"
           />
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 text-sm text-text-muted">
             <p>Have an account?</p>{" "}
             <Link className="text-primary" to="/sign-in">
               Sign In

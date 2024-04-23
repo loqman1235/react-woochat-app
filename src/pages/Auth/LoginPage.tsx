@@ -28,7 +28,7 @@ const LoginPage = () => {
             type="password"
           />
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 text-sm text-text-muted">
             <p>Don't have an account?</p>{" "}
             <Link className="text-primary" to="/sign-up">
               Sign Up
