@@ -1,7 +1,24 @@
-import { Input } from "@/components/shared/Input";
+import { FormField } from "@/components/shared/FormField";
+// import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+// import { z } from "zod";
+
+// const registerSchema = z.object({
+//   username: z
+//     .string()
+//     .trim()
+//     .min(1, { message: "Username is required" })
+//     .max(20, { message: " Username can't be longer than 20 characters" }),
+//   email: z.string().trim().email({ message: "Invalid email address" }),
+//   dateOfBirth: z
+//     .string()
+//     .trim()
+//     .min(1, { message: "Date of birth is required" }),
+// });
 
 const RegisterPage = () => {
+  // const { register } = useForm();
+
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-5 bg-background p-5">
       {/* REGISTER CONTAINER   */}
@@ -12,14 +29,14 @@ const RegisterPage = () => {
 
         {/* REGISTER FORM  */}
         <form className="flex flex-col gap-5">
-          <Input
+          <FormField
             label="Username"
             name="username"
             id="username"
             placeholder="Username"
             type="text"
           />
-          <Input
+          <FormField
             label="Email"
             name="email"
             id="email"
@@ -27,15 +44,23 @@ const RegisterPage = () => {
             type="email"
           />
 
-          <Input
-            label="Date of birth"
-            name="dateOfBirth"
-            id="dateOfBirth"
-            placeholder="Date of Birth"
-            type="date"
-          />
+          {/*GENDER */}
+          <div className="relative space-y-1">
+            <label htmlFor="gender" className="text-sm text-text-foreground">
+              Gender
+            </label>
+            <select
+              name="gender"
+              id="gender"
+              className="w-full rounded-md border border-border bg-background p-2 text-text-foreground outline-none placeholder:text-text-muted"
+            >
+              <option value=""></option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
 
-          <Input
+          <FormField
             label="Password"
             name="password"
             id="password"

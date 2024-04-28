@@ -1,4 +1,4 @@
-import { Input } from "@/components/shared/Input";
+import { FormField } from "@/components/shared/FormField";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
@@ -12,7 +12,7 @@ const LoginPage = () => {
 
         {/* LOGIN FORM  */}
         <form className="flex flex-col gap-5">
-          <Input
+          <FormField
             label="Email"
             name="email"
             id="email"
@@ -20,7 +20,7 @@ const LoginPage = () => {
             type="email"
           />
 
-          <Input
+          <FormField
             label="Password"
             name="password"
             id="password"
