@@ -8,6 +8,7 @@ interface FormFieldProps {
   placeholder: string;
   className?: string;
   register: UseFormRegister<FieldValues>;
+  isRequired?: boolean;
 }
 
 const FormField = ({
@@ -17,18 +18,20 @@ const FormField = ({
   id,
   placeholder,
   className = "",
+  isRequired = false,
   register,
 }: FormFieldProps) => {
   return (
     <div className="relative space-y-1">
       <label htmlFor={id} className="text-sm text-text-foreground">
-        {label}
+        {label}{" "}
+        {isRequired ? <span className="text-xs text-danger">*</span> : null}
       </label>
       <input
         type={type}
         id={id}
         placeholder={placeholder}
-        className={`w-full rounded-md border border-border bg-background p-2 text-text-foreground outline-none placeholder:text-text-muted ${className}`}
+        className={`w-full rounded-md border border-border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted ${className}`}
         {...register(name)}
       />
     </div>
