@@ -1,8 +1,9 @@
 import { FormField } from "@/components/shared/FormField";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import { MdExpandMore } from "react-icons/md";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const registerSchema = z.object({
   username: z
@@ -11,16 +12,23 @@ const registerSchema = z.object({
     .min(1, { message: "Username is required" })
     .max(20, { message: " Username can't be longer than 20 characters" }),
   email: z.string().trim().email({ message: "Invalid email address" }),
-  dateOfBirth: z
-    .string()
-    .trim()
-    .min(1, { message: "Date of birth is required" }),
+  gender: z.enum(["male", "female"]).default("male"),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
-const RegisterPage = () => {
-  const { register, handleSubmit } = useForm();
+export type RegisterFormData = z.infer<typeof registerSchema>;
 
-  const onSubmit = (data: any) => {
+const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
+    console.log("submit");
     console.log(data);
   };
 
@@ -35,22 +43,22 @@ const RegisterPage = () => {
         {/* REGISTER FORM  */}
         <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           <FormField
-            label="Username"
             name="username"
+            label="Username"
             id="username"
             placeholder="Username"
             type="text"
-            isRequired
             register={register}
+            error={errors.username?.message}
           />
           <FormField
-            label="Email"
             name="email"
+            label="Email"
             id="email"
             placeholder="Email"
             type="email"
-            isRequired
             register={register}
+            error={errors.email?.message}
           />
 
           {/*GENDER */}
@@ -60,28 +68,28 @@ const RegisterPage = () => {
             </label>
             <div className="relative">
               <select
-                name="gender"
                 id="gender"
                 className="w-full appearance-none rounded-md border border-border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted"
+                {...register("gender")}
               >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
 
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-2xl">
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-2xl text-text-muted">
                 <MdExpandMore />
               </span>
             </div>
           </div>
 
           <FormField
-            label="Password"
             name="password"
+            label="Password"
             id="password"
             placeholder="Password"
             type="password"
-            isRequired
             register={register}
+            error={errors.password?.message}
           />
 
           <div className="flex items-center gap-1 text-sm text-text-muted">
@@ -91,7 +99,7 @@ const RegisterPage = () => {
             </Link>
           </div>
 
-          <button className="w-full rounded-md bg-primary p-3 font-bold text-white transition duration-300 hover:bg-primary-hover">
+          <button className="w-full rounded-md bg-primary p-2 font-bold text-white transition duration-300 hover:bg-primary-hover">
             Sign Up
           </button>
         </form>
