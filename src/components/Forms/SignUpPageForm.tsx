@@ -8,6 +8,7 @@ import {
   SelectInputOption,
 } from "@/components/shared/SelectInput";
 import { Link } from "react-router-dom";
+import Button from "../shared/Button";
 
 const registerSchema = z.object({
   username: z
@@ -89,9 +90,9 @@ const SignUpPageForm = () => {
         </Link>
       </div>
 
-      <button className="w-full rounded-md bg-primary p-2 font-bold text-white transition duration-300 hover:bg-primary-hover">
+      <Button type="submit" variant="primary">
         Sign Up
-      </button>
+      </Button>
     </form>
   );
 };

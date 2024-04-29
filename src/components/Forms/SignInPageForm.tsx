@@ -3,6 +3,7 @@ import { FormField } from "../shared/FormField";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "../shared/Button";
 
 const loginSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
@@ -54,9 +55,9 @@ const SignInPageForm = () => {
         </Link>
       </div>
 
-      <button className="w-full rounded-md bg-primary p-3 font-bold text-white transition duration-300 hover:bg-primary-hover">
+      <Button type="submit" variant="primary">
         Sign In
-      </button>
+      </Button>
     </form>
   );
 };

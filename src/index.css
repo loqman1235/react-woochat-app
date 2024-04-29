@@ -26,9 +26,13 @@
   --color-other: #757575;
 
   --color-danger: #b00020;
+  --color-danger-hover: #9c011d;
   --color-success: #74b20e;
+  --color-success-hover: #6a9f0d;
   --color-warning: #fcbd1f;
+  --color-warning-hover: #f9b81f;
   --color-info: #00ffff;
+  --color-info-hover: #00e1e1;
 
   /* ROLES  */
   --color-admin: #d32f2f;
