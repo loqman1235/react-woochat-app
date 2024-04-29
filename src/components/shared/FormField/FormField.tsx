@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 interface FormFieldProps<TFieldValues extends FieldValues = FieldValues> {
   type: "text" | "email" | "password" | "date";
@@ -10,7 +12,7 @@ interface FormFieldProps<TFieldValues extends FieldValues = FieldValues> {
   required?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
-  error: string | undefined;
+  error?: string | undefined;
 }
 const FormField = ({
   label,
@@ -23,21 +25,46 @@ const FormField = ({
   register,
   error,
 }: FormFieldProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+
   return (
     <div className="relative space-y-1">
       <label htmlFor={id} className="text-sm text-text-foreground">
         {label}{" "}
         {required ? <span className="text-xs text-danger">*</span> : null}
       </label>
-      <input
-        type={type}
-        id={id}
-        placeholder={placeholder}
-        className={`w-full rounded-md border border-border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted ${className}`}
-        required={required}
-        autoComplete="off"
-        {...register(name)}
-      />
+      <div className="relative">
+        <input
+          type={type === "password" && showPassword ? "text" : type}
+          id={id}
+          placeholder={placeholder}
+          className={`w-full rounded-md border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted ${className} ${error ? "border-danger" : "border-border"}`}
+          required={required}
+          autoComplete="off"
+          {...register(name)}
+        />
+        {type === "password" && (
+          <button
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleShowPassword();
+            }}
+          >
+            {showPassword ? (
+              <span>
+                <MdVisibilityOff />
+              </span>
+            ) : (
+              <span>
+                <MdVisibility />
+              </span>
+            )}
+          </button>
+        )}
+      </div>
       {error && <p className="text-xs text-danger">{error}</p>}
     </div>
   );

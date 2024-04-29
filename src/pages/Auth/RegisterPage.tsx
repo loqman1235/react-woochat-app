@@ -10,10 +10,14 @@ const registerSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "Username is required" })
+    .min(3, { message: "Username must be at least 3 characters" })
     .max(20, { message: " Username can't be longer than 20 characters" }),
-  email: z.string().trim().email({ message: "Invalid email address" }),
+  email: z.string().trim().min(1, { message: "Email is required" }).email(),
   gender: z.enum(["male", "female"]).default("male"),
-  password: z.string().min(1, { message: "Password is required" }),
+  password: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(5, { message: "Password must be at least 5 characters" }),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
