@@ -82,9 +82,9 @@ const SignUpPageForm = () => {
         error={errors.password?.message}
       />
 
-      <div className="flex items-center gap-1 text-sm text-text-muted">
+      <div className="flex items-center gap-1 text-text-muted">
         <p>Have an account?</p>{" "}
-        <Link className="text-primary" to="/sign-in">
+        <Link className="text-primary hover:underline" to="/sign-in">
           Sign In
         </Link>
       </div>
