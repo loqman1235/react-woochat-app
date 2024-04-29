@@ -31,7 +31,7 @@ const SignUpPageForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
@@ -90,7 +90,12 @@ const SignUpPageForm = () => {
         </Link>
       </div>
 
-      <Button type="submit" variant="primary" className="w-full">
+      <Button
+        type="submit"
+        variant="primary"
+        className="w-full"
+        isDisabled={isSubmitting}
+      >
         Sign Up
       </Button>
     </form>
