@@ -90,7 +90,7 @@ const SignUpPageForm = () => {
         </Link>
       </div>
 
-      <Button type="submit" variant="primary">
+      <Button type="submit" variant="primary" className="w-full">
         Sign Up
       </Button>
     </form>

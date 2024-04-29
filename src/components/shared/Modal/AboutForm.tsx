@@ -1,4 +1,5 @@
 import { MdSave } from "react-icons/md";
+import Button from "../Button";
 
 interface AboutFormProps {
   isOpen: boolean;
@@ -44,9 +45,9 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
             className="min-h-[120px] w-full resize-none rounded-md border border-border bg-background p-2 outline-none placeholder:text-text-muted"
           ></textarea>
         </div>
-        <button className="flex w-fit items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 font-semibold text-white transition duration-300 hover:bg-primary-hover">
+        <Button type="submit" variant="primary">
           <MdSave /> Save
-        </button>
+        </Button>
       </form>
     </div>
   );

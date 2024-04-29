@@ -6,7 +6,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-const Button = ({ type, variant, children, isDisabled }: ButtonProps) => {
+const Button = ({
+  type,
+  variant,
+  children,
+  className,
+  isDisabled,
+}: ButtonProps) => {
   const primaryBtnStyles = "bg-primary text-white hover:bg-primary-hover";
   const successBtnStyle = "bg-success text-white hover:bg-success-hover";
   const dangerBtnStyle = "bg-danger text-white hover:bg-danger-hover";
@@ -15,7 +21,7 @@ const Button = ({ type, variant, children, isDisabled }: ButtonProps) => {
     <button
       disabled={isDisabled}
       type={type}
-      className={`w-full rounded-md py-2 font-bold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle}`}
+      className={`flex w-fit items-center justify-center gap-2 rounded-md px-5 py-2 font-bold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className}`}
     >
       {children}
     </button>
