@@ -2,6 +2,7 @@ import { FormField } from "@/components/shared/FormField";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 
 import {
   SelectInput,
@@ -9,6 +10,7 @@ import {
 } from "@/components/shared/SelectInput";
 import { Link } from "react-router-dom";
 import Button from "../shared/Button";
+import api from "@/services/api";
 
 const registerSchema = z.object({
   username: z
@@ -28,17 +30,28 @@ const registerSchema = z.object({
 export type RegisterFormData = z.infer<typeof registerSchema>;
 
 const SignUpPageForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
-    console.log("submit");
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+    try {
+      const response = await api.post("/auth/signup", data);
+
+      if (response.status === 201) {
+        console.log(response.data);
+        reset();
+        navigate("/sign-in");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
