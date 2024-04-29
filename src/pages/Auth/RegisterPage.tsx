@@ -2,8 +2,11 @@ import { FormField } from "@/components/shared/FormField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { z } from "zod";
-import { MdExpandMore } from "react-icons/md";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  SelectInput,
+  SelectInputOption,
+} from "@/components/shared/SelectInput";
 
 const registerSchema = z.object({
   username: z
@@ -66,25 +69,16 @@ const RegisterPage = () => {
           />
 
           {/*GENDER */}
-          <div className="relative space-y-1">
-            <label htmlFor="gender" className="text-sm text-text-foreground">
-              Gender
-            </label>
-            <div className="relative">
-              <select
-                id="gender"
-                className="w-full appearance-none rounded-md border border-border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted"
-                {...register("gender")}
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-2xl text-text-muted">
-                <MdExpandMore />
-              </span>
-            </div>
-          </div>
+          <SelectInput
+            id="gender"
+            label="Gender"
+            register={register}
+            name="gender"
+            error={errors.gender?.message}
+          >
+            <SelectInputOption value="male" />
+            <SelectInputOption value="female" />
+          </SelectInput>
 
           <FormField
             name="password"
