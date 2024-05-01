@@ -4,15 +4,17 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../shared/Button";
+import useAuth from "@/hooks/useAuth";
 
 const loginSchema = z.object({
-  username: z.string().min(1, { message: "Username is required" }),
+  email: z.string().min(1, { message: "Email is required" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
 
 const SignInPageForm = () => {
+  const { signinUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -21,21 +23,25 @@ const SignInPageForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    console.log("submit");
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    try {
+      console.log(data.email);
+      await signinUser({ email: data.email, password: data.password });
+    } catch (error) {
+      console.log(`Error signing in: ${error}`);
+    }
   };
 
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
       <FormField
-        name="username"
-        label="Username"
-        id="username"
-        placeholder="Username"
-        type="text"
+        name="email"
+        label="Email"
+        id="email"
+        placeholder="Email"
+        type="email"
         register={register}
-        error={errors.username?.message}
+        error={errors.email?.message}
       />
 
       <FormField

@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import Button from "../shared/Button";
 import api from "@/services/api";
+import { AxiosError } from "axios";
 
 const registerSchema = z.object({
   username: z
@@ -35,6 +36,7 @@ const SignUpPageForm = () => {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -50,6 +52,12 @@ const SignUpPageForm = () => {
         navigate("/sign-in");
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        setError("email", {
+          type: "custom",
+          message: error.response?.data?.details[0]?.message,
+        });
+      }
       console.log(error);
     }
   };

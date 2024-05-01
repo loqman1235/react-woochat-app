@@ -6,10 +6,7 @@ import {
 } from "@/components/icons";
 
 // Manage roles icons
-export const getRoleIcon = (
-  role: string,
-  size: "xs" | "sm" | "md" | "lg" = "sm",
-) => {
+const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
   const iconSize =
     size === "xs"
       ? "text-xs"
@@ -51,3 +48,10 @@ export const getRoleIcon = (
       );
   }
 };
+
+const getAccessTokenFromLocalStorage = (): string | null => {
+  const accessToken = localStorage.getItem("accessToken");
+  return accessToken;
+};
+
+export { getRoleIcon, getAccessTokenFromLocalStorage };
