@@ -49,9 +49,36 @@ const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
   }
 };
 
-const getAccessTokenFromLocalStorage = (): string | null => {
-  const accessToken = localStorage.getItem("accessToken");
-  return accessToken;
+// LOCAL STORAGE
+const getItemFromLocalStorage = (key: string) => {
+  try {
+    const item = localStorage.getItem(key);
+    return item;
+  } catch (error) {
+    console.error("Error retrieving item from localStorage:", error);
+    return null;
+  }
 };
 
-export { getRoleIcon, getAccessTokenFromLocalStorage };
+const setItemToLocalStorage = (key: string, value: string) => {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.error("Error setting item to localStorage:", error);
+  }
+};
+
+const removeItemFromLocalStorage = (key: string) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error("Error removing item from localStorage:", error);
+  }
+};
+
+export {
+  getRoleIcon,
+  getItemFromLocalStorage,
+  setItemToLocalStorage,
+  removeItemFromLocalStorage,
+};

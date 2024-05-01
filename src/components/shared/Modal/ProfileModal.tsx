@@ -5,8 +5,10 @@ import AboutForm from "./AboutForm";
 import OptionsForm from "./OptionsForm";
 import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
+import useAuth from "@/hooks/useAuth";
 
 const ProfileModal = () => {
+  const { user } = useAuth();
   const { isProfileOpen, setIsProfileOpen } = useProfile();
 
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
@@ -79,8 +81,8 @@ const ProfileModal = () => {
                 <Avatar
                   size="4xl"
                   src="/default_avatar.png"
-                  username="Loqmane Djefafla"
-                  gender="male"
+                  username={user?.username}
+                  gender={user?.gender as "male" | "female"}
                   isBordered
                   rounded={false}
                 />
@@ -97,16 +99,18 @@ const ProfileModal = () => {
               <div>
                 <div className="flex items-center gap-1">
                   <h3 className="text-xl font-bold text-white">
-                    Loqmane Djefafla
+                    {user?.username}
                   </h3>
-                  <span className="text-success">
-                    <MdVerified />
-                  </span>
+                  {user?.verified && (
+                    <span className="text-success">
+                      <MdVerified />
+                    </span>
+                  )}
                 </div>
                 {/* MOOD */}
-                <p className="text-sm text-text-muted">
-                  Chat developer and coder
-                </p>
+                {user?.mood && (
+                  <p className="text-sm text-text-muted">{user?.mood}</p>
+                )}
               </div>
             </div>
           </div>

@@ -1,18 +1,29 @@
 import api from "@/services/api";
-import { getAccessTokenFromLocalStorage } from "@/utils";
+import { getItemFromLocalStorage, setItemToLocalStorage } from "@/utils";
 import { createContext, useState } from "react";
+
+type User = {
+  id: string;
+  username: string;
+  email: string;
+  age?: number;
+  gender: "male" | "female";
+  about?: string;
+  level?: number;
+  verified?: boolean;
+  mood?: string;
+  role: "admin" | "mod" | "premium" | "user";
+  location?: {
+    country?: string;
+    city?: string;
+    region?: string;
+    timezone?: string;
+  };
+};
 
 type AuthContextType = {
   accessToken?: string;
-  user?: {
-    username: string;
-    avatar?: string;
-    mood?: string;
-    role: "admin" | "mod" | "premium" | "user";
-    location?: {
-      country?: string;
-    };
-  };
+  user?: User;
   isAuth: boolean;
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
   signinUser: (data: { email: string; password: string }) => Promise<void>;
@@ -33,20 +44,35 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [isAuth, setIsAuth] = useState(!!getAccessTokenFromLocalStorage());
-  // const [accessToken, setAccessToken] = useState<string | undefined>(
-  //   JSON.stringify(getAccessTokenFromLocalStorage()) || undefined,
-  // );
+  const [isAuth, setIsAuth] = useState(
+    !!getItemFromLocalStorage("accessToken"),
+  );
+
+  const [accessToken, setAccessToken] = useState<string | undefined>(
+    JSON.stringify(getItemFromLocalStorage("accessToken")) || undefined,
+  );
+
+  const [user, setUser] = useState<User | undefined>(
+    getItemFromLocalStorage("user")
+      ? JSON.parse(getItemFromLocalStorage("user") || "")
+      : undefined,
+  );
 
   const signinUser = async (credentials: {
     email: string;
     password: string;
   }) => {
     try {
-      const res = await api.post<string>("/auth/signin", credentials);
+      const res = await api.post("/auth/signin", credentials);
 
       if (res.status === 200) {
+        const { accessToken, user } = res.data;
+
         console.log(res.data);
+        setItemToLocalStorage("accessToken", accessToken);
+        setItemToLocalStorage("user", JSON.stringify(user));
+        setAccessToken(accessToken);
+        setUser(user);
         setIsAuth(true);
       }
     } catch (error) {
@@ -63,7 +89,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        accessToken: undefined,
+        accessToken,
+        user,
         isAuth,
         setIsAuth: () => {},
         signinUser,

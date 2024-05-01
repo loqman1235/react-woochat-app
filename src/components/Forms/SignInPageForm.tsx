@@ -25,7 +25,6 @@ const SignInPageForm = () => {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      console.log(data.email);
       await signinUser({ email: data.email, password: data.password });
     } catch (error) {
       console.log(`Error signing in: ${error}`);
