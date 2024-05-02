@@ -5,7 +5,7 @@ import {
   setItemToLocalStorage,
 } from "@/utils";
 import { AxiosError } from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 type User = {
   id: string;
@@ -56,7 +56,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   );
 
   const [accessToken, setAccessToken] = useState<string | undefined>(
-    JSON.stringify(getItemFromLocalStorage("accessToken")) || undefined,
+    getItemFromLocalStorage("accessToken") || undefined,
   );
 
   const [user, setUser] = useState<User | undefined>(
@@ -110,6 +110,26 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   };
 
   // verify accessToken first
+  useEffect(() => {
+    const verifyAccessToken = async () => {
+      try {
+        const response = await api.get("/auth/verify-token", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (response.status === 200 && response.data.isValid) {
+          setIsAuth(true);
+        }
+      } catch (error) {
+        console.log(error);
+        signoutUser();
+      }
+    };
+
+    if (accessToken) verifyAccessToken();
+  }, [accessToken]);
 
   return (
     <AuthContext.Provider
