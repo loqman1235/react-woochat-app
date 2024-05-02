@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../shared/Button";
 import useAuth from "@/hooks/useAuth";
+import { debugLog } from "@/utils";
 
 const loginSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }),
@@ -27,7 +28,7 @@ const SignInPageForm = () => {
     try {
       await signinUser({ email: data.email, password: data.password });
     } catch (error) {
-      console.log(`Error signing in: ${error}`);
+      debugLog(`Error signing in: ${error}`);
     }
   };
 

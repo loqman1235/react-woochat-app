@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Button from "../shared/Button";
 import api from "@/services/api";
 import { AxiosError } from "axios";
+import { debugLog } from "@/utils";
 
 const registerSchema = z.object({
   username: z
@@ -47,7 +48,7 @@ const SignUpPageForm = () => {
       const response = await api.post("/auth/signup", data);
 
       if (response.status === 201) {
-        console.log(response.data);
+        debugLog(response.data);
         reset();
         navigate("/sign-in");
       }
@@ -58,7 +59,7 @@ const SignUpPageForm = () => {
           message: error.response?.data?.details[0]?.message,
         });
       }
-      console.log(error);
+      debugLog(error);
     }
   };
   return (

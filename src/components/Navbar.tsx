@@ -19,6 +19,7 @@ import Brand from "./shared/Brand";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
+import { debugLog } from "@/utils";
 
 const Navbar = () => {
   const { signoutUser } = useAuth();
@@ -39,7 +40,7 @@ const Navbar = () => {
       setIsProfileDropdownOpen(false);
       navigate("/sign-in");
     } catch (error) {
-      console.log(error);
+      debugLog(error);
     }
   };
 

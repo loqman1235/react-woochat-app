@@ -1,5 +1,6 @@
 import api from "@/services/api";
 import {
+  debugLog,
   getItemFromLocalStorage,
   removeItemFromLocalStorage,
   setItemToLocalStorage,
@@ -77,7 +78,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (res.status === 200) {
         const { accessToken, user } = res.data;
 
-        console.log(res.data);
+        debugLog(res.data);
         setItemToLocalStorage("accessToken", accessToken);
         setItemToLocalStorage("user", JSON.stringify(user));
         setAccessToken(accessToken);
@@ -88,7 +89,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (error instanceof AxiosError) {
         setError(error.response?.data?.message);
       }
-      console.log(error);
+      debugLog(error);
     }
   };
 
@@ -105,7 +106,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (error instanceof AxiosError) {
         setError(error.response?.data?.message);
       }
-      console.log(error);
+      debugLog(error);
     }
   };
 
@@ -123,7 +124,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           setIsAuth(true);
         }
       } catch (error) {
-        console.log(error);
+        debugLog(error);
         signoutUser();
       }
     };

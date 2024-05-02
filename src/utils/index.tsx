@@ -76,9 +76,17 @@ const removeItemFromLocalStorage = (key: string) => {
   }
 };
 
+// Log when in development mode
+const debugLog = (...messages: unknown[]): void => {
+  if (import.meta.env.VITE_MODE === "development") {
+    console.log(...messages);
+  }
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
   setItemToLocalStorage,
   removeItemFromLocalStorage,
+  debugLog,
 };
