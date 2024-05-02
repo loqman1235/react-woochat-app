@@ -14,7 +14,7 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 const SignInPageForm = () => {
-  const { signinUser } = useAuth();
+  const { signinUser, error } = useAuth();
   const {
     register,
     handleSubmit,
@@ -50,7 +50,7 @@ const SignInPageForm = () => {
         placeholder="Password"
         type="password"
         register={register}
-        error={errors.password?.message}
+        error={errors.password?.message || error}
       />
 
       <div className="flex items-center gap-1 text-text-muted">

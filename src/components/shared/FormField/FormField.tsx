@@ -47,6 +47,7 @@ const FormField = ({
         />
         {type === "password" && (
           <button
+            type="button"
             className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted"
             onClick={(e) => {
               e.preventDefault();

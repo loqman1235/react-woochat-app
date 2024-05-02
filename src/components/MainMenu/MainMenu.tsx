@@ -17,9 +17,7 @@ import { Link } from "react-router-dom";
 
 const MainMenu = () => {
   const { mainMenuOpen } = useSidebarToggle();
-  const { setIsProfileOpen, isProfileOpen } = useProfile();
-
-  console.log(isProfileOpen, "this is profile open");
+  const { setIsProfileOpen } = useProfile();
 
   const listStyles =
     "w-full border-b border-border px-2 md:px-5 py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";

@@ -16,13 +16,29 @@ import ThemToggleSwitch from "./shared/ThemToggleSwitch";
 import Avatar from "./shared/Avatar";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import Brand from "./shared/Brand";
+import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const { signoutUser } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
+  };
+
+  const navigate = useNavigate();
+
+  // Sign Out
+  const handleSignOut = async () => {
+    try {
+      await signoutUser();
+      setIsProfileDropdownOpen(false);
+      navigate("/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -78,7 +94,11 @@ const Navbar = () => {
 
             <Dropdown isOpen={isProfileDropdownOpen}>
               <DropdownItem text="profile" icon={<MdAccountCircle />} />
-              <DropdownItem text="logout" icon={<MdLogout />} />
+              <DropdownItem
+                text="logout"
+                icon={<MdLogout />}
+                handleClick={handleSignOut}
+              />
             </Dropdown>
           </div>
         </div>

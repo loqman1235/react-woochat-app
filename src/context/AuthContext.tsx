@@ -1,5 +1,10 @@
 import api from "@/services/api";
-import { getItemFromLocalStorage, setItemToLocalStorage } from "@/utils";
+import {
+  getItemFromLocalStorage,
+  removeItemFromLocalStorage,
+  setItemToLocalStorage,
+} from "@/utils";
+import { AxiosError } from "axios";
 import { createContext, useState } from "react";
 
 type User = {
@@ -12,7 +17,7 @@ type User = {
   level?: number;
   verified?: boolean;
   mood?: string;
-  role: "admin" | "mod" | "premium" | "user";
+  role: "ADMIN" | "MOD" | "PREMIUM" | "USER";
   location?: {
     country?: string;
     city?: string;
@@ -27,7 +32,8 @@ type AuthContextType = {
   isAuth: boolean;
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
   signinUser: (data: { email: string; password: string }) => Promise<void>;
-  signoutUser: () => void;
+  signoutUser: () => Promise<void>;
+  error?: string | undefined;
 };
 
 interface AuthContextProviderProps {
@@ -40,7 +46,8 @@ export const AuthContext = createContext<AuthContextType>({
   isAuth: false,
   setIsAuth: () => {},
   signinUser: async () => {},
-  signoutUser: () => {},
+  signoutUser: async () => {},
+  error: undefined,
 });
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -57,6 +64,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       ? JSON.parse(getItemFromLocalStorage("user") || "")
       : undefined,
   );
+
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const signinUser = async (credentials: {
     email: string;
@@ -76,12 +85,28 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         setIsAuth(true);
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data?.message);
+      }
       console.log(error);
     }
   };
 
-  const signoutUser = () => {
-    setIsAuth(false);
+  const signoutUser = async () => {
+    try {
+      await api.post("/auth/signout");
+      removeItemFromLocalStorage("accessToken");
+      removeItemFromLocalStorage("user");
+      setAccessToken(undefined);
+      setUser(undefined);
+      setIsAuth(false);
+      setError(undefined);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data?.message);
+      }
+      console.log(error);
+    }
   };
 
   // verify accessToken first
@@ -95,6 +120,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         setIsAuth: () => {},
         signinUser,
         signoutUser,
+        error,
       }}
     >
       {children}
