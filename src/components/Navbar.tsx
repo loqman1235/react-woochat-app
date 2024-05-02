@@ -18,11 +18,13 @@ import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import Brand from "./shared/Brand";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useProfile from "@/hooks/useProfile";
 
 const Navbar = () => {
   const { signoutUser } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
+  const { setIsProfileOpen } = useProfile();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
@@ -93,7 +95,14 @@ const Navbar = () => {
             />
 
             <Dropdown isOpen={isProfileDropdownOpen}>
-              <DropdownItem text="profile" icon={<MdAccountCircle />} />
+              <DropdownItem
+                text="profile"
+                icon={<MdAccountCircle />}
+                handleClick={() => {
+                  setIsProfileDropdownOpen(false);
+                  setIsProfileOpen(true);
+                }}
+              />
               <DropdownItem
                 text="logout"
                 icon={<MdLogout />}
