@@ -44,15 +44,18 @@ const SignInPageForm = () => {
         error={errors.email?.message}
       />
 
-      <FormField
-        name="password"
-        label="Password"
-        id="password"
-        placeholder="Password"
-        type="password"
-        register={register}
-        error={errors.password?.message || error}
-      />
+      <div>
+        <FormField
+          name="password"
+          label="Password"
+          id="password"
+          placeholder="Password"
+          type="password"
+          register={register}
+          error={errors.password?.message}
+        />
+        {error && <p className="mt-2 text-xs text-danger">{error}</p>}
+      </div>
 
       <div className="flex items-center gap-1 text-text-muted">
         <p>Don't have an account?</p>{" "}
