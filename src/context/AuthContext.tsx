@@ -130,6 +130,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     };
 
     if (accessToken) verifyAccessToken();
+
+    // if (!accessToken) signoutUser();
   }, [accessToken]);
 
   return (
