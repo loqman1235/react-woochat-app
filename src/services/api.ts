@@ -28,10 +28,9 @@ api.interceptors.response.use(
         const res = await api.post("/auth/refresh-token");
 
         if (res.status === 200) {
-          const { accessToken: newAccessToken, user } = res.data;
+          const { accessToken: newAccessToken } = res.data;
 
           setItemToLocalStorage("accessToken", newAccessToken);
-          setItemToLocalStorage("user", JSON.stringify(user));
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
