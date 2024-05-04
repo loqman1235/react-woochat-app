@@ -28,7 +28,8 @@ api.interceptors.response.use(
     if (
       error.response.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes("/verify-email/")
+      !originalRequest.url.includes("/verify-email/") &&
+      !originalRequest.url.includes("/auth/signin")
     ) {
       originalRequest._retry = true;
 
