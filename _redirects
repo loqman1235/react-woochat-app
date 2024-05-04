@@ -1,5 +1,0 @@
-# Serve files from the filesystem
-/* /index.html 200
-
-# Catch-all redirect to index.html
-/*    /index.html   200
