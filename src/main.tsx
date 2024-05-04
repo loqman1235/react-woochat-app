@@ -7,7 +7,7 @@ import { AuthContextProvider } from "./context/AuthContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Router>
+    <Router basename={import.meta.env.VITE_FRONTEND_URL}>
       <AuthContextProvider>
         <App />
       </AuthContextProvider>
