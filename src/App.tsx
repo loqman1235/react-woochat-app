@@ -1,11 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import ChatLayout from "./layouts/ChatLayout";
-import { LoginPage, RegisterPage } from "./pages/Auth";
+import { LoginPage, RegisterPage, VerifyEmailPage } from "./pages/Auth";
 import AppLayout from "./layouts/AppLayout";
 import { RoomsPage } from "./pages/Rooms";
 import { ProfilePage } from "./pages/Profile";
 import { ThemeProvider } from "./context/ThemeContext";
 import useAuth from "./hooks/useAuth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const { isAuth } = useAuth();
@@ -30,7 +32,13 @@ const App = () => {
             path="/sign-up"
             element={!isAuth ? <RegisterPage /> : <Navigate to="/" />}
           />
+          <Route
+            path="/verify-email/:userId/:token"
+            element={<VerifyEmailPage />}
+          />
         </Routes>
+
+        <ToastContainer theme="colored" closeButton />
       </ThemeProvider>
     </>
   );

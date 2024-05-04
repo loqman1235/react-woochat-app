@@ -1,4 +1,8 @@
-import { getItemFromLocalStorage, setItemToLocalStorage } from "@/utils";
+import {
+  debugLog,
+  getItemFromLocalStorage,
+  setItemToLocalStorage,
+} from "@/utils";
 import axios from "axios";
 
 const api = axios.create({
@@ -21,7 +25,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/verify-email/")
+    ) {
       originalRequest._retry = true;
 
       try {
@@ -37,7 +45,7 @@ api.interceptors.response.use(
           return api(originalRequest);
         }
       } catch (error) {
-        console.log("Error refreshing token: ", error);
+        debugLog("Error while refreshing token", error);
         return Promise.reject(error);
       }
     }

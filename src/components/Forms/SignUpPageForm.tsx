@@ -2,7 +2,6 @@ import { FormField } from "@/components/shared/FormField";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 
 import {
   SelectInput,
@@ -13,6 +12,7 @@ import Button from "../shared/Button";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 import { debugLog } from "@/utils";
+import { toast } from "react-toastify";
 
 const registerSchema = z.object({
   username: z
@@ -32,7 +32,6 @@ const registerSchema = z.object({
 export type RegisterFormData = z.infer<typeof registerSchema>;
 
 const SignUpPageForm = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -50,7 +49,7 @@ const SignUpPageForm = () => {
       if (response.status === 201) {
         debugLog(response.data);
         reset();
-        navigate("/sign-in");
+        toast.success(response.data.message);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
