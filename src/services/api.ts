@@ -1,5 +1,5 @@
 import {
-  // debugLog,
+  debugLog,
   getItemFromLocalStorage,
   setItemToLocalStorage,
 } from "@/utils";
@@ -44,11 +44,13 @@ api.interceptors.response.use(undefined, async (error) => {
 
       return api(originalRequest);
     } catch (error) {
+      debugLog(error, "REFRESH_TOKEN_ERROR");
       return Promise.reject(error);
     }
   }
 
   if (error.response?.data?.code === "REFRESH_TOKEN_NOT_PROVIDED") {
+    debugLog(error, "REFRESH_TOKEN_NOT_PROVIDED");
     return Promise.reject(error.response.data.message);
   }
 
