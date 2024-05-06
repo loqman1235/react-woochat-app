@@ -86,6 +86,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         setIsAuth(true);
       }
     } catch (error) {
+      console.log(error, "SIGN IN ERROR");
+
       if (error instanceof AxiosError) {
         setError(error.response?.data?.message);
       }

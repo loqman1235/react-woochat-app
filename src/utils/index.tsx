@@ -81,6 +81,8 @@ const debugLog = (...messages: unknown[]): void => {
   if (import.meta.env.VITE_MODE === "development") {
     console.log(...messages);
   }
+
+  return;
 };
 
 export {

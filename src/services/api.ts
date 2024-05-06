@@ -1,8 +1,9 @@
 import {
-  debugLog,
+  // debugLog,
   getItemFromLocalStorage,
   setItemToLocalStorage,
 } from "@/utils";
+
 import axios from "axios";
 
 const api = axios.create({
@@ -11,48 +12,47 @@ const api = axios.create({
 });
 
 // Append Authorization header
-api.interceptors.request.use((config) => {
-  const accessToken = getItemFromLocalStorage("accessToken");
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
-});
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = getItemFromLocalStorage("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 // Refresh token interceptor
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+api.interceptors.response.use(undefined, async (error) => {
+  const originalRequest = error.config;
 
-    if (
-      error.response.status === 401 &&
-      !originalRequest._retry &&
-      !originalRequest.url.includes("/verify-email/") &&
-      !originalRequest.url.includes("/auth/signin")
-    ) {
-      originalRequest._retry = true;
+  if (
+    error.response?.data?.code === "EXPIRED_ACCESS_TOKEN" &&
+    originalRequest &&
+    !originalRequest._retry
+  ) {
+    originalRequest._retry = true;
 
-      try {
-        const res = await api.post("/auth/refresh-token");
+    try {
+      const {
+        data: { accessToken: newAccessToken },
+      } = await api.post("/auth/refresh-token");
 
-        if (res.status === 200) {
-          const { accessToken: newAccessToken } = res.data;
+      setItemToLocalStorage("accessToken", newAccessToken);
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-          setItemToLocalStorage("accessToken", newAccessToken);
-
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-          return api(originalRequest);
-        }
-      } catch (error) {
-        debugLog("Error while refreshing token", error);
-        return Promise.reject(error);
-      }
+      return api(originalRequest);
+    } catch (error) {
+      return Promise.reject(error);
     }
+  }
 
-    return Promise.reject(error);
-  },
-);
+  if (error.response?.data?.code === "REFRESH_TOKEN_NOT_PROVIDED") {
+    return Promise.reject(error.response.data.message);
+  }
+
+  return Promise.reject(error);
+});
 
 export default api;
