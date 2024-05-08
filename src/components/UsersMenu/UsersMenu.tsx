@@ -1,15 +1,11 @@
-import {
-  MdClose,
-  MdPeopleAlt,
-  MdPersonAdd,
-  MdHome,
-  MdSearch,
-} from "react-icons/md";
+import { MdClose, MdPeopleAlt, MdPersonAdd, MdSearch } from "react-icons/md";
 import User from "./User";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
+// import useFetch from "@/hooks/useFetch";
 
 const UsersMenu = () => {
   const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
+  // const { data: users, isLoading } = useFetch("/users");
   return (
     <div
       className={`fixed right-0 top-12 h-full flex-[1] border-l border-l-border bg-foreground md:relative md:top-0 ${usersMenuOpen ? "hidden md:block" : "block md:hidden"} z-30 transition duration-300 ease-in-out`}
@@ -32,10 +28,6 @@ const UsersMenu = () => {
 
           <button className="transition duration-300 hover:text-text-foreground">
             <MdPersonAdd />
-          </button>
-
-          <button className="transition duration-300 hover:text-text-foreground">
-            <MdHome />
           </button>
 
           <button className="transition duration-300 hover:text-text-foreground">
