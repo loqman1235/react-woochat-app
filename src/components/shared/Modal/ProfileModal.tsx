@@ -12,7 +12,7 @@ const ProfileModal = () => {
   const { user } = useAuth();
   // const { data: userResult, isLoading } = useFetch("/users", user.id);
 
-  const { isProfileOpen, setIsProfileOpen } = useProfile();
+  const { isProfileOpen, setIsProfileOpen, currentUser } = useProfile();
 
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
   const [isOptionsTabActive, setIsOptionsTabActive] = useState(false);
@@ -90,12 +90,12 @@ const ProfileModal = () => {
                   <Avatar
                     size="4xl"
                     src={
-                      user?.avatar && user.avatar.secure_url
-                        ? user.avatar.secure_url
+                      currentUser?.avatar && currentUser.avatar.secure_url
+                        ? currentUser.avatar.secure_url
                         : "/default_avatar.png"
                     }
-                    username={user?.username}
-                    gender={user?.gender as "male" | "female"}
+                    username={currentUser?.username}
+                    gender={currentUser?.gender as "male" | "female"}
                     isBordered
                     rounded={false}
                   />

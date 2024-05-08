@@ -1,7 +1,10 @@
+import { User } from "@/types";
 import { createContext, useState } from "react";
 
 interface ProfileContextType {
   isProfileOpen: boolean;
+  currentUser?: User;
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   toggleProfile: () => void;
   setIsProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -12,12 +15,15 @@ interface ProfileProviderProps {
 
 export const ProfileContext = createContext<ProfileContextType>({
   isProfileOpen: false,
+  currentUser: undefined,
+  setCurrentUser: () => {},
   toggleProfile: () => {},
   setIsProfileOpen: () => {},
 });
 
 export const ProfileContextProvider = ({ children }: ProfileProviderProps) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User>();
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -25,7 +31,13 @@ export const ProfileContextProvider = ({ children }: ProfileProviderProps) => {
 
   return (
     <ProfileContext.Provider
-      value={{ isProfileOpen, toggleProfile, setIsProfileOpen }}
+      value={{
+        isProfileOpen,
+        toggleProfile,
+        setIsProfileOpen,
+        currentUser,
+        setCurrentUser,
+      }}
     >
       {children}
     </ProfileContext.Provider>

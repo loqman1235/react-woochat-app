@@ -1,4 +1,5 @@
 import api from "@/services/api";
+import { User } from "@/types";
 import {
   debugLog,
   getItemFromLocalStorage,
@@ -7,31 +8,6 @@ import {
 } from "@/utils";
 import { AxiosError } from "axios";
 import { createContext, useEffect, useState } from "react";
-
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  age?: number;
-  gender: "male" | "female";
-  about?: string;
-  level?: number;
-  verified?: boolean;
-  mood?: string;
-  role: "ADMIN" | "MOD" | "PREMIUM" | "USER";
-  location?: {
-    country?: string;
-    city?: string;
-    region?: string;
-    timezone?: string;
-  };
-  avatar?: {
-    secure_url?: string;
-  };
-  cover?: {
-    secure_url?: string;
-  };
-};
 
 type AuthContextType = {
   accessToken?: string;

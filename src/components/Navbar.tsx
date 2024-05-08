@@ -22,10 +22,10 @@ import useProfile from "@/hooks/useProfile";
 import { debugLog } from "@/utils";
 
 const Navbar = () => {
-  const { signoutUser } = useAuth();
+  const { signoutUser, user } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
-  const { setIsProfileOpen } = useProfile();
+  const { setIsProfileOpen, setCurrentUser } = useProfile();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
@@ -89,8 +89,12 @@ const Navbar = () => {
             </div> */}
 
             <Avatar
-              src="/default_avatar.png"
-              gender="male"
+              src={
+                user?.avatar && user.avatar.secure_url
+                  ? user.avatar.secure_url
+                  : "/default_avatar.png"
+              }
+              gender={user?.gender as "male" | "female"}
               onClick={toggleProfileDropdown}
               size="sm"
             />
@@ -102,6 +106,7 @@ const Navbar = () => {
                 handleClick={() => {
                   setIsProfileDropdownOpen(false);
                   setIsProfileOpen(true);
+                  setCurrentUser(user);
                 }}
               />
               <DropdownItem
