@@ -25,6 +25,12 @@ type User = {
     region?: string;
     timezone?: string;
   };
+  avatar?: {
+    secure_url?: string;
+  };
+  cover?: {
+    secure_url?: string;
+  };
 };
 
 type AuthContextType = {

@@ -6,9 +6,12 @@ import OptionsForm from "./OptionsForm";
 import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
+// import useFetch from "@/hooks/useFetch";
 
 const ProfileModal = () => {
   const { user } = useAuth();
+  // const { data: userResult, isLoading } = useFetch("/users", user.id);
+
   const { isProfileOpen, setIsProfileOpen } = useProfile();
 
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
@@ -86,7 +89,11 @@ const ProfileModal = () => {
                 <div className="relative shadow-md">
                   <Avatar
                     size="4xl"
-                    src="/default_avatar.png"
+                    src={
+                      user?.avatar && user.avatar.secure_url
+                        ? user.avatar.secure_url
+                        : "/default_avatar.png"
+                    }
                     username={user?.username}
                     gender={user?.gender as "male" | "female"}
                     isBordered
