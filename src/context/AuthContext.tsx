@@ -12,6 +12,7 @@ import { createContext, useEffect, useState } from "react";
 type AuthContextType = {
   accessToken?: string;
   user?: User;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   isAuth: boolean;
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
   signinUser: (data: { email: string; password: string }) => Promise<void>;
@@ -26,6 +27,7 @@ interface AuthContextProviderProps {
 export const AuthContext = createContext<AuthContextType>({
   accessToken: undefined,
   user: undefined,
+  setUser: () => {},
   isAuth: false,
   setIsAuth: () => {},
   signinUser: async () => {},
@@ -125,6 +127,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       value={{
         accessToken,
         user,
+        setUser,
         isAuth,
         setIsAuth: () => {},
         signinUser,

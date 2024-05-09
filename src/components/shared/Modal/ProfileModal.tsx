@@ -6,13 +6,21 @@ import OptionsForm from "./OptionsForm";
 import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
+import api from "@/services/api";
+import { setItemToLocalStorage } from "@/utils";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { AxiosError } from "axios";
 // import useFetch from "@/hooks/useFetch";
 
 const ProfileModal = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   // const { data: userResult, isLoading } = useFetch("/users", user.id);
 
-  const { isProfileOpen, setIsProfileOpen, currentUser } = useProfile();
+  const { isProfileOpen, setIsProfileOpen, currentUser, setCurrentUser } =
+    useProfile();
+
+  const isOwnProfile = user?.id === currentUser?.id;
 
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
   const [isOptionsTabActive, setIsOptionsTabActive] = useState(false);
@@ -34,6 +42,47 @@ const ProfileModal = () => {
     setIsAboutTabActive(false);
     setIsOptionsTabActive(false);
     setIsLevelsTabActive(true);
+  };
+
+  const [isAvatarUploading, setIsAvatarUploading] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      const formData = new FormData();
+
+      formData.append("avatar", file);
+
+      try {
+        setIsAvatarUploading(true);
+        const response = await api.put(`/users/${user?.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        setIsAvatarUploading(false);
+
+        if (response.status === 200) {
+          toast.success("Avatar updated successfully");
+          setCurrentUser(response.data.user);
+          setUser(response.data.user);
+          setItemToLocalStorage("user", JSON.stringify(response.data.user));
+        }
+      } catch (error) {
+        setIsAvatarUploading(false);
+        if (error instanceof AxiosError) {
+          if (error.response?.data?.details[0]?.message) {
+            toast.error(error.response?.data?.details[0]?.message);
+          }
+        } else {
+          toast.error("An error occurred. Please try again later.");
+        }
+
+        console.log(error);
+      }
+    }
   };
 
   const activeTabStyles = "bg-secondary !text-text-foreground";
@@ -66,16 +115,16 @@ const ProfileModal = () => {
 
               {/* CTAs */}
               <div className="absolute right-2 top-2 flex items-center gap-3">
-                <div className="flex gap-5 rounded-full bg-muted px-2 py-1 text-xl text-text-foreground opacity-80 shadow md:right-5 md:top-5">
-                  <button>
-                    <MdClose />
-                  </button>
-                  <label htmlFor="cover" className="cursor-pointer">
-                    <input type="file" name="cover" id="cover" hidden />
-                    <MdCameraAlt />
-                  </label>
-                </div>
-
+                {isOwnProfile && (
+                  <div className="flex gap-5 rounded-full bg-muted p-1 text-lg text-text-foreground opacity-80 shadow md:right-5 md:top-5">
+                    <form>
+                      <label htmlFor="cover" className="cursor-pointer">
+                        <input type="file" name="cover" id="cover" hidden />
+                        <MdCameraAlt />
+                      </label>
+                    </form>
+                  </div>
+                )}
                 <button
                   className="text-2xl text-white"
                   onClick={() => setIsProfileOpen(false)}
@@ -100,15 +149,29 @@ const ProfileModal = () => {
                     rounded={false}
                   />
 
-                  <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-5 rounded-full bg-muted px-2 py-1 text-xl text-text-foreground opacity-80 shadow">
-                    <button>
-                      <MdClose />
-                    </button>
-                    <label htmlFor="avatar" className="cursor-pointer">
-                      <input type="file" name="avatar" id="avatar" hidden />
-                      <MdCameraAlt />
-                    </label>
-                  </div>
+                  {isOwnProfile && (
+                    <div className="absolute bottom-2 right-2 z-40 flex gap-5 rounded-full bg-muted p-1 text-lg text-text-foreground opacity-80 shadow">
+                      {isAvatarUploading ? (
+                        <ClipLoader
+                          color="var(--color-text-foreground)"
+                          size={14}
+                        />
+                      ) : (
+                        <label htmlFor="avatar" className="cursor-pointer">
+                          <input
+                            type="file"
+                            name="avatar"
+                            id="avatar"
+                            hidden
+                            onChange={handleAvatarUpload}
+                          />
+                          <span>
+                            <MdCameraAlt />
+                          </span>
+                        </label>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <div className="flex items-center gap-1">
