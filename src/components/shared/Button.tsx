@@ -12,6 +12,7 @@ const Button = ({
   children,
   className,
   isDisabled,
+  ...props
 }: ButtonProps) => {
   const primaryBtnStyles = "bg-primary text-white hover:bg-primary-hover";
   const successBtnStyle = "bg-success text-white hover:bg-success-hover";
@@ -19,9 +20,10 @@ const Button = ({
 
   return (
     <button
-      disabled={isDisabled}
       type={type}
-      className={`flex w-fit items-center justify-center gap-2 rounded-md px-5 py-2 font-bold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className}`}
+      className={`flex w-fit items-center justify-center gap-2 rounded-md px-5 py-2 font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className}`}
+      disabled={isDisabled}
+      {...props}
     >
       {children}
     </button>

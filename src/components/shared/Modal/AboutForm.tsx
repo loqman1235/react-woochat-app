@@ -31,7 +31,7 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<AboutForm>({
     resolver: zodResolver(aboutSchema),
     defaultValues: user
@@ -105,8 +105,8 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
           register={register}
           error={errors.about?.message}
         />
-        <Button type="submit" variant="primary">
-          <MdSave /> Save
+        <Button type="submit" variant="primary" disabled={isSubmitting}>
+          {isSubmitting ? <MdSave className="animate-spin" /> : <MdSave />} Save
         </Button>
       </form>
     </div>
