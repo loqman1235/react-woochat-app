@@ -1,6 +1,7 @@
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   type: "button" | "submit";
   variant: "primary" | "success" | "danger";
+  size?: "sm" | "md" | "lg";
   className?: string;
   isDisabled?: boolean;
   children: React.ReactNode;
@@ -11,6 +12,7 @@ const Button = ({
   variant,
   children,
   className,
+  size = "md",
   isDisabled,
   ...props
 }: ButtonProps) => {
@@ -18,10 +20,16 @@ const Button = ({
   const successBtnStyle = "bg-success text-white hover:bg-success-hover";
   const dangerBtnStyle = "bg-danger text-white hover:bg-danger-hover";
 
+  const buttonSize = {
+    sm: "px-3 py-1 text-sm",
+    md: "px-5 py-2 text-base",
+    lg: "px-7 py-3 text-lg",
+  };
+
   return (
     <button
       type={type}
-      className={`flex w-fit items-center justify-center gap-2 rounded-md px-5 py-2 font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className}`}
+      className={`flex w-fit items-center justify-center gap-2 rounded-md font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className} ${buttonSize[size]}`}
       disabled={isDisabled}
       {...props}
     >
