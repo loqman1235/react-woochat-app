@@ -1,6 +1,6 @@
 import { MdSave } from "react-icons/md";
-import Button from "../Button";
-import { FormField } from "../FormField";
+import Button from "../shared/Button";
+import { FormField } from "../shared/FormField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

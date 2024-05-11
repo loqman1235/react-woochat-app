@@ -3,11 +3,11 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 interface FormFieldProps<TFieldValues extends FieldValues = FieldValues> {
-  type: "text" | "email" | "password" | "date" | "number" | "textarea";
+  type: "text" | "email" | "password" | "date" | "number" | "textarea" | "file";
   label: string;
   name: keyof TFieldValues;
   id: string;
-  placeholder: string;
+  placeholder?: string;
   className?: string;
   required?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +40,7 @@ const FormField = ({
           <input
             type={type === "password" && showPassword ? "text" : type}
             id={id}
-            placeholder={placeholder}
+            placeholder={placeholder || ""}
             className={`w-full rounded-md border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted  ${error ? "border-danger" : "border-border"}`}
             required={required}
             autoComplete="off"
@@ -73,7 +73,7 @@ const FormField = ({
           className={`w-full rounded-md border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted  ${error ? "border-danger" : "border-border"}`}
           {...register(name)}
           id={id}
-          placeholder={placeholder}
+          placeholder={placeholder || ""}
           autoComplete="off"
           required={required}
           rows={5}

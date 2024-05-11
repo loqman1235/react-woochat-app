@@ -2,13 +2,65 @@ import { MainMenu } from "@/components/MainMenu";
 import RoomCard from "@/components/RoomCard";
 import Button from "@/components/shared/Button";
 import useAuth from "@/hooks/useAuth";
-import { Link } from "react-router-dom";
 
 // Icons
 import { MdAdd } from "react-icons/md";
+import { Modal } from "@/components/shared/Modal";
+import { FormField } from "@/components/shared/FormField";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+const createRoomSchema = z.object({
+  name: z.string().min(1, "Name is required").max(50, "Name is too long"),
+  description: z.string().max(255, "Description is too long").optional(),
+  image: z
+    .instanceof(FileList)
+    .refine((files) => {
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.size > MAX_FILE_SIZE) return false;
+      }
+      return true;
+    }, "Image is too large")
+    .refine((files) => {
+      if (files.length > 0) {
+        const file = files[0];
+        if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) return false;
+      }
+      return true;
+    }, "Only jpeg, jpg, png, and webp images are allowed"),
+});
+
+type CreateRoomForm = z.infer<typeof createRoomSchema>;
 
 const RoomsPage = () => {
   const { user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<CreateRoomForm>({
+    resolver: zodResolver(createRoomSchema),
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  // Handle form submission
+  const onSubmit: SubmitHandler<CreateRoomForm> = async (data) => {
+    console.log(data);
+  };
 
   return (
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
@@ -19,11 +71,9 @@ const RoomsPage = () => {
           <h3 className="text-xl font-semibold text-text-foreground">Rooms</h3>
 
           {user && user.role === "ADMIN" && (
-            <Link to="/rooms/create">
-              <Button variant="primary" type="button">
-                <MdAdd /> Create
-              </Button>
-            </Link>
+            <Button variant="primary" type="button" onClick={handleModal}>
+              <MdAdd className="text-xl" /> Create
+            </Button>
           )}
         </div>
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
@@ -57,60 +107,55 @@ const RoomsPage = () => {
       </div>
 
       {/* Create room modal */}
-      {/* <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div className="w-[420px] rounded-md bg-background p-5">
-          <h3 className="text-xl font-semibold text-text-foreground">
-            Create Room
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-bold text-text-foreground">
+            Create room
           </h3>
-
-          <form className="mt-5 space-y-5">
-            <div className="space-y-2">
-              <label htmlFor="roomName" className="block text-text-foreground">
-                Room Name
-              </label>
-              <input
-                type="text"
-                id="roomName"
-                className="border-border-200 w-full rounded-md border bg-background p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="roomDescription"
-                className="block text-text-foreground"
-              >
-                Room Description
-              </label>
-              <textarea
-                id="roomDescription"
-                className="border-border-200 w-full rounded-md border bg-background p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                rows={5}
-              ></textarea>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="roomImage" className="block text-text-foreground">
-                Room Image
-              </label>
-              <input
-                type="text"
-                id="roomImage"
-                className="border-border-200 w-full rounded-md border bg-background p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div className="flex items-center justify-end space-x-2">
-              <Button variant="danger" type="button">
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit">
-                Create
-              </Button>
-            </div>
-          </form>
         </div>
-      </div> */}
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            id="name"
+            label="Name"
+            name="name"
+            placeholder="Enter room name"
+            type="text"
+            register={register}
+            error={errors.name?.message}
+          />
+
+          <FormField
+            id="image"
+            label="Image"
+            name="image"
+            type="file"
+            register={register}
+            error={errors.image?.message}
+          />
+
+          <FormField
+            id="description"
+            label="Description"
+            name="description"
+            placeholder="Enter room description"
+            type="textarea"
+            register={register}
+            error={errors.description?.message}
+          />
+          <div className="flex gap-2">
+            <Button variant="primary" type="submit" isDisabled={isSubmitting}>
+              Create
+            </Button>
+            <Button
+              variant="danger"
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </main>
   );
 };

@@ -1,5 +1,5 @@
 import { MdCameraAlt, MdClose, MdVerified } from "react-icons/md";
-import Avatar from "../Avatar";
+import Avatar from "../shared/Avatar";
 import { useState } from "react";
 import AboutForm from "./AboutForm";
 import OptionsForm from "./OptionsForm";
