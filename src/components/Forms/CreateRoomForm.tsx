@@ -8,6 +8,8 @@ import api from "@/services/api";
 import { AxiosError } from "axios";
 import { debugLog } from "@/utils";
 import { toast } from "react-toastify";
+import useRoom from "@/hooks/useRoom";
+import { Room } from "@/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
@@ -44,6 +46,7 @@ const createRoomSchema = z.object({
 type CreateRoomForm = z.infer<typeof createRoomSchema>;
 
 const CreateRoomForm = () => {
+  const { addRoom } = useRoom();
   const {
     register,
     handleSubmit,
@@ -69,6 +72,7 @@ const CreateRoomForm = () => {
       const response = await api.post("/rooms", formData);
 
       if (response.status === 201) {
+        if (response.data.room) addRoom(response.data.room as Room);
         reset();
         toast.success("Room created successfully");
         debugLog(response.data);

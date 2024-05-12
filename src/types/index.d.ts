@@ -27,3 +27,14 @@ export type User = {
   };
 };
 
+export type Room = {
+  id: string;
+  name: string;
+  description?: string;
+  roomImage?: {
+    id: string;
+    secure_url?: string;
+  };
+  isPrivate: boolean;
+  isPinned: boolean;
+};

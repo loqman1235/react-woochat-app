@@ -1,17 +1,14 @@
+import { Room } from "@/types";
 import { MdImage, MdPeople, MdPushPin } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-interface RoomCardProps {
-  name: string;
-  image?: string;
+interface RoomCardProps extends Room {
   totalMembers: number;
-  description?: string;
-  isPinned?: boolean;
 }
 
 const RoomCard = ({
   name,
-  image,
+  roomImage,
   totalMembers,
   description,
   isPinned = false,
@@ -22,9 +19,13 @@ const RoomCard = ({
       className="flex items-center gap-3 rounded-md bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
     >
       {/* ROOM IMAGE */}
-      {image ? (
+      {roomImage && roomImage.secure_url ? (
         <div className="h-20 w-20 overflow-hidden rounded-md">
-          <img src={image} alt={name} className="h-full w-full object-cover" />
+          <img
+            src={roomImage.secure_url}
+            alt={name}
+            className="h-full w-full object-cover"
+          />
         </div>
       ) : (
         <div className="flex h-20 w-20 items-center justify-center rounded-md bg-secondary text-2xl text-text-foreground">

@@ -1,5 +1,5 @@
 import { MainMenu } from "@/components/MainMenu";
-import RoomCard from "@/components/RoomCard";
+import { RoomCard, SkeletonRoomCard } from "@/components/RoomCard";
 import Button from "@/components/shared/Button";
 import useAuth from "@/hooks/useAuth";
 
@@ -8,10 +8,11 @@ import { MdAdd } from "react-icons/md";
 import { Modal } from "@/components/shared/Modal";
 import { useState } from "react";
 import CreateRoomForm from "@/components/Forms/CreateRoomForm";
+import useRoom from "@/hooks/useRoom";
 
 const RoomsPage = () => {
   const { user } = useAuth();
-
+  const { rooms, isLoading, error } = useRoom();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModal = () => {
@@ -33,32 +34,18 @@ const RoomsPage = () => {
           )}
         </div>
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
-          <RoomCard
-            image="https://picsum.photos/200"
-            name="main room"
-            description="Dive into the latest in technology, share tips, discuss trends, and explore innovations with fellow tech enthusiasts."
-            totalMembers={150}
-            isPinned
-          />
-          <RoomCard
-            image="https://picsum.photos/200"
-            name="global gourmet"
-            description="A place for foodies to exchange recipes, discuss cooking techniques, and explore culinary cultures from around the world."
-            totalMembers={134}
-            isPinned
-          />
-          <RoomCard
-            image="https://picsum.photos/200"
-            name="book buds"
-            description=" Join book lovers as we discuss our latest reads, share recommendations, and occasionally host author Q&A sessions."
-            totalMembers={22}
-          />
-          <RoomCard
-            image="https://picsum.photos/200"
-            name="fitness friends"
-            description="Whether you’re a gym rat or a yoga newbie, find motivation, workout tips, and health advice in a supportive community."
-            totalMembers={20}
-          />
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonRoomCard key={i} />
+            ))}
+
+          {rooms.length > 0 ? (
+            rooms.map((room) => (
+              <RoomCard key={room.id} {...room} totalMembers={0} />
+            ))
+          ) : (
+            <div className="w-full  text-text-muted">{error && error}</div>
+          )}
         </div>
       </div>
 
