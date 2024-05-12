@@ -26,3 +26,4 @@ export type User = {
     secure_url?: string;
   };
 };
+

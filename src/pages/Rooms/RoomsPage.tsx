@@ -6,60 +6,16 @@ import useAuth from "@/hooks/useAuth";
 // Icons
 import { MdAdd } from "react-icons/md";
 import { Modal } from "@/components/shared/Modal";
-import { FormField } from "@/components/shared/FormField";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-const createRoomSchema = z.object({
-  name: z.string().min(1, "Name is required").max(50, "Name is too long"),
-  description: z.string().max(255, "Description is too long").optional(),
-  image: z
-    .instanceof(FileList)
-    .refine((files) => {
-      if (files.length > 0) {
-        const file = files[0];
-        if (file.size > MAX_FILE_SIZE) return false;
-      }
-      return true;
-    }, "Image is too large")
-    .refine((files) => {
-      if (files.length > 0) {
-        const file = files[0];
-        if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) return false;
-      }
-      return true;
-    }, "Only jpeg, jpg, png, and webp images are allowed"),
-});
-
-type CreateRoomForm = z.infer<typeof createRoomSchema>;
+import CreateRoomForm from "@/components/Forms/CreateRoomForm";
 
 const RoomsPage = () => {
   const { user } = useAuth();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<CreateRoomForm>({
-    resolver: zodResolver(createRoomSchema),
-  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
-  };
-
-  // Handle form submission
-  const onSubmit: SubmitHandler<CreateRoomForm> = async (data) => {
-    console.log(data);
   };
 
   return (
@@ -107,54 +63,12 @@ const RoomsPage = () => {
       </div>
 
       {/* Create room modal */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-text-foreground">
-            Create room
-          </h3>
-        </div>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <FormField
-            id="name"
-            label="Name"
-            name="name"
-            placeholder="Enter room name"
-            type="text"
-            register={register}
-            error={errors.name?.message}
-          />
-
-          <FormField
-            id="image"
-            label="Image"
-            name="image"
-            type="file"
-            register={register}
-            error={errors.image?.message}
-          />
-
-          <FormField
-            id="description"
-            label="Description"
-            name="description"
-            placeholder="Enter room description"
-            type="textarea"
-            register={register}
-            error={errors.description?.message}
-          />
-          <div className="flex gap-2">
-            <Button variant="primary" type="submit" isDisabled={isSubmitting}>
-              Create
-            </Button>
-            <Button
-              variant="danger"
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </form>
+      <Modal
+        title="Create room"
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <CreateRoomForm />
       </Modal>
     </main>
   );
