@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import { Dropdown, DropdownItem } from "../shared/Dropdown";
 import { useState } from "react";
-import { useTheme } from "@/hooks/useTheme";
 
 interface RoomCardProps extends Room {
   totalMembers: number;
@@ -23,7 +22,6 @@ const RoomCard = ({
   description,
   isPinned = false,
 }: RoomCardProps) => {
-  const { theme } = useTheme();
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
 
   const toggleOptionsDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,7 +73,7 @@ const RoomCard = ({
         {/* OPTIONS */}
         <div className="relative">
           <button
-            className={`rounded-full p-1 text-xl text-text-foreground opacity-0 transition duration-300  group-hover:opacity-100 ${theme === "light" ? "bg-black/5 hover:bg-black/10" : "bg-white/5 hover:bg-white/10"}`}
+            className="text-2xl text-text-muted-2 opacity-0 transition duration-300 hover:text-text-foreground group-hover:opacity-100"
             onClick={toggleOptionsDropdown}
           >
             <MdMoreVert />
