@@ -22,7 +22,7 @@ const MainMenu = () => {
   const { user } = useAuth();
 
   const listStyles =
-    "w-full border-b border-border px-2 md:px-5 py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out";
+    "px-[4px] md:px-[10px] py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out font-medium hover:bg-muted-hover text-text-foreground rounded-md";
   const subListStyles =
     "w-full py-3 last:border-0 last:pb-0 grayscale hover:grayscale-0 transition duration-300 ease-in-out";
 
@@ -36,10 +36,10 @@ const MainMenu = () => {
     <div
       className={`fixed top-12 h-full w-[var(--main-menu-mobile-width)] flex-[1] border-r border-r-border bg-foreground text-text-foreground md:relative md:top-0 md:w-[var(--main-menu-width)] ${mainMenuOpen ? "hidden md:block" : "block md:hidden"} z-30 transition duration-300 ease-in-out`}
     >
-      <ul>
+      <ul className="px-[4px] pt-2 md:px-[10px]">
         <li className={listStyles} onClick={toggleStatus}>
-          <button className="flex items-center gap-2">
-            <span className="text-success">
+          <button className="flex items-center gap-5">
+            <span className="text-xl text-success">
               <MdCheckCircle />
             </span>
             <span>Online</span>
@@ -52,7 +52,7 @@ const MainMenu = () => {
             }}
           >
             <li className={subListStyles}>
-              <button className="flex items-center gap-2">
+              <button className="flex items-center gap-5">
                 <span className="text-success">
                   <MdCheckCircle />
                 </span>
@@ -60,7 +60,7 @@ const MainMenu = () => {
               </button>
             </li>
             <li className={subListStyles}>
-              <button className="flex items-center gap-2">
+              <button className="flex items-center gap-5">
                 <span className="text-warning">
                   <MdAccessTimeFilled />
                 </span>
@@ -68,7 +68,7 @@ const MainMenu = () => {
               </button>
             </li>
             <li className={subListStyles}>
-              <button className="flex items-center gap-2">
+              <button className="flex items-center gap-5">
                 <span className="text-danger">
                   <MdDoNotDisturbOnTotalSilence />
                 </span>
@@ -79,8 +79,8 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <Link to="/" className="flex w-full items-center gap-2">
-            <span className="text-text-muted">
+          <Link to="/" className="flex w-full items-center gap-5">
+            <span className="text-xl text-text-muted">
               <MdStorage />
             </span>
             <span>Rooms</span>
@@ -89,22 +89,22 @@ const MainMenu = () => {
 
         <li className={listStyles}>
           <button
-            className="flex w-full items-center gap-2"
+            className="flex w-full items-center gap-5"
             onClick={() => {
               setIsProfileOpen(true);
               setCurrentUser(user);
             }}
           >
-            <span className="text-text-muted">
+            <span className="text-xl text-text-muted">
               <MdAccountBox />
             </span>
-            <span>My profile</span>
+            <span>My Profile</span>
           </button>
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+          <button className="flex items-center gap-5">
+            <span className="text-xl text-text-muted">
               <MdMenuBook />
             </span>
             <span>Rules</span>
@@ -112,8 +112,8 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+          <button className="flex items-center gap-5">
+            <span className="text-xl text-text-muted">
               <MdRssFeed />
             </span>
             <span>Wall</span>
@@ -121,8 +121,8 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+          <button className="flex items-center gap-5">
+            <span className="text-xl text-text-muted">
               <MdNewspaper />
             </span>
             <span>News</span>
@@ -130,8 +130,8 @@ const MainMenu = () => {
         </li>
 
         <li className={listStyles}>
-          <button className="flex items-center gap-2">
-            <span className="text-text-muted">
+          <button className="flex items-center gap-5">
+            <span className="text-xl text-text-muted">
               <MdStar />
             </span>
             <span>Top 100</span>

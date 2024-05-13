@@ -26,7 +26,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
   return (
     <div className="relative overflow-hidden">
       <div
-        className="flex cursor-pointer items-center justify-between border-b border-b-border px-2 py-2 last:border-0 md:px-5"
+        className="flex cursor-pointer items-center justify-between rounded-lg px-[4px] py-2 transition duration-300 last:border-0 hover:bg-muted-hover md:px-[10px]"
         onClick={toggleUserMenu}
       >
         <div className="flex items-center gap-2">
