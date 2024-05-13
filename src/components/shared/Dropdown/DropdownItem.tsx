@@ -21,7 +21,7 @@ const DropdownItem = ({
       : `${theme === "dark" ? "hover:bg-[#2f0c12]" : "hover:bg-[#f7e7e7]"}`;
   const textColorStyles =
     bgColor === "default"
-      ? "text-text-muted hover:text-text-foreground"
+      ? "text-text-foreground hover:text-text-foreground"
       : "text-danger hover:!text-danger";
 
   return (

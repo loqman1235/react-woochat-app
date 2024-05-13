@@ -17,19 +17,19 @@ const Modal = ({ title, children, isOpen, onClose }: ModalProps) => {
         className="flex w-full max-w-[520px] flex-col gap-5 rounded-xl bg-foreground p-5"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-b-border pb-5">
-          {title && (
+        {title && (
+          <div className="flex items-center justify-between border-b border-b-border pb-5">
             <h3 className="text-xl font-semibold text-text-foreground">
               {title}
             </h3>
-          )}
-          <button
-            className="ml-auto rounded-full bg-muted p-1 text-2xl text-text-muted transition duration-300 hover:bg-muted-hover hover:text-text-foreground"
-            onClick={onClose}
-          >
-            <MdClose />
-          </button>
-        </div>
+            <button
+              className="ml-auto rounded-full bg-muted p-1 text-2xl text-text-muted transition duration-300 hover:bg-muted-hover hover:text-text-foreground"
+              onClick={onClose}
+            >
+              <MdClose />
+            </button>
+          </div>
+        )}
         {children}
       </div>
     </div>

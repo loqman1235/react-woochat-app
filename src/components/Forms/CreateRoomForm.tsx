@@ -101,6 +101,7 @@ const CreateRoomForm = () => {
         type="text"
         register={register}
         error={errors.name?.message}
+        required
       />
 
       <FormField

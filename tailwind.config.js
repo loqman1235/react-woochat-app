@@ -25,6 +25,7 @@ export default {
         warning: "var(--color-warning)",
         info: "var(--color-info)",
         secondary: "var(--color-secondary)",
+        "secondary-hover": "var(--color-secondary-hover)",
         muted: "var(--color-muted)",
         "muted-hover": "var(--color-muted-hover)",
         "text-foreground": "var(--color-text-foreground)",

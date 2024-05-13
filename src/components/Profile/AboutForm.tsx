@@ -1,4 +1,3 @@
-import { MdSave } from "react-icons/md";
 import Button from "../shared/Button";
 import { FormField } from "../shared/FormField";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -11,6 +10,7 @@ import api from "@/services/api";
 // Hooks
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
+import { ClipLoader } from "react-spinners";
 interface AboutFormProps {
   isOpen: boolean;
 }
@@ -105,8 +105,15 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
           register={register}
           error={errors.about?.message}
         />
-        <Button type="submit" variant="primary" disabled={isSubmitting}>
-          {isSubmitting ? <MdSave className="animate-spin" /> : <MdSave />} Save
+        <Button variant="primary" type="submit" isDisabled={isSubmitting}>
+          {isSubmitting ? (
+            <span className="flex items-center gap-2">
+              <ClipLoader size={16} color="rgba(255, 255, 255, 0.8)" />{" "}
+              Updating...
+            </span>
+          ) : (
+            "Update"
+          )}
         </Button>
       </form>
     </div>

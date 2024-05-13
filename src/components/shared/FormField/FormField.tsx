@@ -31,8 +31,11 @@ const FormField = ({
 
   return (
     <div className={`relative space-y-1 ${className}`}>
-      <label htmlFor={id} className="text-sm text-text-foreground">
-        {label}{" "}
+      <label
+        htmlFor={id}
+        className="flex items-center gap-1 text-sm text-text-foreground"
+      >
+        {label}
         {required ? <span className="text-xs text-danger">*</span> : null}
       </label>
       {type !== "textarea" && (

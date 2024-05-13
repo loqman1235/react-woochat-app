@@ -1,6 +1,6 @@
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   type: "button" | "submit";
-  variant: "primary" | "success" | "danger";
+  variant: "primary" | "success" | "danger" | "secondary";
   size?: "sm" | "md" | "lg";
   className?: string;
   isDisabled?: boolean;
@@ -19,6 +19,19 @@ const Button = ({
   const primaryBtnStyles = "bg-primary text-white hover:bg-primary-hover";
   const successBtnStyle = "bg-success text-white hover:bg-success-hover";
   const dangerBtnStyle = "bg-danger text-white hover:bg-danger-hover";
+  const secondaryBtnStyle =
+    "bg-secondary text-text-foreground hover:bg-secondary-hover";
+
+  const buttonStyles =
+    variant === "primary"
+      ? primaryBtnStyles
+      : variant === "success"
+        ? successBtnStyle
+        : variant === "danger"
+          ? dangerBtnStyle
+          : variant === "secondary"
+            ? secondaryBtnStyle
+            : "";
 
   const buttonSize = {
     sm: "px-2 py-1 text-sm",
@@ -29,7 +42,7 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`flex w-fit items-center justify-center gap-2 rounded-md font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${variant === "primary" ? primaryBtnStyles : variant === "success" ? successBtnStyle : dangerBtnStyle} ${className} ${buttonSize[size]}`}
+      className={`flex w-fit items-center justify-center gap-2 rounded-md font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${buttonStyles} ${className} ${buttonSize[size]}`}
       disabled={isDisabled}
       {...props}
     >
