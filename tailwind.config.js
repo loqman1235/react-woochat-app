@@ -7,6 +7,7 @@ export default {
         roboto: ["var(--font-roboto)", "sans-serif"],
         "open-sans": ["var(--font-open-sans)", "sans-serif"],
         kaushan: ["var(--font-kaushan)", "cursive"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
       colors: {
         primary: "var(--color-primary)",
