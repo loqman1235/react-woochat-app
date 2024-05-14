@@ -38,3 +38,10 @@ export type Room = {
   isPrivate: boolean;
   isPinned: boolean;
 };
+
+export type MessageType = {
+  id: string;
+  content: string;
+  user: User;
+  createdAt: string;
+};

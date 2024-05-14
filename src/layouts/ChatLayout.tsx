@@ -40,7 +40,7 @@ const ChatLayout = () => {
   return (
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
       <MainMenu />
-      <ChatArea />
+      <ChatArea roomId={roomId || ""} />
       <UsersMenu
         onlineUsers={onlineUsers}
         roomName={roomResult?.room.name || ""}

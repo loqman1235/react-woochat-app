@@ -1,9 +1,25 @@
-import Message from "./Message";
+import { Message, MessageSkeleton } from "@/components/ChatArea/Message";
+import { useEffect, useState } from "react";
 import ChatInput from "./ChatInput";
-import { messages } from "@/data/messages";
-import { useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import { MessageType } from "@/types";
 
-const ChatArea = () => {
+interface ChatAreaProps {
+  roomId: string;
+}
+
+const ChatArea = ({ roomId }: ChatAreaProps) => {
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const { data: messagesData, isLoading } = useFetch<{
+    messages: MessageType[];
+  }>(`/messages/room/${roomId}`);
+
+  useEffect(() => {
+    if (messagesData) {
+      setMessages(messagesData.messages);
+    }
+  }, [messagesData]);
+
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
   const toggleDropdown = (id: string) => {
@@ -13,6 +29,7 @@ const ChatArea = () => {
       setOpenDropdownId(id);
     }
   };
+
   return (
     <div
       className={`
@@ -26,12 +43,15 @@ const ChatArea = () => {
     >
       {/*  MESSAGES CONTAINER */}
       <div className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background py-2 md:py-5">
+        {/* Loading */}
+        {isLoading &&
+          Array.from({ length: 2 }).map((_, i) => <MessageSkeleton key={i} />)}
         {messages.map((message) => (
           <Message
-            key={message.user.id}
+            key={message.id}
             {...message}
-            isUserDropdownOpen={openDropdownId === message.user.id}
-            toggleUserDropdown={() => toggleDropdown(message.user.id)}
+            isUserDropdownOpen={openDropdownId === message.id}
+            toggleUserDropdown={() => toggleDropdown(message.id)}
           />
         ))}
       </div>

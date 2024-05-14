@@ -4,6 +4,7 @@ import {
   PremiumIcon,
   UserIcon,
 } from "@/components/icons";
+import moment from "moment";
 
 // Manage roles icons
 const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
@@ -85,10 +86,16 @@ const debugLog = (...messages: unknown[]): void => {
   return;
 };
 
+// Format date using moment.js
+const formatDate = (date: string) => {
+  return moment(date).calendar();
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
   setItemToLocalStorage,
   removeItemFromLocalStorage,
   debugLog,
+  formatDate,
 };
