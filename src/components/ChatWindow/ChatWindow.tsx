@@ -23,7 +23,7 @@ const ChatWindow = () => {
             size="sm"
             gender={currentUser.gender}
             username={currentUser.username}
-            src={currentUser.avatar}
+            src={currentUser.avatar?.secure_url}
             isBordered
           />
           <h5 className="text-sm font-bold text-text-foreground">
