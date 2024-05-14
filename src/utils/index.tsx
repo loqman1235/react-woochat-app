@@ -16,25 +16,25 @@ const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
           ? "text-base"
           : "text-lg";
   switch (role) {
-    case "admin":
+    case "ADMIN":
       return (
         <span className={`text-admin ${iconSize}`} title="Admin">
           <AdminIcon />
         </span>
       );
-    case "mod":
+    case "MOD":
       return (
         <span className={`text-mod ${iconSize}`} title="Moderator">
           <ModeratorIcon />
         </span>
       );
-    case "premium":
+    case "PREMIUM":
       return (
         <span className={`text-premium ${iconSize}`} title="Premium">
           <PremiumIcon />
         </span>
       );
-    case "user":
+    case "USER":
       return (
         <span className={`text-user ${iconSize}`} title="User">
           <UserIcon />

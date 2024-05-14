@@ -19,6 +19,7 @@ interface RoomCardProps extends Room {
 }
 
 const RoomCard = ({
+  id,
   name,
   roomImage,
   totalMembers,
@@ -41,7 +42,7 @@ const RoomCard = ({
   return (
     <>
       <Link
-        to="/chat" //  to={`/rooms/${id}`}
+        to={`/rooms/${id}`}
         className="flex items-center gap-3 rounded-md bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
       >
         {/* ROOM IMAGE */}

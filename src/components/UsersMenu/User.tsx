@@ -4,18 +4,9 @@ import { useState } from "react";
 import Avatar from "../shared/Avatar";
 import { getRoleIcon } from "@/utils";
 import useChatWindow from "@/hooks/useChatWindow";
+import { User as UserType } from "@/types";
 
-export interface UserProps {
-  id?: string;
-  username: string;
-  avatar: string;
-  gender: "male" | "female";
-  mood?: string;
-  role: "admin" | "mod" | "premium" | "user";
-  country?: string;
-}
-
-const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
+const User = ({ username, avatar, gender, mood, role, location }: UserType) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
 
@@ -32,7 +23,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
         <div className="flex items-center gap-2">
           {/* AVATAR */}
           <Avatar
-            src={avatar}
+            src={avatar ? avatar.secure_url : "/avatar.png"}
             username={username}
             gender={gender}
             size="md"
@@ -50,11 +41,10 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
           {/* ROLE AND COUNTRY */}
           <div className="flex items-center gap-2">
             {getRoleIcon(role)}
-            {country && (
+            {location && (
               <span>
                 <Flag
-                  code={country}
-                  fallback="🏳️‍🌈"
+                  code={location.country}
                   className="rounded-sm"
                   style={{ width: "20px", height: "15px", borderRadius: "4px" }}
                 />
@@ -79,7 +69,7 @@ const User = ({ username, avatar, gender, mood, role, country }: UserProps) => {
                 gender,
                 mood,
                 role,
-                country,
+                location,
               });
             }}
           >

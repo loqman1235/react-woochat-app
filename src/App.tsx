@@ -3,7 +3,6 @@ import ChatLayout from "./layouts/ChatLayout";
 import { LoginPage, RegisterPage, VerifyEmailPage } from "./pages/Auth";
 import AppLayout from "./layouts/AppLayout";
 import { RoomsPage } from "./pages/Rooms";
-import { ProfilePage } from "./pages/Profile";
 import { ThemeProvider } from "./context/ThemeContext";
 import useAuth from "./hooks/useAuth";
 import { ToastContainer } from "react-toastify";
@@ -21,8 +20,7 @@ const App = () => {
             element={isAuth ? <AppLayout /> : <Navigate to="/sign-in" />}
           >
             <Route index element={<RoomsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/chat" element={<ChatLayout />} />
+            <Route path="/rooms/:roomId" element={<ChatLayout />} />
           </Route>
           <Route
             path="/sign-in"
