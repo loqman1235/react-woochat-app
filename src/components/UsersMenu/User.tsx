@@ -6,7 +6,16 @@ import { getRoleIcon } from "@/utils";
 import useChatWindow from "@/hooks/useChatWindow";
 import { User as UserType } from "@/types";
 
-const User = ({ username, avatar, gender, mood, role, location }: UserType) => {
+const User = ({
+  id,
+  email,
+  username,
+  avatar,
+  gender,
+  mood,
+  role,
+  location,
+}: UserType) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
 
@@ -64,6 +73,8 @@ const User = ({ username, avatar, gender, mood, role, location }: UserType) => {
             onClick={() => {
               setIsChatWindowOpen(true);
               setCurrentUser({
+                id,
+                email,
                 username,
                 avatar,
                 gender,
