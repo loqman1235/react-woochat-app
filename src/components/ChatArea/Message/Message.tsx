@@ -38,7 +38,7 @@ const Message = ({
             }}
           />
           <DropdownItem icon={<MdAccountCircle />} text="View Profile" />
-          <DropdownItem icon={<MdBolt />} text="Action" />
+          <DropdownItem icon={<MdBolt />} text="Action" bgColor="danger" />
         </Dropdown>
       </div>
 
