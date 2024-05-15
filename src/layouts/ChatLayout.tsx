@@ -20,20 +20,21 @@ const ChatLayout = () => {
 
   // Connect to the socket and join the room
   useEffect(() => {
-    if (socket) {
-      socket.connect();
-      socket.emit("join_room", { user, roomId });
+    if (!socket || !roomId || !user) return;
 
-      socket.on("online_users", (data) => {
-        // Filter out the current user
-        setOnlineUsers(data.filter((u: User) => u.id !== user?.id));
-      });
-    }
+    // Join the room and set up event listeners
+    socket.emit("join_room", { user, roomId });
 
+    const handleOnlineUsers = (data: User[]) => {
+      setOnlineUsers(data.filter((u) => u.id !== user.id));
+    };
+
+    socket.on("online_users", handleOnlineUsers);
+
+    // Clean up the socket event listeners on component unmount
     return () => {
-      if (socket) {
-        socket.disconnect();
-      }
+      socket.off("online_users", handleOnlineUsers);
+      socket.emit("leave_room", { user, roomId });
     };
   }, [socket, roomId, user]);
 

@@ -5,23 +5,26 @@ import { ChatWindoProvider } from "@/context/ChatWindowContext";
 import { ProfileContextProvider } from "@/context/ProfileContext";
 import { RoomProvider } from "@/context/RoomContext";
 import { SidebarToggleProvider } from "@/context/SidebarToggleContext";
+import { SocketProvider } from "@/context/SocketContext";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
     <>
-      <ProfileContextProvider>
-        <SidebarToggleProvider>
-          <ChatWindoProvider>
-            <RoomProvider>
-              <Navbar />
-              <Outlet />
-              <Footer />
-            </RoomProvider>
-            <ProfileModal />
-          </ChatWindoProvider>
-        </SidebarToggleProvider>
-      </ProfileContextProvider>
+      <SocketProvider>
+        <ProfileContextProvider>
+          <SidebarToggleProvider>
+            <ChatWindoProvider>
+              <RoomProvider>
+                <Navbar />
+                <Outlet />
+                <Footer />
+              </RoomProvider>
+              <ProfileModal />
+            </ChatWindoProvider>
+          </SidebarToggleProvider>
+        </ProfileContextProvider>
+      </SocketProvider>
     </>
   );
 };

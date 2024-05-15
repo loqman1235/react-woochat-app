@@ -1,14 +1,19 @@
 import { Message, MessageSkeleton } from "@/components/ChatArea/Message";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatInput from "./ChatInput";
 import useFetch from "@/hooks/useFetch";
 import { MessageType } from "@/types";
+import useSocket from "@/hooks/useSocket";
+import { playSound } from "@/utils";
+import BloopSound from "@/assets/sounds/bloop.mp3";
 
 interface ChatAreaProps {
   roomId: string;
 }
 
 const ChatArea = ({ roomId }: ChatAreaProps) => {
+  const socket = useSocket();
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const { data: messagesData, isLoading } = useFetch<{
     messages: MessageType[];
@@ -30,6 +35,29 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
     }
   };
 
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleReceiveRoomMessage = (data: MessageType) => {
+      setMessages((prevMessages) => [...prevMessages, data]);
+      playSound(BloopSound);
+    };
+
+    socket.on("receiveRoomMessage", handleReceiveRoomMessage);
+
+    // Clean up the socket event listeners on component unmount
+    return () => {
+      socket.off("receiveRoomMessage", handleReceiveRoomMessage);
+    };
+  }, [socket]);
+
   return (
     <div
       className={`
@@ -42,10 +70,13 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       `}
     >
       {/*  MESSAGES CONTAINER */}
-      <div className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background py-2 md:py-5">
+      <div
+        className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background py-2 md:py-5"
+        ref={messagesContainerRef}
+      >
         {/* Loading */}
         {isLoading &&
-          Array.from({ length: 2 }).map((_, i) => <MessageSkeleton key={i} />)}
+          Array.from({ length: 10 }).map((_, i) => <MessageSkeleton key={i} />)}
         {messages.map((message) => (
           <Message
             key={message.id}
@@ -57,7 +88,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       </div>
 
       {/* CHAT INPUT */}
-      <ChatInput />
+      <ChatInput roomId={roomId} />
     </div>
   );
 };

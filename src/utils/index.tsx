@@ -91,6 +91,11 @@ const formatDate = (date: string) => {
   return moment(date).calendar();
 };
 
+const playSound = (audioFile: string) => {
+  const audio = new Audio(audioFile);
+  audio.play().catch((error) => console.log("Play sound failed:", error));
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -98,4 +103,5 @@ export {
   removeItemFromLocalStorage,
   debugLog,
   formatDate,
+  playSound,
 };
