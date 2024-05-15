@@ -5,7 +5,7 @@ import useFetch from "@/hooks/useFetch";
 import { MessageType } from "@/types";
 import useSocket from "@/hooks/useSocket";
 import { playSound } from "@/utils";
-import BloopSound from "@/assets/sounds/bloop.mp3";
+import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
 
 interface ChatAreaProps {
   roomId: string;
@@ -49,7 +49,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
 
     const handleReceiveRoomMessage = (data: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, data]);
-      playSound(BloopSound);
+      playSound(MessageReceivedSound);
     };
 
     socket.on("receiveRoomMessage", handleReceiveRoomMessage);
