@@ -6,7 +6,7 @@ import { useState } from "react";
 import { MdOutlineEmojiEmotions, MdSend } from "react-icons/md";
 
 interface ChatInputProps {
-  roomId: string;
+  roomId?: string;
 }
 
 const ChatInput = ({ roomId }: ChatInputProps) => {
