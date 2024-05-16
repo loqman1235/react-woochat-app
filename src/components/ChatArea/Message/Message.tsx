@@ -23,7 +23,7 @@ const Message = ({
     <div className="flex w-full items-start gap-2 px-2 py-2 md:px-5">
       <div className="relative" onClick={toggleUserDropdown}>
         <Avatar
-          src={user.avatar?.secure_url}
+          src={user.avatar?.secure_url || "/avatar.png"}
           gender={user.gender}
           isBordered
           size="md"
