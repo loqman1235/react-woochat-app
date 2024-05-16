@@ -28,6 +28,7 @@ export type User = {
 };
 
 export type Room = {
+  totalMembers: number;
   id: string;
   name: string;
   description?: string;

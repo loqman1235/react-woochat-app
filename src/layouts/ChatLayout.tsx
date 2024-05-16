@@ -25,8 +25,8 @@ const ChatLayout = () => {
     // Join the room and set up event listeners
     socket.emit("join_room", { user, roomId });
 
-    const handleOnlineUsers = (data: User[]) => {
-      setOnlineUsers(data.filter((u) => u.id !== user.id));
+    const handleOnlineUsers = ({ users }: { users: User[] }) => {
+      setOnlineUsers(users.filter((u) => u.id !== user.id));
     };
 
     socket.on("online_users", handleOnlineUsers);
