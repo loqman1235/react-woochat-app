@@ -64,8 +64,8 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
 
         {/* SEND BUTTON */}
         <button
-          className="flex cursor-not-allowed items-center justify-center rounded-full bg-primary p-2 text-white transition duration-300 hover:bg-primary-hover disabled:opacity-50"
-          disabled={isSubmitting}
+          className="flex items-center justify-center rounded-full bg-primary p-2 text-white transition duration-300 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={isSubmitting || !content.trim()}
         >
           <MdSend />
         </button>

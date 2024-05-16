@@ -78,7 +78,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       >
         {/* Loading */}
         {isLoading &&
-          Array.from({ length: 10 }).map((_, i) => <MessageSkeleton key={i} />)}
+          Array.from({ length: 4 }).map((_, i) => <MessageSkeleton key={i} />)}
         {messages.map((message) => (
           <Message
             key={message.id}

@@ -32,7 +32,7 @@ const User = ({
         <div className="flex items-center gap-2">
           {/* AVATAR */}
           <Avatar
-            src={avatar ? avatar.secure_url : "/avatar.png"}
+            src={avatar ? avatar.secure_url : "/default_avatar.png"}
             username={username}
             gender={gender}
             size="md"
