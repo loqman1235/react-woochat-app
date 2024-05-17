@@ -39,7 +39,7 @@ const ChatLayout = () => {
   }, [socket, roomId, user]);
 
   return (
-    <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
+    <main className="fixed top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
       <MainMenu />
       <ChatArea roomId={roomId || ""} />
       <UsersMenu
