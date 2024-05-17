@@ -18,7 +18,7 @@ const AppLayout = () => {
               <RoomProvider>
                 <Navbar />
                 <Outlet />
-                <Footer />
+                {/* <Footer /> */}
               </RoomProvider>
               <ProfileModal />
             </ChatWindoProvider>
