@@ -38,7 +38,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
   };
 
   return (
-    <div className="sticky bottom-0 flex h-12 items-center gap-5 border-t border-t-border bg-foreground px-2 py-1 text-text-foreground md:px-5">
+    <div className="absolute bottom-0 flex h-12 w-full items-center gap-5 border-t border-t-border bg-foreground px-2 py-1 text-text-foreground md:px-5">
       <button className="text-2xl text-text-muted transition duration-300 hover:text-text-foreground">
         <MdOutlineEmojiEmotions />
       </button>

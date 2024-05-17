@@ -63,10 +63,11 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
   return (
     <div
       className={`
-        h-full
-        w-[--chat-area-width] 
-        flex-[3]  
-        overflow-y-auto 
+        relative
+        h-full 
+        w-[--chat-area-width]  
+        flex-[3] 
+        overflow-y-auto
         bg-background
         
       `}
