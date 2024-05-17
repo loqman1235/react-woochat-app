@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { ProfileModal } from "@/components/Profile";
 import { ChatWindoProvider } from "@/context/ChatWindowContext";
