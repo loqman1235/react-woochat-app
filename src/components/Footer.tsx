@@ -4,7 +4,7 @@ import { MdMenu, MdVolumeUp } from "react-icons/md";
 const Footer = () => {
   const { toggleUsersMenu } = useSidebarToggle();
   return (
-    <footer className="fixed bottom-0 z-40 hidden h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-2 text-2xl text-text-foreground md:flex md:px-5">
+    <footer className="fixed bottom-0 z-40 flex h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-2 text-2xl text-text-foreground md:px-5">
       {/* COPYRIGHT */}
       <p className="text-sm text-text-muted">
         SomthinChat © 2024{" "}

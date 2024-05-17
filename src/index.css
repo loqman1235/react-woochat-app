@@ -90,7 +90,7 @@
 
 @layer base {
   html {
-    @apply scroll-smooth bg-background font-roboto text-text-foreground;
+    @apply h-screen scroll-smooth bg-background font-roboto text-text-foreground;
   }
 
   /* SVG Icons */
