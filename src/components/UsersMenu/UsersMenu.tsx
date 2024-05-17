@@ -13,6 +13,18 @@ interface UsersMenuProps {
 
 const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
   const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
+
+  // Filtering online users
+  const staffMembers = !isLoading
+    ? onlineUsers.filter((user) => user.role === "ADMIN" || user.role === "MOD")
+    : [];
+  const vipMembers = !isLoading
+    ? onlineUsers.filter((user) => user.role === "PREMIUM")
+    : [];
+  const users = !isLoading
+    ? onlineUsers.filter((user) => user.role === "USER")
+    : [];
+
   // const { data: users, isLoading } = useFetch("/users");
   return (
     <div
@@ -61,20 +73,53 @@ const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
             roomName
           )}
         </h5>
-        {!isLoading && (
-          <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
-            {onlineUsers.length}
-          </span>
-        )}
       </div>
       {/* ONLINE USERS */}
       <div className="h-[calc(100%-120px)] overflow-y-auto px-[10px] pb-5">
         {onlineUsers.length === 0 && (
           <div className="px-3 text-sm text-text-muted">No users online</div>
         )}
-        {onlineUsers.map((user) => (
-          <User key={user.id} {...user} />
-        ))}
+        {staffMembers.length > 0 && (
+          <div className="mb-5">
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+              Staff{" "}
+              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+                {staffMembers.length}
+              </span>
+            </h2>
+            {staffMembers.map((user) => (
+              <User key={user.id} {...user} />
+            ))}
+          </div>
+        )}
+
+        {vipMembers.length > 0 && (
+          <div className="mb-5">
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+              VIP Members{" "}
+              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+                {vipMembers.length}
+              </span>
+            </h2>
+            {vipMembers.map((user) => (
+              <User key={user.id} {...user} />
+            ))}
+          </div>
+        )}
+
+        {users.length > 0 && (
+          <div>
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+              Users{" "}
+              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+                {users.length}
+              </span>
+            </h2>
+            {users.map((user) => (
+              <User key={user.id} {...user} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
