@@ -25,6 +25,7 @@ export type User = {
   cover?: {
     secure_url?: string;
   };
+  createdAt?: string;
 };
 
 export type Room = {

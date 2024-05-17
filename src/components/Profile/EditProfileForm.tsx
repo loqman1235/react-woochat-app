@@ -11,7 +11,8 @@ import api from "@/services/api";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
 import { ClipLoader } from "react-spinners";
-interface AboutFormProps {
+
+interface EditProfileFormProps {
   isOpen: boolean;
 }
 
@@ -21,9 +22,9 @@ const aboutSchema = z.object({
   about: z.string().nullable().optional(),
 });
 
-type AboutForm = z.infer<typeof aboutSchema>;
+type EditProfileForm = z.infer<typeof aboutSchema>;
 
-const AboutForm = ({ isOpen = false }: AboutFormProps) => {
+const EditProfileForm = ({ isOpen = false }: EditProfileFormProps) => {
   const { user, setUser } = useAuth();
   // const { data: fetchedUser, isLoading } = useFetch<User>("/users", user?.id);
   const { setCurrentUser } = useProfile();
@@ -32,14 +33,14 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<AboutForm>({
+  } = useForm<EditProfileForm>({
     resolver: zodResolver(aboutSchema),
     defaultValues: user
       ? { age: user.age, mood: user.mood, about: user.about }
       : {},
   });
 
-  const onSubmit: SubmitHandler<AboutForm> = async (data) => {
+  const onSubmit: SubmitHandler<EditProfileForm> = async (data) => {
     const formData = new FormData();
 
     if (data.age) {
@@ -120,4 +121,4 @@ const AboutForm = ({ isOpen = false }: AboutFormProps) => {
   );
 };
 
-export default AboutForm;
+export default EditProfileForm;

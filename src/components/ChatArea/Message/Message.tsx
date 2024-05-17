@@ -3,8 +3,10 @@ import { formatDate, getRoleIcon } from "@/utils";
 import Avatar from "@/components/shared/Avatar";
 import { Dropdown, DropdownItem } from "@/components/shared/Dropdown";
 import { MdAccountCircle, MdBolt, MdEmail } from "react-icons/md";
-import useChatWindow from "@/hooks/useChatWindow";
+// import useChatWindow from "@/hooks/useChatWindow";
 import { MessageType } from "@/types";
+import useProfile from "@/hooks/useProfile";
+import useAuth from "@/hooks/useAuth";
 
 interface MessageProps extends MessageType {
   isUserDropdownOpen: boolean;
@@ -12,32 +14,37 @@ interface MessageProps extends MessageType {
 }
 
 const Message = ({
-  user,
+  user: sender,
   content,
   createdAt,
   isUserDropdownOpen,
   toggleUserDropdown,
 }: MessageProps) => {
-  const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
+  // const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
+  const { setIsProfileOpen, setCurrentUser } = useProfile();
+  const { user } = useAuth();
+
+  const isOwnProfile = user?.id === sender.id;
+
   return (
     <div className="flex w-full items-start gap-2 px-2 py-2 md:px-5">
       <div className="relative" onClick={toggleUserDropdown}>
         <Avatar
-          src={user.avatar?.secure_url || "/default_avatar.png"}
-          gender={user.gender}
+          src={sender.avatar?.secure_url || "/default_avatar.png"}
+          gender={sender.gender}
           isBordered
           size="md"
         />
         <Dropdown isOpen={isUserDropdownOpen} position="left">
+          {!isOwnProfile && <DropdownItem icon={<MdEmail />} text="Private" />}
           <DropdownItem
-            icon={<MdEmail />}
-            text="Private"
+            icon={<MdAccountCircle />}
+            text="View Profile"
             handleClick={() => {
-              setIsChatWindowOpen(true);
-              setCurrentUser(user);
+              setIsProfileOpen(true);
+              setCurrentUser(sender);
             }}
           />
-          <DropdownItem icon={<MdAccountCircle />} text="View Profile" />
           <DropdownItem icon={<MdBolt />} text="Action" bgColor="danger" />
         </Dropdown>
       </div>
@@ -46,9 +53,9 @@ const Message = ({
         {/* HEADER */}
         <div className="mb-2 flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <span>{getRoleIcon(user.role, "xs")}</span>
+            <span>{getRoleIcon(sender.role, "xs")}</span>
             <h5 className="text-sm font-bold text-text-foreground">
-              {user.username}
+              {sender.username}
             </h5>
           </div>
           {/* Add an html dot */}

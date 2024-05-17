@@ -1,8 +1,8 @@
 import { MdCameraAlt, MdClose, MdVerified } from "react-icons/md";
 import Avatar from "../shared/Avatar";
-import { useState } from "react";
-import AboutForm from "./AboutForm";
-import OptionsForm from "./OptionsForm";
+import { useEffect, useState } from "react";
+import AboutProfile from "./AboutProfile";
+import EditProfileForm from "./EditProfileForm";
 import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
@@ -23,24 +23,24 @@ const ProfileModal = () => {
   const isOwnProfile = user?.id === currentUser?.id;
 
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
-  const [isOptionsTabActive, setIsOptionsTabActive] = useState(false);
+  const [isEditProfileTabActive, setIsProfileTabActive] = useState(false);
   const [isLevelsTabActive, setIsLevelsTabActive] = useState(false);
 
   const toggleAboutTab = () => {
     setIsAboutTabActive(true);
-    setIsOptionsTabActive(false);
+    setIsProfileTabActive(false);
     setIsLevelsTabActive(false);
   };
 
   const toggleOptionsTab = () => {
     setIsAboutTabActive(false);
-    setIsOptionsTabActive(true);
+    setIsProfileTabActive(true);
     setIsLevelsTabActive(false);
   };
 
   const toggleLevelsTab = () => {
     setIsAboutTabActive(false);
-    setIsOptionsTabActive(false);
+    setIsProfileTabActive(false);
     setIsLevelsTabActive(true);
   };
 
@@ -125,6 +125,14 @@ const ProfileModal = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (isProfileOpen) {
+      setIsAboutTabActive(true);
+      setIsProfileTabActive(false);
+      setIsLevelsTabActive(false);
+    }
+  }, [isProfileOpen]);
 
   const activeTabStyles = "bg-secondary !text-text-foreground";
   const inactiveTabStyles =
@@ -223,7 +231,7 @@ const ProfileModal = () => {
               <div>
                 <div className="flex items-center gap-1">
                   <h3 className="text-xl font-bold text-white">
-                    {user?.username}
+                    {isOwnProfile ? user?.username : currentUser?.username}
                   </h3>
                   {user?.verified && (
                     <span className="text-success">
@@ -233,7 +241,9 @@ const ProfileModal = () => {
                 </div>
                 {/* MOOD */}
                 {user?.mood && (
-                  <p className="text-sm text-text-muted">{user?.mood}</p>
+                  <p className="text-sm text-text-muted">
+                    {isOwnProfile ? user?.mood : currentUser?.mood}
+                  </p>
                 )}
               </div>
             </div>
@@ -247,12 +257,14 @@ const ProfileModal = () => {
           >
             About
           </li>
-          <li
-            className={`${inactiveTabStyles} ${isOptionsTabActive && activeTabStyles}`}
-            onClick={toggleOptionsTab}
-          >
-            Options
-          </li>
+          {isOwnProfile && (
+            <li
+              className={`${inactiveTabStyles} ${isEditProfileTabActive && activeTabStyles}`}
+              onClick={toggleOptionsTab}
+            >
+              Edit
+            </li>
+          )}
           <li
             className={`${inactiveTabStyles} ${isLevelsTabActive && activeTabStyles}`}
             onClick={toggleLevelsTab}
@@ -261,8 +273,8 @@ const ProfileModal = () => {
           </li>
         </ul>
 
-        <AboutForm isOpen={isAboutTabActive} />
-        <OptionsForm isOpen={isOptionsTabActive} />
+        <AboutProfile isOpen={isAboutTabActive} />
+        {isOwnProfile && <EditProfileForm isOpen={isEditProfileTabActive} />}
         <LevelForm isOpen={isLevelsTabActive} />
       </div>
     </div>
