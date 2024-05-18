@@ -3,6 +3,7 @@ import User from "./User";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import { User as UserType } from "@/types";
 import Skeleton from "react-loading-skeleton";
+import { filterUsersByRole } from "@/utils";
 // import useFetch from "@/hooks/useFetch";
 
 interface UsersMenuProps {
@@ -15,15 +16,13 @@ const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
   const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
 
   // Filtering online users
-  const staffMembers = !isLoading
-    ? onlineUsers.filter((user) => user.role === "ADMIN" || user.role === "MOD")
-    : [];
-  const vipMembers = !isLoading
-    ? onlineUsers.filter((user) => user.role === "PREMIUM")
-    : [];
-  const users = !isLoading
-    ? onlineUsers.filter((user) => user.role === "USER")
-    : [];
+  const staffMembers = filterUsersByRole(
+    onlineUsers,
+    ["ADMIN", "MOD"],
+    isLoading,
+  );
+  const vipMembers = filterUsersByRole(onlineUsers, ["PREMIUM"], isLoading);
+  const users = filterUsersByRole(onlineUsers, ["USER"], isLoading);
 
   // const { data: users, isLoading } = useFetch("/users");
   return (

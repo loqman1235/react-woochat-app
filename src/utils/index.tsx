@@ -4,6 +4,7 @@ import {
   PremiumIcon,
   UserIcon,
 } from "@/components/icons";
+import { Role, User } from "@/types";
 import moment from "moment";
 
 // Manage roles icons
@@ -96,6 +97,15 @@ const playSound = (audioFile: string) => {
   audio.play().catch((error) => console.log("Play sound failed:", error));
 };
 
+// Filter users by role
+const filterUsersByRole = (users: User[], role: Role[], isLoading: boolean) => {
+  if (isLoading) {
+    return [];
+  }
+
+  return users.filter((user) => role.includes(user.role));
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -104,4 +114,5 @@ export {
   debugLog,
   formatDate,
   playSound,
+  filterUsersByRole,
 };

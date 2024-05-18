@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export type LoginForm = z.infer<typeof loginSchema>;
 
+export type Role = "ADMIN" | "MOD" | "PREMIUM" | "USER";
+
 export type User = {
   id: string;
   username: string;
@@ -12,7 +14,7 @@ export type User = {
   level?: number;
   verified?: boolean;
   mood?: string;
-  role: "ADMIN" | "MOD" | "PREMIUM" | "USER";
+  role: Role;
   location?: {
     country?: string;
     city?: string;

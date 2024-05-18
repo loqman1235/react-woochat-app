@@ -90,7 +90,7 @@
 
 @layer base {
   html {
-    @apply h-screen scroll-smooth bg-background font-roboto text-text-foreground;
+    @apply h-screen scroll-smooth bg-background font-poppins text-text-foreground;
   }
 
   /* SVG Icons */
@@ -119,4 +119,17 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(136, 136, 136, 0.8);
+}
+
+.message-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 500ms,
+    transform 500ms;
 }

@@ -11,6 +11,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["react-spinners"],
+    include: ["react-spinners", "framer-motion"],
   },
 });

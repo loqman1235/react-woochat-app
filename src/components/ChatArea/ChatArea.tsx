@@ -6,6 +6,7 @@ import { MessageType } from "@/types";
 import useSocket from "@/hooks/useSocket";
 import { playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ChatAreaProps {
   roomId: string;
@@ -18,10 +19,12 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
   const { data: messagesData, isLoading } = useFetch<{
     messages: MessageType[];
   }>(`/messages/room/${roomId}`);
+  const [initialMessagesLoaded, setInitialMessagesLoaded] = useState(false);
 
   useEffect(() => {
     if (messagesData) {
       setMessages(messagesData.messages);
+      setInitialMessagesLoaded(true);
     }
   }, [messagesData]);
 
@@ -74,20 +77,36 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
     >
       {/*  MESSAGES CONTAINER */}
       <div
-        className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto bg-background py-2 md:py-5"
+        className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto overflow-x-hidden bg-background py-2 md:py-5"
         ref={messagesContainerRef}
       >
         {/* Loading */}
         {isLoading &&
           Array.from({ length: 4 }).map((_, i) => <MessageSkeleton key={i} />)}
-        {messages.map((message) => (
-          <Message
-            key={message.id}
-            {...message}
-            isUserDropdownOpen={openDropdownId === message.id}
-            toggleUserDropdown={() => toggleDropdown(message.id)}
-          />
-        ))}
+        <AnimatePresence>
+          {messages.map((message) => (
+            <motion.div
+              key={message.id}
+              initial={
+                initialMessagesLoaded ? { opacity: 0, y: 20, scale: 0 } : {}
+              }
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.3,
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+              }}
+            >
+              <Message
+                {...message}
+                isUserDropdownOpen={openDropdownId === message.id}
+                toggleUserDropdown={() => toggleDropdown(message.id)}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       {/* CHAT INPUT */}

@@ -40,8 +40,8 @@ const User = ({
           />
           {/* USERNAME AND MOOD */}
           <ul>
-            <li className="text-sm font-bold text-text-foreground">
-              {username.length > 8 ? username.slice(0, 8) + "..." : username}
+            <li className="truncate text-sm font-bold text-text-foreground">
+              {username}
             </li>
             {mood && <li className="text-[11px] text-text-muted">{mood}</li>}
           </ul>
