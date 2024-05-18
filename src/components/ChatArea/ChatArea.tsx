@@ -7,6 +7,7 @@ import useSocket from "@/hooks/useSocket";
 import { playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface ChatAreaProps {
   roomId: string;
@@ -15,18 +16,22 @@ interface ChatAreaProps {
 const ChatArea = ({ roomId }: ChatAreaProps) => {
   const socket = useSocket();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [newMessageIds, setNewMessageIds] = useState<string[]>([]);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const { data: messagesData, isLoading } = useFetch<{
     messages: MessageType[];
   }>(`/messages/room/${roomId}`);
-  const [initialMessagesLoaded, setInitialMessagesLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (messagesData) {
       setMessages(messagesData.messages);
-      setInitialMessagesLoaded(true);
     }
-  }, [messagesData]);
+
+    if (!messagesData && !isLoading) {
+      navigate("/");
+    }
+  }, [messagesData, isLoading, navigate]);
 
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
@@ -40,10 +45,8 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
 
   useEffect(() => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scroll({
-        top: messagesContainerRef.current.scrollHeight,
-        behavior: "smooth",
-      });
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -52,6 +55,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
 
     const handleReceiveRoomMessage = (data: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, data]);
+      setNewMessageIds((prevIds) => [...prevIds, data.id]);
       playSound(MessageReceivedSound);
     };
 
@@ -88,12 +92,14 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
             <motion.div
               key={message.id}
               initial={
-                initialMessagesLoaded ? { opacity: 0, y: 20, scale: 0 } : {}
+                newMessageIds.includes(message.id)
+                  ? { opacity: 0, y: 50, scale: 0 }
+                  : {}
               }
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{
-                duration: 0.3,
+                duration: 0.2,
                 type: "spring",
                 stiffness: 260,
                 damping: 20,

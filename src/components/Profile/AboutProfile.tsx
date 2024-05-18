@@ -1,4 +1,5 @@
 import useProfile from "@/hooks/useProfile";
+import moment from "moment";
 import {
   MdCalendarMonth,
   MdEmail,
@@ -66,7 +67,9 @@ const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
           </span>
           Member since
         </li>
-        <li className="w-1/2">{currentUser?.createdAt || "N/A"}</li>
+        <li className="w-1/2">
+          {moment(currentUser?.createdAt).format("yyyy-MM-DD HH:mm A") || "N/A"}
+        </li>
       </ul>
     </div>
   );

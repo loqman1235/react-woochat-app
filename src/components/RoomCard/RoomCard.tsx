@@ -63,7 +63,7 @@ const RoomCard = ({
           {/* INFO */}
           <div className="flex h-full flex-1 flex-col justify-between">
             <div>
-              <p className="flex items-center gap-2 text-sm font-semibold capitalize text-text-foreground">
+              <h3 className="flex items-center gap-2 text-sm font-bold capitalize text-text-foreground">
                 {name}{" "}
                 {isPinned && (
                   <span
@@ -73,7 +73,7 @@ const RoomCard = ({
                     <MdPushPin />
                   </span>
                 )}
-              </p>
+              </h3>
               <p className="mb-2 text-xs font-medium text-text-muted">
                 {description}
               </p>

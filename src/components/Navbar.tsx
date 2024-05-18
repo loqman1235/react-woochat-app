@@ -64,15 +64,15 @@ const Navbar = () => {
         <div className="flex items-center gap-2 text-2xl md:gap-5">
           <ThemToggleSwitch />
 
-          <button className="relative">
+          <button className="relative text-text-muted">
             <MdEmail />
             <NotifCounter count={1} />
           </button>
-          <button className="relative">
+          <button className="relative text-text-muted">
             <MdPerson2 />
             <NotifCounter count={1} />
           </button>
-          <button className="relative">
+          <button className="relative text-text-muted">
             <MdNotifications />
             <NotifCounter count={1} />
           </button>
