@@ -45,7 +45,11 @@ const createRoomSchema = z.object({
 
 type CreateRoomForm = z.infer<typeof createRoomSchema>;
 
-const CreateRoomForm = () => {
+interface CreateRoomFormProps {
+  handleCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CreateRoomForm = ({ handleCloseModal }: CreateRoomFormProps) => {
   const { addRoom } = useRoom();
   const {
     register,
@@ -75,6 +79,7 @@ const CreateRoomForm = () => {
         if (response.data.room) addRoom(response.data.room as Room);
         reset();
         toast.success("Room created successfully");
+        handleCloseModal(false);
         debugLog(response.data);
       }
     } catch (error) {

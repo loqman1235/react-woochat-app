@@ -106,7 +106,7 @@ const RoomsPage = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        <CreateRoomForm />
+        <CreateRoomForm handleCloseModal={setIsModalOpen} />
       </Modal>
     </main>
   );
