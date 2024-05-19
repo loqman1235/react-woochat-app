@@ -8,6 +8,9 @@ import { playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import useRoom from "@/hooks/useRoom";
+import AlertSound from "@/assets/sounds/alert.mp3";
 
 interface ChatAreaProps {
   roomId: string;
@@ -15,6 +18,7 @@ interface ChatAreaProps {
 
 const ChatArea = ({ roomId }: ChatAreaProps) => {
   const socket = useSocket();
+  const { setRooms } = useRoom();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [newMessageIds, setNewMessageIds] = useState<string[]>([]);
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -45,8 +49,10 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
 
   useEffect(() => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scroll({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
 
@@ -59,13 +65,24 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       playSound(MessageReceivedSound);
     };
 
+    const handleRoomRemoved = (roomId: string) => {
+      if (roomId === roomId) {
+        setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+        playSound(AlertSound);
+        toast.error("This room has been deleted");
+        navigate("/");
+      }
+    };
+
     socket.on("receiveRoomMessage", handleReceiveRoomMessage);
+    socket.on("delete_room", handleRoomRemoved);
 
     // Clean up the socket event listeners on component unmount
     return () => {
       socket.off("receiveRoomMessage", handleReceiveRoomMessage);
+      socket.off("delete_room", handleRoomRemoved);
     };
-  }, [socket]);
+  }, [navigate, socket]);
 
   return (
     <div

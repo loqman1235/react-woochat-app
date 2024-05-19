@@ -23,6 +23,14 @@ const User = ({
     setIsUserMenuOpen((prev) => !prev);
   };
 
+  const animatedText =
+    role === "ADMIN" || role === "MOD" || role === "PREMIUM"
+      ? "animated-text"
+      : null;
+
+  console.log(role, "ROLE");
+  console.log(animatedText, "ANIMATED TEXT");
+
   return (
     <div className="relative overflow-hidden">
       <div
@@ -40,7 +48,9 @@ const User = ({
           />
           {/* USERNAME AND MOOD */}
           <ul>
-            <li className="truncate text-sm font-bold text-text-foreground">
+            <li
+              className={`truncate text-sm font-bold text-text-foreground ${animatedText}`}
+            >
               {username}
             </li>
             {mood && <li className="text-[11px] text-text-muted">{mood}</li>}

@@ -133,3 +133,20 @@
     opacity 500ms,
     transform 500ms;
 }
+
+.animated-text {
+  background: url("/fire.gif") repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate 10s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}

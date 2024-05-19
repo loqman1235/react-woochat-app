@@ -13,6 +13,8 @@ import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { Modal } from "../shared/Modal";
 import Button from "../shared/Button";
+import useRoom from "@/hooks/useRoom";
+import useSocket from "@/hooks/useSocket";
 
 interface RoomCardProps extends Room {
   totalMembers: number;
@@ -24,19 +26,29 @@ const RoomCard = ({
   roomImage,
   totalMembers,
   description,
-  isPinned = false,
+  isPinned,
 }: RoomCardProps) => {
+  const socket = useSocket();
   const { user } = useAuth();
+  const { deleteRoom, toggleRoomPin } = useRoom();
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
 
+  // Toggle options dropdown
   const toggleOptionsDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowOptionsDropdown((prev: boolean) => !prev);
   };
 
+  // Toggle remove modal
   const toggleRemoveModal = () => {
     setShowRemoveModal((prev: boolean) => !prev);
+  };
+
+  const handleDeleteRoom = () => {
+    deleteRoom(id);
+    setShowRemoveModal(false);
+    if (socket) socket.emit("delete_room", id);
   };
 
   return (
@@ -94,7 +106,11 @@ const RoomCard = ({
               </button>
 
               <Dropdown isOpen={showOptionsDropdown}>
-                <DropdownItem text={`Pin "${name}"`} icon={<MdPushPin />} />
+                <DropdownItem
+                  text={`${isPinned ? "Unpin" : "Pin"} "${name}"`}
+                  icon={<MdPushPin />}
+                  handleClick={() => toggleRoomPin(id)}
+                />
                 <DropdownItem text={`Edit "${name}"`} icon={<MdEdit />} />
                 <DropdownItem
                   text={`Delete "${name}"`}
@@ -115,7 +131,7 @@ const RoomCard = ({
             Are you sure you want to delete {name}?
           </h2>
           <div className="mt-5 flex justify-center gap-2">
-            <Button variant="danger" type="button">
+            <Button variant="danger" type="button" onClick={handleDeleteRoom}>
               Delete
             </Button>
             <Button

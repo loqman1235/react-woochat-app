@@ -5,6 +5,7 @@ import useAuth from "@/hooks/useAuth";
 
 // Icons
 import { MdAdd } from "react-icons/md";
+
 import { Modal } from "@/components/shared/Modal";
 import { useEffect, useState } from "react";
 import CreateRoomForm from "@/components/Forms/CreateRoomForm";
@@ -16,6 +17,9 @@ const RoomsPage = () => {
   const { user } = useAuth();
   const { rooms, isLoading, error, setRooms } = useRoom();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const pinnedRooms = rooms.filter((room) => room.isPinned);
+  const unpinnedRooms = rooms.filter((room) => !room.isPinned);
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -61,24 +65,39 @@ const RoomsPage = () => {
             </Button>
           )}
         </div>
-        <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
-          {isLoading &&
-            Array.from({ length: 6 }).map((_, i) => (
+
+        {isLoading && (
+          <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2">
+            {[...Array(10)].map((_, i) => (
               <SkeletonRoomCard key={i} />
             ))}
+          </div>
+        )}
 
-          {rooms.length > 0 ? (
-            rooms.map((room) => (
+        {pinnedRooms.length > 0 && (
+          <div className="mb-5 grid w-full grid-cols-1 gap-5 border-b border-b-border pb-5 md:grid-cols-2">
+            {pinnedRooms.map((room) => (
               <RoomCard
                 key={room.id}
                 {...room}
                 totalMembers={room.totalMembers || 0}
               />
-            ))
-          ) : (
-            <div className="w-full  text-text-muted">{error && error}</div>
-          )}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {unpinnedRooms.length > 0 && (
+          <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
+            {unpinnedRooms.map((room) => (
+              <RoomCard
+                key={room.id}
+                {...room}
+                totalMembers={room.totalMembers || 0}
+              />
+            ))}
+          </div>
+        )}
+        <div className="w-full  text-text-muted">{error && error}</div>
       </div>
 
       {/* Create room modal */}

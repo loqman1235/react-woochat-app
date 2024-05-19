@@ -2,6 +2,7 @@ import api from "@/services/api";
 import { Room } from "@/types";
 import { AxiosError } from "axios";
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type RoomContextType = {
   rooms: Room[];
@@ -9,6 +10,8 @@ type RoomContextType = {
   error: string | null;
   addRoom: (newRoom: Room) => void;
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
+  deleteRoom: (roomId: string) => void;
+  toggleRoomPin: (roomId: string) => void;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setError?: React.Dispatch<React.SetStateAction<string | null>>;
 };
@@ -20,6 +23,8 @@ type RoomProviderProps = {
 export const RoomContext = createContext<RoomContextType>({
   rooms: [],
   setRooms: () => {},
+  deleteRoom: () => {},
+  toggleRoomPin: () => {},
   addRoom: () => {},
   isLoading: true,
   error: null,
@@ -32,6 +37,40 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
 
   const addRoom = (newRoom: Room) => {
     setRooms((prevRooms) => [newRoom, ...prevRooms]);
+  };
+
+  // Delete room
+  const deleteRoom = async (roomId: string) => {
+    try {
+      const response = await api.delete(`/rooms/${roomId}`);
+      if (response.status === 200) {
+        setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
+    }
+  };
+
+  // Pin room
+  const toggleRoomPin = async (roomId: string) => {
+    try {
+      const response = await api.patch(`/rooms/${roomId}/pin`);
+      if (response.status === 200) {
+        setRooms((prevRooms) =>
+          prevRooms.map((room) =>
+            room.id === roomId ? { ...room, isPinned: !room.isPinned } : room,
+          ),
+        );
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
+    }
   };
 
   // Fetch rooms
@@ -62,6 +101,8 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
         setIsLoading,
         setError,
         addRoom,
+        deleteRoom,
+        toggleRoomPin,
       }}
     >
       {children}

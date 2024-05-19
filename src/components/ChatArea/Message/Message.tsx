@@ -26,6 +26,13 @@ const Message = ({
 
   const isOwnProfile = user?.id === sender.id;
 
+  const animatedText =
+    sender.role === "ADMIN" ||
+    sender.role === "MOD" ||
+    sender.role === "PREMIUM"
+      ? "animated-text"
+      : null;
+
   return (
     <div
       className={`flex w-full items-start gap-2 px-2 py-2 md:px-5 ${isOwnProfile && "flex-row-reverse"}`}
@@ -63,7 +70,9 @@ const Message = ({
             className={`flex items-center gap-1 ${isOwnProfile && "flex-row-reverse"}`}
           >
             <span>{getRoleIcon(sender.role, "xs")}</span>
-            <h5 className="text-sm font-bold text-text-foreground">
+            <h5
+              className={`text-sm font-bold text-text-foreground ${animatedText}`}
+            >
               {sender.username}
             </h5>
           </div>
