@@ -6,11 +6,13 @@ interface AvatarProps {
   size: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
   onClick?: () => void;
   rounded?: boolean;
+  isOnline?: boolean;
 }
 
 const Avatar = ({
   src,
   username,
+  isOnline,
   gender,
   isBordered = false,
   size,
@@ -43,7 +45,13 @@ const Avatar = ({
         />
       </div>
 
-      {/* LEVEL  */}
+      {/* Online Status */}
+      {isOnline && (
+        <span
+          className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-success"
+          title="Online"
+        ></span>
+      )}
     </div>
   );
 };

@@ -2,9 +2,9 @@ import { Message, MessageSkeleton } from "@/components/ChatArea/Message";
 import { useEffect, useRef, useState } from "react";
 import ChatInput from "./ChatInput";
 import useFetch from "@/hooks/useFetch";
-import { MessageType } from "@/types";
+import { MessageType, User } from "@/types";
 import useSocket from "@/hooks/useSocket";
-import { playSound } from "@/utils";
+import { isUserOnline, playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ interface ChatAreaProps {
 const ChatArea = ({ roomId }: ChatAreaProps) => {
   const socket = useSocket();
   const { setRooms } = useRoom();
+  const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [newMessageIds, setNewMessageIds] = useState<string[]>([]);
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -59,12 +60,19 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
   useEffect(() => {
     if (!socket) return;
 
+    // Handle online users
+    const handleOnlineUsers = ({ users }: { users: User[] }) => {
+      setOnlineUsers(users);
+    };
+
+    // Handle receiving a message in the room
     const handleReceiveRoomMessage = (data: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       setNewMessageIds((prevIds) => [...prevIds, data.id]);
       playSound(MessageReceivedSound);
     };
 
+    // Handle room deletion
     const handleRoomRemoved = (roomId: string) => {
       if (roomId === roomId) {
         setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
@@ -74,11 +82,13 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       }
     };
 
+    socket.on("online_users", handleOnlineUsers);
     socket.on("receiveRoomMessage", handleReceiveRoomMessage);
     socket.on("delete_room", handleRoomRemoved);
 
     // Clean up the socket event listeners on component unmount
     return () => {
+      socket.off("online_users", handleOnlineUsers);
       socket.off("receiveRoomMessage", handleReceiveRoomMessage);
       socket.off("delete_room", handleRoomRemoved);
     };
@@ -123,6 +133,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
               }}
             >
               <Message
+                isOnline={isUserOnline(onlineUsers, message.user.id)}
                 {...message}
                 isUserDropdownOpen={openDropdownId === message.id}
                 toggleUserDropdown={() => toggleDropdown(message.id)}

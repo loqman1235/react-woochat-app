@@ -106,6 +106,12 @@ const filterUsersByRole = (users: User[], role: Role[], isLoading: boolean) => {
   return users.filter((user) => role.includes(user.role));
 };
 
+// Check if user is online or not
+const isUserOnline = (onlineUsersArr: User[], userId: string): boolean => {
+  const onlineUsersIds = onlineUsersArr.map((user) => user.id);
+  return onlineUsersIds.includes(userId);
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -115,4 +121,5 @@ export {
   formatDate,
   playSound,
   filterUsersByRole,
+  isUserOnline,
 };

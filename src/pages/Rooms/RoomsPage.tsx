@@ -35,7 +35,7 @@ const RoomsPage = () => {
       roomId: string;
       totalMembers: number;
     }) => {
-      console.log(roomId, totalMembers);
+      console.log("online_users", { roomId, totalMembers });
 
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
