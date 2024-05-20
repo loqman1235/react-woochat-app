@@ -19,10 +19,6 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
     e.preventDefault();
     if (!content.trim()) return;
 
-    if (socket) {
-      socket.emit("sendRoomMessage", { roomId, content, user });
-    }
-
     try {
       setIsSubmitting(true);
       const response = await api.post(`/messages/${roomId}`, { content });
@@ -30,6 +26,15 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
 
       if (response.status === 201) {
         setContent("");
+
+        if (socket) {
+          socket.emit("sendRoomMessage", {
+            roomId,
+            messageId: response.data.createdMessage.id,
+            content,
+            user,
+          });
+        }
       }
     } catch (error) {
       setIsSubmitting(false);

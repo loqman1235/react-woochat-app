@@ -2,26 +2,45 @@
 import { formatDate, getRoleIcon } from "@/utils";
 import Avatar from "@/components/shared/Avatar";
 import { Dropdown, DropdownItem } from "@/components/shared/Dropdown";
-import { MdAccountCircle, MdBolt, MdEmail, MdMoreHoriz } from "react-icons/md";
+import {
+  MdAccountCircle,
+  MdBolt,
+  MdDelete,
+  MdEmail,
+  MdFlag,
+  MdMoreHoriz,
+  MdReply,
+} from "react-icons/md";
 // import useChatWindow from "@/hooks/useChatWindow";
 import { MessageType } from "@/types";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+import api from "@/services/api";
+import useSocket from "@/hooks/useSocket";
 
 interface MessageProps extends MessageType {
   isUserDropdownOpen: boolean;
   toggleUserDropdown: () => void;
 }
 
+const STAFF_ROLES = ["ADMIN", "MOD", "PREMIUM"];
+
 const Message = ({
+  id,
   user: sender,
   content,
+  isDeleted,
   createdAt,
   isUserDropdownOpen,
   toggleUserDropdown,
 }: MessageProps) => {
   // const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
+  const socket = useSocket();
   const { setIsProfileOpen, setCurrentUser } = useProfile();
+  const [isMessageMarkedAsDeleted, setIsMessageMarkedAsDeleted] =
+    useState(isDeleted);
+  const [isMessageOptionsOpen, setIsMessageOptionsOpen] = useState(false);
   const { user } = useAuth();
 
   const isOwnProfile = user?.id === sender.id;
@@ -32,6 +51,33 @@ const Message = ({
     sender.role === "PREMIUM"
       ? "animated-text"
       : null;
+
+  const toggleMessageOptionsDropdown = () => {
+    setIsMessageOptionsOpen((prev) => !prev);
+  };
+
+  const handleMarkAsDeleted = async () => {
+    try {
+      await api.patch(`/messages/${id}`);
+      socket?.emit("mark_message_deleted", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const handleOnMarkMessageDeleted = (messageId: string) => {
+      if (messageId === id) {
+        setIsMessageMarkedAsDeleted(true);
+      }
+    };
+
+    socket?.on("mark_message_deleted", handleOnMarkMessageDeleted);
+
+    return () => {
+      socket?.off("mark_message_deleted", handleOnMarkMessageDeleted);
+    };
+  }, [id, socket]);
 
   return (
     <div
@@ -89,7 +135,12 @@ const Message = ({
           <div
             className={`w-fit rounded-full rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-full rounded-tr-none bg-primary text-white"}`}
           >
-            <p className="text-sm">{content}</p>
+            {isMessageMarkedAsDeleted ? (
+              <p className="text-sm italic">Message has been deleted</p>
+            ) : (
+              <p className="text-sm">{content}</p>
+            )}
+
             {/* {media && (
             <img
               src={media}
@@ -97,9 +148,52 @@ const Message = ({
             />
           )} */}
           </div>
-          <button className="text-xl text-text-muted-2 opacity-0 transition duration-300 hover:text-text-foreground group-hover:opacity-100">
-            <MdMoreHoriz />
-          </button>
+          {!isMessageMarkedAsDeleted && (
+            <button
+              className="relative text-xl text-text-muted-2 opacity-0 transition duration-300 hover:text-text-foreground group-hover:opacity-100"
+              onClick={toggleMessageOptionsDropdown}
+            >
+              <MdMoreHoriz />
+
+              <Dropdown
+                isOpen={isMessageOptionsOpen}
+                position={isOwnProfile ? "right" : "left"}
+              >
+                {isOwnProfile ? (
+                  <>
+                    <DropdownItem
+                      icon={<MdDelete />}
+                      text="Delete"
+                      bgColor="danger"
+                      handleClick={handleMarkAsDeleted}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <DropdownItem
+                      icon={<MdReply />}
+                      text="Reply"
+                      bgColor="default"
+                    />
+                    {STAFF_ROLES.includes(user?.role || "") && (
+                      <>
+                        <DropdownItem
+                          icon={<MdDelete />}
+                          text="Delete"
+                          bgColor="danger"
+                        />
+                      </>
+                    )}
+                    <DropdownItem
+                      icon={<MdFlag />}
+                      text="Report"
+                      bgColor="danger"
+                    />
+                  </>
+                )}
+              </Dropdown>
+            </button>
+          )}
         </div>
       </div>
     </div>

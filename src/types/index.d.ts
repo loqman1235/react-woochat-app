@@ -47,5 +47,6 @@ export type MessageType = {
   id: string;
   content: string;
   user: User;
+  isDeleted?: boolean;
   createdAt: string;
 };
