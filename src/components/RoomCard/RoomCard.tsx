@@ -74,7 +74,7 @@ const RoomCard = ({
         <div className="flex h-full w-[calc(100%-80px)] items-center justify-between">
           {/* INFO */}
           <div className="flex h-full flex-1 flex-col justify-between">
-            <div>
+            <div className="flex flex-col gap-2">
               <h3 className="flex items-center gap-2 text-sm font-bold capitalize text-text-foreground">
                 {name}{" "}
                 {isPinned && (
@@ -91,9 +91,11 @@ const RoomCard = ({
               </p>
             </div>
             {/* NUMBER OF MEMBERS */}
-            <div className="flex w-fit items-center gap-1 rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
-              {totalMembers} <MdPeople className="text-sm" />
-            </div>
+            {totalMembers > 0 && (
+              <div className="flex w-fit items-center gap-1 rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+                {totalMembers} <MdPeople className="text-sm" />
+              </div>
+            )}
           </div>
           {/* OPTIONS */}
           {user?.role === "ADMIN" && (

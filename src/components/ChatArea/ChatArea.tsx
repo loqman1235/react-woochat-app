@@ -82,7 +82,7 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
       socket.off("receiveRoomMessage", handleReceiveRoomMessage);
       socket.off("delete_room", handleRoomRemoved);
     };
-  }, [navigate, socket]);
+  }, [navigate, setRooms, socket]);
 
   return (
     <div

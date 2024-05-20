@@ -24,7 +24,7 @@ interface MessageProps extends MessageType {
   toggleUserDropdown: () => void;
 }
 
-const STAFF_ROLES = ["ADMIN", "MOD", "PREMIUM"];
+const STAFF_ROLES = ["ADMIN", "MOD"];
 
 const Message = ({
   id,
