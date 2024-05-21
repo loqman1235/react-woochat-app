@@ -59,7 +59,7 @@ const RoomsPage = () => {
         <div className="mb-5 flex w-full items-center justify-between">
           <h3 className="text-xl font-semibold text-text-foreground">Rooms</h3>
 
-          {user && user.role === "ADMIN" && (
+          {user && user.role === "OWNER" && (
             <Button variant="primary" type="button" onClick={handleModal}>
               <MdAdd className="text-xl" /> Create
             </Button>

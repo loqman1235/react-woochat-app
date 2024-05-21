@@ -4,12 +4,16 @@ import Avatar from "@/components/shared/Avatar";
 import { Dropdown, DropdownItem } from "@/components/shared/Dropdown";
 import {
   MdAccountCircle,
-  MdBolt,
+  MdBlock,
   MdDelete,
   MdEmail,
   MdFlag,
+  MdLocalPolice,
+  MdLogout,
   MdMoreHoriz,
+  MdPersonAdd,
   MdReply,
+  MdShield,
 } from "react-icons/md";
 // import useChatWindow from "@/hooks/useChatWindow";
 import { MessageType } from "@/types";
@@ -25,7 +29,7 @@ interface MessageProps extends MessageType {
   toggleUserDropdown: () => void;
 }
 
-const STAFF_ROLES = ["ADMIN", "MOD"];
+const STAFF_ROLES = ["OWNER", "ADMIN", "MOD"];
 
 const Message = ({
   id,
@@ -48,6 +52,7 @@ const Message = ({
   const isOwnProfile = user?.id === sender.id;
 
   const animatedText =
+    sender.role === "OWNER" ||
     sender.role === "ADMIN" ||
     sender.role === "MOD" ||
     sender.role === "PREMIUM"
@@ -97,7 +102,12 @@ const Message = ({
           isOpen={isUserDropdownOpen}
           position={isOwnProfile ? "right" : "left"}
         >
-          {!isOwnProfile && <DropdownItem icon={<MdEmail />} text="Private" />}
+          {!isOwnProfile && (
+            <>
+              <DropdownItem icon={<MdEmail />} text="Private" />{" "}
+              <DropdownItem icon={<MdPersonAdd />} text="Send Request" />
+            </>
+          )}
           <DropdownItem
             icon={<MdAccountCircle />}
             text="View Profile"
@@ -106,7 +116,39 @@ const Message = ({
               setCurrentUser(sender);
             }}
           />
-          <DropdownItem icon={<MdBolt />} text="Action" bgColor="danger" />
+
+          {user &&
+            sender.role !== "OWNER" &&
+            user.role === "OWNER" &&
+            !isOwnProfile && (
+              <>
+                {sender.role === "MOD" ? (
+                  <DropdownItem icon={<MdLocalPolice />} text="Make Admin" />
+                ) : (
+                  <>
+                    <DropdownItem icon={<MdLocalPolice />} text="Make Admin" />
+                    <DropdownItem icon={<MdShield />} text="Make Moderator" />
+                  </>
+                )}
+                <DropdownItem
+                  icon={<MdBlock />}
+                  text={`Ban ${sender.username}`}
+                  bgColor="danger"
+                />
+              </>
+            )}
+
+          {/* Kick */}
+          {user &&
+            STAFF_ROLES.includes(user?.role) &&
+            sender.role !== "ADMIN" &&
+            !isOwnProfile && (
+              <DropdownItem
+                icon={<MdLogout />}
+                text={`Kick ${sender?.username}`}
+                bgColor="danger"
+              />
+            )}
         </Dropdown>
       </div>
 

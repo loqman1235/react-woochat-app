@@ -98,7 +98,7 @@ const RoomCard = ({
             )}
           </div>
           {/* OPTIONS */}
-          {user?.role === "ADMIN" && (
+          {user?.role === "OWNER" && (
             <div className="relative">
               <button
                 className="text-2xl text-text-muted-2 transition duration-300 hover:text-text-foreground"

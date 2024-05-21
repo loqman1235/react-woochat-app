@@ -24,11 +24,10 @@ const User = ({
   };
 
   const animatedText =
-    role === "ADMIN" || role === "MOD" || role === "PREMIUM"
+    role === "OWNER" || role === "ADMIN" || role === "MOD" || role === "PREMIUM"
       ? "animated-text"
       : null;
 
-  console.log(role, "ROLE");
   console.log(animatedText, "ANIMATED TEXT");
 
   return (

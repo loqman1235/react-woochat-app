@@ -8,6 +8,7 @@ export default {
         "open-sans": ["var(--font-open-sans)", "sans-serif"],
         kaushan: ["var(--font-kaushan)", "cursive"],
         poppins: ["var(--font-poppins)", "sans-serif"],
+        "nunito-sans": ["var(--font-nunito-sans)", "sans-serif"],
       },
       colors: {
         primary: "var(--color-primary)",

@@ -7,7 +7,7 @@ import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
 import api from "@/services/api";
-import { setItemToLocalStorage } from "@/utils";
+import { getRoleIcon, setItemToLocalStorage } from "@/utils";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { AxiosError } from "axios";
@@ -230,8 +230,18 @@ const ProfileModal = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1">
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="flex items-center gap-2 text-xl font-bold text-white">
                     {isOwnProfile ? user?.username : currentUser?.username}
+                    <div className="flex items-center gap-1">
+                      {currentUser?.verified && (
+                        <span className="text-success" title="Verified">
+                          <MdVerified />
+                        </span>
+                      )}
+                      {currentUser && (
+                        <span>{getRoleIcon(currentUser.role, "md")}</span>
+                      )}
+                    </div>
                   </h3>
                   {user?.verified && (
                     <span className="text-success">

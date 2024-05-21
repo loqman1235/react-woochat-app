@@ -3,6 +3,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
 /* Import poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
@@ -49,6 +51,7 @@
   --font-kaushan: "Kaushan Script", cursive;
   --font-open-sans: "Open Sans", sans-serif;
   --font-poppins: "Poppins", sans-serif;
+  --font-nunito-sans: "Nunito Sans", sans-serif;
 
   --main-menu-width: 260px; /* 160px */
   --main-menu-mobile-width: 180px;
@@ -90,7 +93,7 @@
 
 @layer base {
   html {
-    @apply h-screen scroll-smooth bg-background font-poppins text-text-foreground;
+    @apply h-screen scroll-smooth bg-background font-nunito-sans text-text-foreground;
   }
 
   /* SVG Icons */

@@ -1,6 +1,7 @@
 import {
   AdminIcon,
   ModeratorIcon,
+  OwnerIcon,
   PremiumIcon,
   UserIcon,
 } from "@/components/icons";
@@ -18,6 +19,12 @@ const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
           ? "text-base"
           : "text-lg";
   switch (role) {
+    case "OWNER":
+      return (
+        <span className={`text-owner ${iconSize}`} title="Owner">
+          <OwnerIcon />
+        </span>
+      );
     case "ADMIN":
       return (
         <span className={`text-admin ${iconSize}`} title="Admin">

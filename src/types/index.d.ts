@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export type LoginForm = z.infer<typeof loginSchema>;
 
-export type Role = "ADMIN" | "MOD" | "PREMIUM" | "USER";
+export type Role = "ADMIN" | "MOD" | "PREMIUM" | "USER" | "OWNER";
 
 export type User = {
   id: string;

@@ -88,6 +88,7 @@ const CreateRoomForm = ({ handleCloseModal }: CreateRoomFormProps) => {
           setError(error.response?.data.details[0].field, {
             message: error.response?.data.details[0].message,
           });
+          toast.error(error.response?.data.details[0].message);
         } else {
           debugLog(error.response?.data);
         }

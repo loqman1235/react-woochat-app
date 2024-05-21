@@ -18,7 +18,7 @@ const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
   // Filtering online users
   const staffMembers = filterUsersByRole(
     onlineUsers,
-    ["ADMIN", "MOD"],
+    ["OWNER", "ADMIN", "MOD"],
     isLoading,
   );
   const vipMembers = filterUsersByRole(onlineUsers, ["PREMIUM"], isLoading);

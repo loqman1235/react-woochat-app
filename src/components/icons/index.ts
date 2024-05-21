@@ -1,3 +1,4 @@
+export { default as OwnerIcon } from "./roles/OwnerIcon";
 export { default as AdminIcon } from "./roles/AdminIcon";
 export { default as ModeratorIcon } from "./roles/ModeratorIcon";
 export { default as PremiumIcon } from "./roles/PremiumIcon";
