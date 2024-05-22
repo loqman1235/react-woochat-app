@@ -26,7 +26,7 @@ const DropdownItem = ({
 
   return (
     <li
-      className={`flex cursor-pointer items-center gap-2 rounded-md border-b border-b-border px-3 py-2 text-[15px] font-medium capitalize transition duration-300 last:border-0 ${bgColorStyles} ${textColorStyles}`}
+      className={`flex cursor-pointer items-center gap-4 rounded-md border-b border-b-border px-3 py-2 text-sm font-medium capitalize transition duration-300 last:border-0 ${bgColorStyles} ${textColorStyles}`}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

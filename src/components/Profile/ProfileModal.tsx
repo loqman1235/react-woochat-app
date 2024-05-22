@@ -11,6 +11,7 @@ import { getRoleIcon, setItemToLocalStorage } from "@/utils";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { AxiosError } from "axios";
+import ManageRole from "./ManageRole";
 // import useFetch from "@/hooks/useFetch";
 
 const ProfileModal = () => {
@@ -25,23 +26,34 @@ const ProfileModal = () => {
   const [isAboutTabActive, setIsAboutTabActive] = useState(true);
   const [isEditProfileTabActive, setIsProfileTabActive] = useState(false);
   const [isLevelsTabActive, setIsLevelsTabActive] = useState(false);
+  const [isManageRoleTabActive, setIsManageRoleTabActive] = useState(false);
 
   const toggleAboutTab = () => {
     setIsAboutTabActive(true);
     setIsProfileTabActive(false);
     setIsLevelsTabActive(false);
+    setIsManageRoleTabActive(false);
   };
 
   const toggleOptionsTab = () => {
     setIsAboutTabActive(false);
     setIsProfileTabActive(true);
     setIsLevelsTabActive(false);
+    setIsManageRoleTabActive(false);
   };
 
   const toggleLevelsTab = () => {
     setIsAboutTabActive(false);
     setIsProfileTabActive(false);
     setIsLevelsTabActive(true);
+    setIsManageRoleTabActive(false);
+  };
+
+  const toggleManageRole = () => {
+    setIsAboutTabActive(false);
+    setIsProfileTabActive(false);
+    setIsLevelsTabActive(false);
+    setIsManageRoleTabActive(true);
   };
 
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
@@ -131,6 +143,7 @@ const ProfileModal = () => {
       setIsAboutTabActive(true);
       setIsProfileTabActive(false);
       setIsLevelsTabActive(false);
+      setIsManageRoleTabActive(false);
     }
   }, [isProfileOpen]);
 
@@ -243,11 +256,6 @@ const ProfileModal = () => {
                       )}
                     </div>
                   </h3>
-                  {user?.verified && (
-                    <span className="text-success">
-                      <MdVerified />
-                    </span>
-                  )}
                 </div>
                 {/* MOOD */}
                 {user?.mood && (
@@ -281,11 +289,20 @@ const ProfileModal = () => {
           >
             Level
           </li>
+          {user?.role === "OWNER" && !isOwnProfile && (
+            <li
+              className={`${inactiveTabStyles} ${isManageRoleTabActive && activeTabStyles}`}
+              onClick={toggleManageRole}
+            >
+              Manage role
+            </li>
+          )}
         </ul>
 
         <AboutProfile isOpen={isAboutTabActive} />
         {isOwnProfile && <EditProfileForm isOpen={isEditProfileTabActive} />}
         <LevelForm isOpen={isLevelsTabActive} />
+        <ManageRole isOpen={isManageRoleTabActive} />
       </div>
     </div>
   );

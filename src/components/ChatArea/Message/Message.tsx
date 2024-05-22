@@ -8,12 +8,10 @@ import {
   MdDelete,
   MdEmail,
   MdFlag,
-  MdLocalPolice,
   MdLogout,
   MdMoreHoriz,
   MdPersonAdd,
   MdReply,
-  MdShield,
 } from "react-icons/md";
 // import useChatWindow from "@/hooks/useChatWindow";
 import { MessageType } from "@/types";
@@ -117,37 +115,23 @@ const Message = ({
             }}
           />
 
-          {user &&
-            sender.role !== "OWNER" &&
-            user.role === "OWNER" &&
-            !isOwnProfile && (
-              <>
-                {sender.role === "MOD" ? (
-                  <DropdownItem icon={<MdLocalPolice />} text="Make Admin" />
-                ) : (
-                  <>
-                    <DropdownItem icon={<MdLocalPolice />} text="Make Admin" />
-                    <DropdownItem icon={<MdShield />} text="Make Moderator" />
-                  </>
-                )}
-                <DropdownItem
-                  icon={<MdBlock />}
-                  text={`Ban ${sender.username}`}
-                  bgColor="danger"
-                />
-              </>
-            )}
-
           {/* Kick */}
           {user &&
             STAFF_ROLES.includes(user?.role) &&
-            sender.role !== "ADMIN" &&
+            sender.role !== "OWNER" &&
             !isOwnProfile && (
-              <DropdownItem
-                icon={<MdLogout />}
-                text={`Kick ${sender?.username}`}
-                bgColor="danger"
-              />
+              <>
+                <DropdownItem
+                  icon={<MdLogout />}
+                  text={`Kick ${sender?.username}`}
+                  bgColor="danger"
+                />
+                <DropdownItem
+                  icon={<MdBlock />}
+                  text={`Ban ${sender?.username}`}
+                  bgColor="danger"
+                />
+              </>
             )}
         </Dropdown>
       </div>
