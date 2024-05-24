@@ -44,10 +44,10 @@ const RoomsPage = () => {
       );
     };
 
-    socket.on("online_users", handleOnlineUsers);
+    socket.on("online_room_users", handleOnlineUsers);
 
     return () => {
-      socket.off("online_users", handleOnlineUsers);
+      socket.off("online_room_users", handleOnlineUsers);
     };
   }, [socket, setRooms]);
 

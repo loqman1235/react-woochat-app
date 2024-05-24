@@ -7,14 +7,17 @@ import LevelForm from "./LevelForm";
 import useProfile from "@/hooks/useProfile";
 import useAuth from "@/hooks/useAuth";
 import api from "@/services/api";
-import { getRoleIcon, setItemToLocalStorage } from "@/utils";
+import { getRoleIcon, isUserOnline, setItemToLocalStorage } from "@/utils";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { AxiosError } from "axios";
 import ManageRole from "./ManageRole";
+import useSocket from "@/hooks/useSocket";
+import { User } from "@/types";
 // import useFetch from "@/hooks/useFetch";
 
 const ProfileModal = () => {
+  const socket = useSocket();
   const { user, setUser } = useAuth();
   // const { data: userResult, isLoading } = useFetch("/users", user.id);
 
@@ -27,6 +30,7 @@ const ProfileModal = () => {
   const [isEditProfileTabActive, setIsProfileTabActive] = useState(false);
   const [isLevelsTabActive, setIsLevelsTabActive] = useState(false);
   const [isManageRoleTabActive, setIsManageRoleTabActive] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
 
   const toggleAboutTab = () => {
     setIsAboutTabActive(true);
@@ -58,6 +62,8 @@ const ProfileModal = () => {
 
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
   const [isCoverUploading, setIsCoverUploading] = useState(false);
+
+  const isOnline = currentUser && isUserOnline(onlineUsers, currentUser.id);
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -147,9 +153,25 @@ const ProfileModal = () => {
     }
   }, [isProfileOpen]);
 
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleOnlineUsers = (users: User[]) => {
+      setOnlineUsers(users);
+    };
+
+    socket.on("online_users", handleOnlineUsers);
+
+    return () => {
+      socket.off("online_users", handleOnlineUsers);
+    };
+  }, [socket]);
+
   const activeTabStyles = "bg-secondary !text-text-foreground";
   const inactiveTabStyles =
     "flex h-full cursor-pointer items-center px-5 text-text-muted transition duration-300 hover:text-text-foreground";
+
+  console.log(currentUser);
 
   return (
     // MODAL CONTAINER
@@ -204,18 +226,35 @@ const ProfileModal = () => {
             {/* AVATAR */}
             <div className="absolute bottom-5 left-2 flex items-end gap-3 md:left-5">
               <div className="relative shadow-md">
-                <Avatar
-                  size="4xl"
-                  src={
-                    currentUser?.avatar && currentUser.avatar.secure_url
-                      ? currentUser.avatar.secure_url
-                      : "/default_avatar.png"
-                  }
-                  username={currentUser?.username}
-                  gender={currentUser?.gender as "male" | "female"}
-                  isBordered
-                  rounded={false}
-                />
+                <div className="relative">
+                  <Avatar
+                    size="4xl"
+                    src={
+                      currentUser?.avatar && currentUser.avatar.secure_url
+                        ? currentUser.avatar.secure_url
+                        : "/default_avatar.png"
+                    }
+                    username={currentUser?.username}
+                    gender={currentUser?.gender as "male" | "female"}
+                    isBordered
+                    rounded={false}
+                  />
+                  {!isOwnProfile && (
+                    <div>
+                      {isOnline ? (
+                        <span
+                          className="absolute bottom-2 right-2 h-4 w-4 rounded-full border-2 border-white bg-success"
+                          title="Online"
+                        ></span>
+                      ) : (
+                        <span
+                          className="absolute bottom-2 right-2 h-4 w-4 rounded-full border-2 border-white bg-danger"
+                          title="Offline"
+                        ></span>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 {isOwnProfile && (
                   <div className="absolute bottom-2 right-2 z-40 flex gap-5 rounded-full bg-muted p-1 text-lg text-text-foreground opacity-80 shadow">

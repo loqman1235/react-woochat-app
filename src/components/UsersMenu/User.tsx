@@ -28,8 +28,6 @@ const User = ({
       ? "animated-text"
       : null;
 
-  console.log(animatedText, "ANIMATED TEXT");
-
   return (
     <div className="relative overflow-hidden">
       <div

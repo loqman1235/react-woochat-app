@@ -28,6 +28,7 @@ export type User = {
     secure_url?: string;
   };
   createdAt?: string;
+  isGlobalOnline?: boolean;
 };
 
 export type Room = {

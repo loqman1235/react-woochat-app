@@ -2,17 +2,15 @@ import { MdClose, MdPeopleAlt, MdPersonAdd, MdSearch } from "react-icons/md";
 import User from "./User";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 import { User as UserType } from "@/types";
-import Skeleton from "react-loading-skeleton";
 import { filterUsersByRole } from "@/utils";
 // import useFetch from "@/hooks/useFetch";
 
 interface UsersMenuProps {
-  roomName: string;
   isLoading: boolean;
   onlineUsers: UserType[];
 }
 
-const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
+const UsersMenu = ({ onlineUsers, isLoading }: UsersMenuProps) => {
   const { usersMenuOpen, toggleUsersMenu } = useSidebarToggle();
 
   // Filtering online users
@@ -55,26 +53,8 @@ const UsersMenu = ({ onlineUsers, roomName, isLoading }: UsersMenuProps) => {
         </div>
       </div>
 
-      {/* ROOM NAME */}
-      <div className="flex items-center gap-2 px-2 py-2 md:px-5">
-        <h5 className="text-sm font-bold text-primary md:text-base">
-          {isLoading ? (
-            <div className="h-5 w-20 overflow-hidden rounded-md">
-              <Skeleton
-                height="100%"
-                width="100%"
-                baseColor="var(--color-primary)"
-                highlightColor="var(--color-primary-light)"
-                className="rounded-md"
-              />
-            </div>
-          ) : (
-            roomName
-          )}
-        </h5>
-      </div>
       {/* ONLINE USERS */}
-      <div className="h-[calc(100%-120px)] overflow-y-auto px-[10px] pb-5">
+      <div className="h-[calc(100%-120px)] overflow-y-auto px-[10px] py-5">
         {onlineUsers.length === 0 && (
           <div className="px-3 text-sm text-text-muted">No users online</div>
         )}

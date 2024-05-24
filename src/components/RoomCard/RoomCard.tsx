@@ -48,7 +48,7 @@ const RoomCard = ({
   const handleDeleteRoom = () => {
     deleteRoom(id);
     setShowRemoveModal(false);
-    if (socket) socket.emit("delete_room", id);
+    if (socket) socket.emit("delete_room", { roomId: id, name });
   };
 
   return (

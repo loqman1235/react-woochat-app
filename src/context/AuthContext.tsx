@@ -1,3 +1,4 @@
+import useSocket from "@/hooks/useSocket";
 import api from "@/services/api";
 import { User } from "@/types";
 import {
@@ -36,6 +37,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+  const socket = useSocket();
   const [isAuth, setIsAuth] = useState(
     !!getItemFromLocalStorage("accessToken"),
   );
@@ -84,6 +86,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const signoutUser = async () => {
     try {
       await api.post("/auth/signout");
+
+      socket?.emit("disconnect_user", { user });
       removeItemFromLocalStorage("accessToken");
       removeItemFromLocalStorage("user");
       setAccessToken(undefined);

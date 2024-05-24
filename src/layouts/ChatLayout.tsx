@@ -26,14 +26,15 @@ const ChatLayout = () => {
     socket.emit("join_room", { user, roomId });
 
     const handleOnlineUsers = ({ users }: { users: User[] }) => {
+      // console.log("Online room users", users);
       setOnlineUsers(users.filter((u) => u.id !== user.id));
     };
 
-    socket.on("online_users", handleOnlineUsers);
+    socket.on("online_room_users", handleOnlineUsers);
 
     // Clean up the socket event listeners on component unmount
     return () => {
-      socket.off("online_users", handleOnlineUsers);
+      socket.off("online_room_users", handleOnlineUsers);
       socket.emit("leave_room", { user, roomId });
     };
   }, [socket, roomId, user]);
@@ -41,12 +42,8 @@ const ChatLayout = () => {
   return (
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
       <MainMenu />
-      <ChatArea roomId={roomId || ""} />
-      <UsersMenu
-        onlineUsers={onlineUsers}
-        roomName={roomResult?.room.name || ""}
-        isLoading={isLoading}
-      />
+      <ChatArea roomId={roomId || ""} roomName={roomResult?.room.name} />
+      <UsersMenu onlineUsers={onlineUsers} isLoading={isLoading} />
       <ChatWindow />
     </main>
   );

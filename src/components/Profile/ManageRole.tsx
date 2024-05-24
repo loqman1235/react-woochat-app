@@ -7,12 +7,14 @@ import api from "@/services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { debugLog, getRoleIcon } from "@/utils";
+import useSocket from "@/hooks/useSocket";
 
 interface ManageRoleProps {
   isOpen: boolean;
 }
 
 const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
+  const socket = useSocket();
   const { currentUser, setCurrentUser } = useProfile();
   const [selectedRole, setSelectedRole] = useState<Role | undefined>(
     currentUser?.role,
@@ -34,7 +36,14 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
       setIsSubmitting(false);
 
       if (response.status === 200) {
-        setCurrentUser(response.data.user);
+        const updatedUser = response.data.user;
+
+        setCurrentUser(updatedUser);
+        //  Broadcast a notification to the user
+        socket?.emit("role_updated", {
+          id: updatedUser.id,
+          role: updatedUser.role,
+        });
         toast.success("Role updated successfully");
       }
     } catch (error) {

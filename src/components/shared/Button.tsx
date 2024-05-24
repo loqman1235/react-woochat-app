@@ -16,7 +16,7 @@ const Button = ({
   isDisabled,
   ...props
 }: ButtonProps) => {
-  const primaryBtnStyles = "bg-primary text-white hover:bg-primary-hover";
+  const primaryBtnStyles = "bg bg-primary text-white hover:bg-primary-hover";
   const successBtnStyle = "bg-success text-white hover:bg-success-hover";
   const dangerBtnStyle = "bg-danger text-white hover:bg-danger-hover";
   const secondaryBtnStyle =

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // ICONS
 import {
@@ -20,8 +20,10 @@ import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
 import { debugLog } from "@/utils";
+import useSocket from "@/hooks/useSocket";
 
 const Navbar = () => {
+  const socket = useSocket();
   const { signoutUser, user } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
@@ -43,6 +45,18 @@ const Navbar = () => {
       debugLog(error);
     }
   };
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("role_updated", (data) => {
+        console.log("Role updated", data);
+      });
+    }
+
+    return () => {
+      socket?.off("role_updated");
+    };
+  }, [socket]);
 
   return (
     <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-2 text-text-foreground md:px-5">

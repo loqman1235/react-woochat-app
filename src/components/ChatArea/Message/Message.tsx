@@ -22,7 +22,7 @@ import api from "@/services/api";
 import useSocket from "@/hooks/useSocket";
 
 interface MessageProps extends MessageType {
-  isOnline: boolean;
+  isOnlineInRoom: boolean;
   isUserDropdownOpen: boolean;
   toggleUserDropdown: () => void;
 }
@@ -32,7 +32,7 @@ const STAFF_ROLES = ["OWNER", "ADMIN", "MOD"];
 const Message = ({
   id,
   user: sender,
-  isOnline,
+  isOnlineInRoom,
   content,
   isDeleted,
   createdAt,
@@ -94,7 +94,7 @@ const Message = ({
           gender={sender.gender}
           isBordered
           size="md"
-          isOnline={isOnline}
+          isOnline={isOnlineInRoom}
         />
         <Dropdown
           isOpen={isUserDropdownOpen}

@@ -28,7 +28,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
         setContent("");
 
         if (socket) {
-          socket.emit("sendRoomMessage", {
+          socket.emit("send_room_message", {
             roomId,
             messageId: response.data.createdMessage.id,
             content,

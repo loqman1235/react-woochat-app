@@ -11,15 +11,23 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useRoom from "@/hooks/useRoom";
 import AlertSound from "@/assets/sounds/alert.mp3";
+import useAuth from "@/hooks/useAuth";
+import { MdArrowBack } from "react-icons/md";
+import Skeleton from "react-loading-skeleton";
+import { useTheme } from "@/hooks/useTheme";
 
 interface ChatAreaProps {
   roomId: string;
+  roomName: string | undefined;
 }
 
-const ChatArea = ({ roomId }: ChatAreaProps) => {
+const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
+  const { user } = useAuth();
   const socket = useSocket();
+  const { theme } = useTheme();
   const { setRooms } = useRoom();
   const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
+  // const [globallyOnlineUsers, setGloballyOnlineUsers] = useState<User[]>([]);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [newMessageIds, setNewMessageIds] = useState<string[]>([]);
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -28,17 +36,10 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
   }>(`/messages/room/${roomId}`);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (messagesData) {
-      setMessages(messagesData.messages);
-    }
-
-    if (!messagesData && !isLoading) {
-      navigate("/");
-    }
-  }, [messagesData, isLoading, navigate]);
-
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+
+  const baseColor = theme === "dark" ? "#252627" : "#E0E0E0";
+  const highlightColor = theme === "dark" ? "#2d2e2f" : "#F5F5F5";
 
   const toggleDropdown = (id: string) => {
     if (openDropdownId === id) {
@@ -69,30 +70,57 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
     const handleReceiveRoomMessage = (data: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       setNewMessageIds((prevIds) => [...prevIds, data.id]);
-      playSound(MessageReceivedSound);
+
+      if (data.user.id !== user?.id) {
+        playSound(MessageReceivedSound);
+      }
     };
 
     // Handle room deletion
-    const handleRoomRemoved = (roomId: string) => {
+    const handleDeleteRoom = ({
+      roomId,
+      name,
+    }: {
+      roomId: string;
+      name: string;
+    }) => {
       if (roomId === roomId) {
         setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
         playSound(AlertSound);
-        toast.error("This room has been deleted");
+        toast.error(`Room "${name}" has been deleted!`);
         navigate("/");
       }
     };
 
-    socket.on("online_users", handleOnlineUsers);
-    socket.on("receiveRoomMessage", handleReceiveRoomMessage);
-    socket.on("delete_room", handleRoomRemoved);
+    const handleRoomDeleted = (roomId: string) => {
+      if (roomId === roomId) {
+        setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+      }
+    };
+
+    socket.on("online_room_users", handleOnlineUsers);
+    socket.on("receive_room_message", handleReceiveRoomMessage);
+    socket.on("delete_room", handleDeleteRoom);
+    socket.on("room_deleted", handleRoomDeleted);
 
     // Clean up the socket event listeners on component unmount
     return () => {
-      socket.off("online_users", handleOnlineUsers);
-      socket.off("receiveRoomMessage", handleReceiveRoomMessage);
-      socket.off("delete_room", handleRoomRemoved);
+      socket.off("online_room_users", handleOnlineUsers);
+      socket.off("receive_room_message", handleReceiveRoomMessage);
+      socket.off("delete_room", handleDeleteRoom);
+      socket.off("room_deleted", handleRoomDeleted);
     };
-  }, [navigate, setRooms, socket]);
+  }, [navigate, setRooms, socket, user]);
+
+  useEffect(() => {
+    if (messagesData) {
+      setMessages(messagesData.messages);
+    }
+
+    if (!messagesData && !isLoading) {
+      navigate("/");
+    }
+  }, [messagesData, isLoading, navigate]);
 
   return (
     <div
@@ -108,9 +136,32 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
     >
       {/*  MESSAGES CONTAINER */}
       <div
-        className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto overflow-x-hidden bg-background py-2 md:py-5"
+        className="scrollbar-hide h-[calc(100%-48px)] w-full overflow-y-auto overflow-x-hidden bg-background pb-2 md:pb-5"
         ref={messagesContainerRef}
       >
+        {/* ROOM NAME */}
+        <div className="sticky top-0 z-40 flex w-full items-center gap-2 border-b border-b-border bg-foreground p-2 md:px-5 md:py-3">
+          <button
+            className="text-lg text-text-muted transition duration-300 hover:text-text-foreground"
+            onClick={() => navigate("/")}
+          >
+            <MdArrowBack />
+          </button>
+          {roomName ? (
+            <h1 className="text-lg font-bold tracking-tight text-text-foreground">
+              {roomName}
+            </h1>
+          ) : (
+            <Skeleton
+              width={100}
+              height={16}
+              baseColor={baseColor}
+              highlightColor={highlightColor}
+              borderRadius={20}
+            />
+          )}
+        </div>
+
         {/* Loading */}
         {isLoading &&
           Array.from({ length: 4 }).map((_, i) => <MessageSkeleton key={i} />)}
@@ -133,7 +184,11 @@ const ChatArea = ({ roomId }: ChatAreaProps) => {
               }}
             >
               <Message
-                isOnline={isUserOnline(onlineUsers, message.user.id)}
+                // isGloballyOnline={isUserOnline(
+                //   globallyOnlineUsers,
+                //   message.user.id,
+                // )}
+                isOnlineInRoom={isUserOnline(onlineUsers, message.user.id)}
                 {...message}
                 isUserDropdownOpen={openDropdownId === message.id}
                 toggleUserDropdown={() => toggleDropdown(message.id)}
