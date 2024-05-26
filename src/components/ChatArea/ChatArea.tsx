@@ -15,6 +15,7 @@ import useAuth from "@/hooks/useAuth";
 import { MdArrowBack } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
 import { useTheme } from "@/hooks/useTheme";
+import useSound from "@/hooks/useSound";
 
 interface ChatAreaProps {
   roomId: string;
@@ -22,6 +23,7 @@ interface ChatAreaProps {
 }
 
 const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
+  const { isPlaying } = useSound();
   const { user } = useAuth();
   const socket = useSocket();
   const { theme } = useTheme();
@@ -71,7 +73,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       setNewMessageIds((prevIds) => [...prevIds, data.id]);
 
-      if (data.user.id !== user?.id) {
+      if (data.user.id !== user?.id && isPlaying) {
         playSound(MessageReceivedSound);
       }
     };
@@ -110,7 +112,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       socket.off("delete_room", handleDeleteRoom);
       socket.off("room_deleted", handleRoomDeleted);
     };
-  }, [navigate, setRooms, socket, user]);
+  }, [isPlaying, navigate, setRooms, socket, user]);
 
   useEffect(() => {
     if (messagesData) {

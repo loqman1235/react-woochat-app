@@ -35,6 +35,12 @@ const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
   const { setIsProfileOpen, setCurrentUser } = useProfile();
+  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
+    useState(false);
+
+  const toggleNotificationDropdown = () => {
+    setIsNotificationDropdownOpen((prev) => !prev);
+  };
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
@@ -74,8 +80,6 @@ const Navbar = () => {
     };
   }, [isPlaying, setNotifications, socket]);
 
-  console.log(notifications);
-
   return (
     <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-2 text-text-foreground md:px-5">
       <div className="container mx-auto flex h-full max-w-full items-center justify-between">
@@ -104,9 +108,22 @@ const Navbar = () => {
             <MdPerson2 />
             <NotifCounter count={0} />
           </button>
-          <button className="relative text-text-muted">
+          <button
+            className="relative text-text-muted"
+            onClick={toggleNotificationDropdown}
+          >
             <MdNotifications />
             <NotifCounter count={notifications.length} />
+            <Dropdown isOpen={isNotificationDropdownOpen}>
+              {notifications &&
+                notifications.length > 0 &&
+                notifications.map((notification) => (
+                  <DropdownItem
+                    key={notification.id}
+                    text={notification.content}
+                  />
+                ))}
+            </Dropdown>
           </button>
           <div className="relative">
             <Avatar
@@ -122,7 +139,7 @@ const Navbar = () => {
 
             <Dropdown isOpen={isProfileDropdownOpen}>
               <DropdownItem
-                text="profile"
+                text="Profile"
                 icon={<MdAccountCircle />}
                 handleClick={() => {
                   setIsProfileDropdownOpen(false);
@@ -131,7 +148,7 @@ const Navbar = () => {
                 }}
               />
               <DropdownItem
-                text="logout"
+                text="Logout"
                 icon={<MdLogout />}
                 handleClick={handleSignOut}
               />

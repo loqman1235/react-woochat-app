@@ -43,7 +43,7 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
         const notification = {
           id: Math.random().toString(),
           title: "Role Updated",
-          content: `Your role has been updated to ${updatedUser.role}`,
+          content: `You have been promoted into a ${updatedUser.role.toLowerCase()}`,
           isRead: false,
           isDeleted: false,
           isSystem: true,
