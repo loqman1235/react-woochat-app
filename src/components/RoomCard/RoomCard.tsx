@@ -9,7 +9,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Dropdown, DropdownItem } from "../shared/Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { Modal } from "../shared/Modal";
 import Button from "../shared/Button";
@@ -30,7 +30,7 @@ const RoomCard = ({
 }: RoomCardProps) => {
   const socket = useSocket();
   const { user } = useAuth();
-  const { deleteRoom, toggleRoomPin } = useRoom();
+  const { deleteRoom, toggleRoomPin, setRooms } = useRoom();
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
 
@@ -50,6 +50,18 @@ const RoomCard = ({
     setShowRemoveModal(false);
     if (socket) socket.emit("delete_room", { roomId: id, name });
   };
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("delete_room", ({ roomId }) => {
+      setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+    });
+
+    return () => {
+      socket.off("delete_room");
+    };
+  }, [setRooms, socket]);
 
   return (
     <>

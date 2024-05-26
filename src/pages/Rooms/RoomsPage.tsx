@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import CreateRoomForm from "@/components/Forms/CreateRoomForm";
 import useRoom from "@/hooks/useRoom";
 import useSocket from "@/hooks/useSocket";
+import { Room } from "@/types";
 
 const RoomsPage = () => {
   const socket = useSocket();
@@ -44,10 +45,17 @@ const RoomsPage = () => {
       );
     };
 
+    const handleCreateRoom = (newRoom: Room) => {
+      console.log("create_room", newRoom);
+      setRooms((prevRooms) => [newRoom, ...prevRooms]);
+    };
+
     socket.on("online_room_users", handleOnlineUsers);
+    socket.on("create_room", handleCreateRoom);
 
     return () => {
       socket.off("online_room_users", handleOnlineUsers);
+      socket.off("create_room", handleCreateRoom);
     };
   }, [socket, setRooms]);
 

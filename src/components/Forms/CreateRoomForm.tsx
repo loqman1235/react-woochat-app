@@ -8,8 +8,10 @@ import api from "@/services/api";
 import { AxiosError } from "axios";
 import { debugLog } from "@/utils";
 import { toast } from "react-toastify";
-import useRoom from "@/hooks/useRoom";
-import { Room } from "@/types";
+// import useRoom from "@/hooks/useRoom";
+// import { Room } from "@/types";
+import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
@@ -50,7 +52,9 @@ interface CreateRoomFormProps {
 }
 
 const CreateRoomForm = ({ handleCloseModal }: CreateRoomFormProps) => {
-  const { addRoom } = useRoom();
+  const socket = useSocket();
+  const { user } = useAuth();
+  // const { addRoom } = useRoom();
   const {
     register,
     handleSubmit,
@@ -76,7 +80,13 @@ const CreateRoomForm = ({ handleCloseModal }: CreateRoomFormProps) => {
       const response = await api.post("/rooms", formData);
 
       if (response.status === 201) {
-        if (response.data.room) addRoom(response.data.room as Room);
+        if (response.data.room) {
+          socket?.emit("create_room", {
+            userId: user?.id,
+            room: response.data.room,
+          });
+        }
+
         reset();
         toast.success("Room created successfully");
         handleCloseModal(false);
