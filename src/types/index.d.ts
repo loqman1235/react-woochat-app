@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export type LoginForm = z.infer<typeof loginSchema>;
+type LoginForm = z.infer<typeof loginSchema>;
 
-export type Role = "ADMIN" | "MOD" | "PREMIUM" | "USER" | "OWNER";
+type Role = "ADMIN" | "MOD" | "PREMIUM" | "USER" | "OWNER";
 
-export type User = {
+type User = {
   id: string;
   username: string;
   email: string;
@@ -31,7 +31,7 @@ export type User = {
   isGlobalOnline?: boolean;
 };
 
-export type Room = {
+type Room = {
   totalMembers: number;
   id: string;
   name: string;
@@ -44,10 +44,22 @@ export type Room = {
   isPinned: boolean;
 };
 
-export type MessageType = {
+type MessageType = {
   id: string;
   content: string;
   user: User;
   isDeleted?: boolean;
   createdAt: string;
 };
+
+type NotificationType = {
+  id: string;
+  title: string;
+  content: string;
+  isRead: boolean;
+  createdAt: string;
+  isDeleted: boolean;
+  isSystem: boolean;
+};
+
+export { LoginForm, Role, User, Room, MessageType, NotificationType };

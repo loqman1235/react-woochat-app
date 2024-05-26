@@ -19,11 +19,18 @@ import Brand from "./shared/Brand";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
-import { debugLog } from "@/utils";
+import { debugLog, playSound } from "@/utils";
 import useSocket from "@/hooks/useSocket";
+import useNotification from "@/hooks/useNotification";
+
+// Sound fx
+import notificationSound from "@/assets/sounds/notification.mp3";
+import useSound from "@/hooks/useSound";
 
 const Navbar = () => {
   const socket = useSocket();
+  const { notifications, setNotifications } = useNotification();
+  const { isPlaying } = useSound();
   const { signoutUser, user } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
@@ -34,6 +41,8 @@ const Navbar = () => {
   };
 
   const navigate = useNavigate();
+
+  // Unread Notifications count
 
   // Sign Out
   const handleSignOut = async () => {
@@ -48,15 +57,24 @@ const Navbar = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("role_updated", (data) => {
-        console.log("Role updated", data);
+      socket.on("notification_send", ({ notification }) => {
+        setNotifications((prevNotifications) => [
+          notification,
+          ...prevNotifications,
+        ]);
+
+        if (isPlaying) {
+          playSound(notificationSound);
+        }
       });
     }
 
     return () => {
-      socket?.off("role_updated");
+      socket?.off("notification_send");
     };
-  }, [socket]);
+  }, [isPlaying, setNotifications, socket]);
+
+  console.log(notifications);
 
   return (
     <div className="fixed top-0 z-40 h-12 w-full border-b border-b-border bg-foreground px-2 text-text-foreground md:px-5">
@@ -80,28 +98,17 @@ const Navbar = () => {
 
           <button className="relative text-text-muted">
             <MdEmail />
-            <NotifCounter count={1} />
+            <NotifCounter count={0} />
           </button>
           <button className="relative text-text-muted">
             <MdPerson2 />
-            <NotifCounter count={1} />
+            <NotifCounter count={0} />
           </button>
           <button className="relative text-text-muted">
             <MdNotifications />
-            <NotifCounter count={1} />
+            <NotifCounter count={notifications.length} />
           </button>
           <div className="relative">
-            {/* <div
-              className="h-8 w-8 cursor-pointer overflow-hidden rounded-full"
-              onClick={toggleProfileDropdown}
-            >
-              <img
-                src="/default_avatar.png"
-                alt="avatar"
-                className="h-full w-full object-cover"
-              />
-            </div> */}
-
             <Avatar
               src={
                 user?.avatar && user.avatar.secure_url

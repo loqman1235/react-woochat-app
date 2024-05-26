@@ -140,7 +140,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
         ref={messagesContainerRef}
       >
         {/* ROOM NAME */}
-        <div className="sticky top-0 z-40 flex w-full items-center gap-2 border-b border-b-border bg-foreground p-2 md:px-5 md:py-3">
+        <div className="sticky top-0 z-30 mb-5 flex h-12 w-full items-center gap-2 border-b border-b-border bg-foreground p-2 md:px-5">
           <button
             className="text-lg text-text-muted transition duration-300 hover:text-text-foreground"
             onClick={() => navigate("/")}

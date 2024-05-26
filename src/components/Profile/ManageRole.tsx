@@ -39,11 +39,24 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
         const updatedUser = response.data.user;
 
         setCurrentUser(updatedUser);
+
+        const notification = {
+          id: Math.random().toString(),
+          title: "Role Updated",
+          content: `Your role has been updated to ${updatedUser.role}`,
+          isRead: false,
+          isDeleted: false,
+          isSystem: true,
+          createdAt: new Date().toISOString(),
+        };
+
         //  Broadcast a notification to the user
-        socket?.emit("role_updated", {
+        socket?.emit("notification_send", {
           id: updatedUser.id,
           role: updatedUser.role,
+          notification,
         });
+
         toast.success("Role updated successfully");
       }
     } catch (error) {
