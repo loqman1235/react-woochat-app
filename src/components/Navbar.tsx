@@ -26,6 +26,7 @@ import useNotification from "@/hooks/useNotification";
 // Sound fx
 import notificationSound from "@/assets/sounds/notification.mp3";
 import useSound from "@/hooks/useSound";
+import { NotificationDropdown } from "./NotificationDropdown";
 
 const Navbar = () => {
   const socket = useSocket();
@@ -109,21 +110,12 @@ const Navbar = () => {
             <NotifCounter count={0} />
           </button>
           <button
-            className="relative text-text-muted"
+            className={`relative  ${isNotificationDropdownOpen ? "text-text-foreground" : "text-text-muted"}`}
             onClick={toggleNotificationDropdown}
           >
             <MdNotifications />
             <NotifCounter count={notifications.length} />
-            <Dropdown isOpen={isNotificationDropdownOpen}>
-              {notifications &&
-                notifications.length > 0 &&
-                notifications.map((notification) => (
-                  <DropdownItem
-                    key={notification.id}
-                    text={notification.content}
-                  />
-                ))}
-            </Dropdown>
+            <NotificationDropdown isOpen={isNotificationDropdownOpen} />
           </button>
           <div className="relative">
             <Avatar
