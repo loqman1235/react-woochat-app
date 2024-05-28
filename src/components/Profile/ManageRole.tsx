@@ -45,7 +45,6 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
         setCurrentUser(updatedUser);
 
         // add notification
-
         const roleNotification = createNotification(
           "ROLE_UPDATED",
           currentUser.id,
