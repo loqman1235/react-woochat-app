@@ -25,7 +25,7 @@ const NotifCounter = ({ count }: NotifCounterProps) => {
       initial="hidden"
       animate={count > 0 ? "show" : "hidden"}
     >
-      {count}
+      {count > 9 ? "9+" : count}
     </motion.div>
   );
 };

@@ -10,18 +10,24 @@ interface NotificationProvider {
 
 type NotificationContextType = {
   notifications: NotificationType[];
+  unreadNotificationsCount: number;
   setNotifications: React.Dispatch<React.SetStateAction<NotificationType[]>>;
+  setUnreadNotificationsCount: React.Dispatch<React.SetStateAction<number>>;
   createNotification: (
     message: string,
     type: string,
     reveiverId: string,
   ) => Promise<void>;
+  markNotificationsAsRead: () => Promise<void>;
 };
 
 const NotificationContext = createContext<NotificationContextType>({
   notifications: [],
+  unreadNotificationsCount: 0,
   setNotifications: () => {},
+  setUnreadNotificationsCount: () => {},
   createNotification: async () => {},
+  markNotificationsAsRead: async () => {},
 });
 
 const NotificationProvider = ({ children }: NotificationProvider) => {
@@ -30,6 +36,7 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
     notifications: NotificationType[];
   }>("/notifications");
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
 
   const createNotification = async (
     message: string,
@@ -55,16 +62,44 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
     }
   };
 
+  // Mark notifications as read
+  const markNotificationsAsRead = async () => {
+    try {
+      await api.patch("/notifications/mark-as-read");
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) => ({
+          ...notification,
+          isRead: true,
+        })),
+      );
+      setUnreadNotificationsCount(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Fetch notifications
   useEffect(() => {
     if (!notificationsResult) return;
 
     setNotifications(notificationsResult.notifications);
+    setUnreadNotificationsCount(
+      notificationsResult.notifications.filter(
+        (notification) => !notification.isRead,
+      ).length,
+    );
   }, [notificationsResult]);
 
   return (
     <NotificationContext.Provider
-      value={{ notifications, setNotifications, createNotification }}
+      value={{
+        notifications,
+        unreadNotificationsCount,
+        setNotifications,
+        createNotification,
+        markNotificationsAsRead,
+        setUnreadNotificationsCount,
+      }}
     >
       {children}
     </NotificationContext.Provider>

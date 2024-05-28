@@ -30,7 +30,12 @@ import { NotificationModal } from "./NotificationModal";
 
 const Navbar = () => {
   const socket = useSocket();
-  const { notifications, setNotifications } = useNotification();
+  const {
+    setNotifications,
+    markNotificationsAsRead,
+    unreadNotificationsCount,
+    setUnreadNotificationsCount,
+  } = useNotification();
   const { isPlaying } = useSound();
   const { signoutUser, user } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -39,7 +44,8 @@ const Navbar = () => {
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
 
-  const toggleNotificationDropdown = () => {
+  const toggleNotificationDropdown = async () => {
+    markNotificationsAsRead();
     setIsNotificationDropdownOpen((prev) => !prev);
   };
 
@@ -70,6 +76,7 @@ const Navbar = () => {
           notification,
           ...prevNotifications,
         ]);
+        setUnreadNotificationsCount((prevCount) => prevCount + 1);
 
         if (isPlaying) {
           playSound(notificationSound);
@@ -80,7 +87,7 @@ const Navbar = () => {
     return () => {
       socket?.off("notification_send");
     };
-  }, [isPlaying, setNotifications, socket]);
+  }, [isPlaying, setNotifications, setUnreadNotificationsCount, socket]);
 
   return (
     <>
@@ -116,7 +123,7 @@ const Navbar = () => {
               onClick={toggleNotificationDropdown}
             >
               <MdNotifications />
-              <NotifCounter count={notifications.length} />
+              <NotifCounter count={unreadNotificationsCount} />
             </button>
             <div className="relative">
               <Avatar

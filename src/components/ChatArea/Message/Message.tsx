@@ -151,7 +151,7 @@ const Message = ({
             >
               {sender.username}{" "}
               {sender?.verified && (
-                <span className="text-xs text-success" title="Verified">
+                <span className="text-xs text-success">
                   <MdVerified />
                 </span>
               )}

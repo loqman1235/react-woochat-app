@@ -29,7 +29,7 @@ const NotificationItem = ({
           {isSystem ? "System" : sender?.username}
         </h5>
         <div>
-          <p className="line-clamp-1 text-sm text-text-muted">
+          <p className="line-clamp-1 text-sm text-text-foreground">
             {formatNotificationMessage(type)}
           </p>
         </div>
