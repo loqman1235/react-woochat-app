@@ -2,6 +2,7 @@ import { MdClose, MdDelete, MdNotifications } from "react-icons/md";
 import NotificationItem from "./NotificationItem";
 import { useTheme } from "@/hooks/useTheme";
 import useNotification from "@/hooks/useNotification";
+import { useEffect } from "react";
 
 interface NotificationModalProps {
   isOpen: boolean;
@@ -16,10 +17,18 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
 
   const bgColor = theme === "light" ? "bg-foreground" : "bg-muted";
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
+
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center bg-black/50 backdrop-blur-sm ${isOpen ? "block" : "hidden"} overflow-y-auto p-5`}
+      className={`fixed inset-0 z-50 flex h-screen w-full items-center justify-center bg-black/50 backdrop-blur-sm ${isOpen ? "block" : "hidden"} overflow-y-auto p-5`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
