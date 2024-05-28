@@ -32,7 +32,7 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`z-50 mt-2.5 w-full origin-top translate-y-3 rounded-xl border border-border text-base text-text-foreground md:w-[420px] ${bgColor}`}
+        className={`z-50 mt-2.5 w-full rounded-xl border border-border text-base text-text-foreground md:w-[420px] ${bgColor}`}
       >
         {/* HEADER */}
         <div className="flex w-full items-center justify-between border-b border-b-border p-3">
