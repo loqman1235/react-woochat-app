@@ -67,11 +67,11 @@ const RoomCard = ({
     <>
       <Link
         to={`/rooms/${id}`}
-        className="flex items-center gap-3 rounded-md bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
+        className="flex items-center gap-3 rounded-xl bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
       >
         {/* ROOM IMAGE */}
         {roomImage && roomImage.secure_url ? (
-          <div className="h-20 w-20 overflow-hidden rounded-md">
+          <div className="h-20 w-20 overflow-hidden rounded-xl">
             <img
               src={roomImage.secure_url}
               alt={name}

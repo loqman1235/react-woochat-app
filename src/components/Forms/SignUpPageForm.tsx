@@ -106,7 +106,7 @@ const SignUpPageForm = () => {
 
       <div className="flex items-center gap-1 text-text-muted">
         <p>Have an account?</p>{" "}
-        <Link className="text-primary hover:underline" to="/sign-in">
+        <Link className="font-bold text-primary hover:underline" to="/sign-in">
           Sign In
         </Link>
       </div>

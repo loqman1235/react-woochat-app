@@ -22,7 +22,7 @@ const MainMenu = () => {
   const { user } = useAuth();
 
   const listStyles =
-    "px-[4px] md:px-[10px] py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out font-extrabold hover:bg-muted-hover text-text-foreground rounded-md";
+    "px-[4px] md:px-[10px] py-3 last:border-0 overflow-hidden cursor-pointer w-full hover:bg-foreground hover:bg-opacity-10 transition duration-300 ease-in-out font-extrabold hover:bg-muted-hover text-text-foreground rounded-xl";
   // const subListStyles =
   //   "w-full py-3 last:border-0 last:pb-0 grayscale hover:grayscale-0 transition duration-300 ease-in-out";
 

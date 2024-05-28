@@ -33,7 +33,7 @@ const FormField = ({
     <div className={`relative space-y-1 ${className}`}>
       <label
         htmlFor={id}
-        className="flex items-center gap-1 text-sm text-text-foreground"
+        className="flex items-center gap-1 text-sm font-semibold text-text-foreground"
       >
         {label}
         {required ? <span className="text-xs text-danger">*</span> : null}
@@ -44,7 +44,7 @@ const FormField = ({
             type={type === "password" && showPassword ? "text" : type}
             id={id}
             placeholder={placeholder || ""}
-            className={`w-full rounded-md border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted  ${error ? "border-danger" : "border-border"}`}
+            className={`w-full rounded-xl border bg-background px-4 py-3 text-text-foreground outline-none placeholder:text-text-muted  ${error ? "border-danger" : "border-border"}`}
             required={required}
             autoComplete="off"
             {...register(name)}
@@ -52,7 +52,7 @@ const FormField = ({
           {type === "password" && (
             <button
               type="button"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted"
               onClick={(e) => {
                 e.preventDefault();
                 toggleShowPassword();

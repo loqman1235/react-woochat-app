@@ -26,7 +26,7 @@ const SelectInput = ({
       <div className="relative">
         <select
           id={id}
-          className="w-full appearance-none rounded-md border border-border bg-background px-3 py-2 text-text-foreground outline-none placeholder:text-text-muted"
+          className="w-full appearance-none rounded-xl border border-border bg-background px-4 py-3 text-text-foreground outline-none placeholder:text-text-muted"
           {...register(name)}
         >
           {children}
