@@ -116,6 +116,7 @@ const SignUpPageForm = () => {
         variant="primary"
         className="w-full"
         isDisabled={isSubmitting}
+        size="lg"
       >
         Sign Up
       </Button>

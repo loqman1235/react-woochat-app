@@ -178,7 +178,7 @@ const ProfileModal = () => {
       className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center backdrop-blur-md ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/50"}`}
     >
       <div
-        className="w-[100%] max-w-[580px] overflow-hidden rounded-xl border border-border bg-foreground shadow-lg"
+        className="w-[100%] max-w-[580px] overflow-hidden rounded-xl bg-foreground shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         {/* MODAL HEADER */}

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 // import { Room } from "@/types";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
+import { MdAdd } from "react-icons/md";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
@@ -146,7 +147,12 @@ const CreateRoomForm = ({ handleCloseModal }: CreateRoomFormProps) => {
               Creating...
             </span>
           ) : (
-            "Create"
+            <span className="flex items-center gap-2">
+              <span className="text-lg">
+                <MdAdd />
+              </span>
+              Create
+            </span>
           )}
         </Button>
       </div>

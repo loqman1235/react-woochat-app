@@ -1,4 +1,4 @@
-import { MdClose, MdDelete, MdNotifications } from "react-icons/md";
+import { MdClose, MdDelete } from "react-icons/md";
 import NotificationItem from "./NotificationItem";
 import { useTheme } from "@/hooks/useTheme";
 import useNotification from "@/hooks/useNotification";
@@ -32,14 +32,11 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`z-50 mt-2.5 w-full rounded-xl border border-border text-base text-text-foreground md:w-[420px] ${bgColor}`}
+        className={`z-50 mt-2.5 w-full rounded-xl text-base text-text-foreground shadow-md md:w-[420px] ${bgColor}`}
       >
         {/* HEADER */}
-        <div className="flex w-full items-center justify-between border-b border-b-border p-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg text-text-muted">
-              <MdNotifications />
-            </span>
+        <div className="flex w-full items-center justify-between border-b border-b-border px-5 py-3">
+          <div className="flex items-center gap-1">
             <span className="text-base font-extrabold">Notifications</span>
           </div>
 
@@ -60,7 +57,7 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
 
         {/* NOTIFICATIONS */}
 
-        <ul className="flex max-h-80 flex-col items-start overflow-y-auto px-1.5">
+        <ul className="flex max-h-80 flex-col items-start overflow-y-auto px-5">
           {notifications.map((notification) => (
             <NotificationItem key={notification.id} {...notification} />
           ))}

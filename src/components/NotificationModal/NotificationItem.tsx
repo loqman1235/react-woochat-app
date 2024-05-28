@@ -10,7 +10,7 @@ const NotificationItem = ({
   isSystem,
 }: NotificationType) => {
   return (
-    <li className="flex w-full items-center gap-5 rounded-md border-b border-b-border px-1.5 py-3 last:border-none">
+    <li className="flex w-full items-center gap-5 rounded-md border-b border-b-border py-3 last:border-none">
       {/* AVATAR */}
       <div className="relative">
         {isSystem ? (

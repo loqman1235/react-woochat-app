@@ -12,6 +12,7 @@ import {
   MdMoreHoriz,
   MdPersonAdd,
   MdReply,
+  MdVerified,
 } from "react-icons/md";
 // import useChatWindow from "@/hooks/useChatWindow";
 import { MessageType } from "@/types";
@@ -146,9 +147,14 @@ const Message = ({
           >
             <span>{getRoleIcon(sender.role, "xs")}</span>
             <h5
-              className={`text-sm font-extrabold text-text-foreground ${animatedText}`}
+              className={`flex items-center gap-1 text-sm font-extrabold text-text-foreground ${animatedText}`}
             >
-              {sender.username}
+              {sender.username}{" "}
+              {sender?.verified && (
+                <span className="text-xs text-success" title="Verified">
+                  <MdVerified />
+                </span>
+              )}
             </h5>
           </div>
           {/* Add an html dot */}

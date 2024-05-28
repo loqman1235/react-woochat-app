@@ -64,7 +64,7 @@ const SignInPageForm = () => {
         </Link>
       </div>
 
-      <Button type="submit" variant="primary" className="w-full">
+      <Button type="submit" variant="primary" className="w-full" size="lg">
         Sign In
       </Button>
     </form>
