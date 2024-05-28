@@ -29,7 +29,7 @@ const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
           </span>
           Email
         </li>
-        <li className="line-clamp-1 w-1/2">{currentUser?.email || "N/A"}</li>
+        <li className="line-clamp-3 w-1/2">{currentUser?.email || "N/A"}</li>
       </ul>
 
       <ul className={listStyles}>
