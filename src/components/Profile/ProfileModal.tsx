@@ -14,9 +14,11 @@ import { AxiosError } from "axios";
 import ManageRole from "./ManageRole";
 import useSocket from "@/hooks/useSocket";
 import { User } from "@/types";
+import { useTheme } from "@/hooks/useTheme";
 // import useFetch from "@/hooks/useFetch";
 
 const ProfileModal = () => {
+  const { theme } = useTheme();
   const socket = useSocket();
   const { user, setUser } = useAuth();
   // const { data: userResult, isLoading } = useFetch("/users", user.id);
@@ -173,10 +175,10 @@ const ProfileModal = () => {
     // MODAL CONTAINER
     <div
       onClick={() => setIsProfileOpen(false)}
-      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center bg-black/50 backdrop-blur-sm ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5`}
+      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center backdrop-blur-sm ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/80"}`}
     >
       <div
-        className="w-[100%] max-w-[580px] overflow-hidden rounded-md border border-border bg-foreground shadow-lg"
+        className="w-[100%] max-w-[580px] overflow-hidden rounded-xl border border-border bg-foreground shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         {/* MODAL HEADER */}
