@@ -175,7 +175,7 @@ const ProfileModal = () => {
     // MODAL CONTAINER
     <div
       onClick={() => setIsProfileOpen(false)}
-      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center backdrop-blur-sm ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/80"}`}
+      className={`fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center backdrop-blur-md ${isProfileOpen ? "block" : "hidden"} overflow-y-auto p-2 md:p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/50"}`}
     >
       <div
         className="w-[100%] max-w-[580px] overflow-hidden rounded-xl border border-border bg-foreground shadow-lg"
@@ -191,7 +191,7 @@ const ProfileModal = () => {
             />
 
             {/* CTAs */}
-            <div className="absolute right-2 top-2 flex items-center gap-3">
+            <div className="absolute right-4 top-4 flex items-center gap-3">
               {isOwnProfile && (
                 <div className="flex gap-5 rounded-full bg-muted p-1 text-lg text-text-foreground opacity-80 shadow md:right-5 md:top-5">
                   {isCoverUploading ? (

@@ -35,7 +35,7 @@ const Avatar = ({
   return (
     <div className={`relative ${avatarSize}`}>
       <div
-        className={`relative cursor-pointer overflow-hidden bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} h-full w-full ${rounded ? "rounded-full" : "rounded-xl"}`}
+        className={`relative cursor-pointer overflow-hidden bg-slate-400 ${isBordered && `border-2 ${avatarBorder}`} h-full w-full ${rounded ? "rounded-full" : "rounded-2xl"}`}
         onClick={onClick}
       >
         <img

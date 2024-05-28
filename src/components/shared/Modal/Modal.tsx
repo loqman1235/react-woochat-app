@@ -12,7 +12,7 @@ const Modal = ({ title, children, isOpen, onClose }: ModalProps) => {
   const { theme } = useTheme();
   return (
     <div
-      className={`fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-opacity-70 p-2 backdrop-blur-sm md:p-5 ${!isOpen && "hidden"} shadow-2xl ${theme === "light" ? "bg-black/50" : "bg-neutral-400/80"}`}
+      className={`fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-opacity-70 p-2 backdrop-blur-md md:p-5 ${!isOpen && "hidden"} shadow-2xl ${theme === "light" ? "bg-black/50" : "bg-neutral-400/50"}`}
       onClick={onClose}
     >
       <div

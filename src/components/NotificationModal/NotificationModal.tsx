@@ -28,7 +28,7 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 z-50 flex h-screen w-full items-center justify-center backdrop-blur-sm ${isOpen ? "block" : "hidden"} overflow-y-auto p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/80"}`}
+      className={`fixed inset-0 z-50 flex h-screen w-full items-center justify-center backdrop-blur-md ${isOpen ? "block" : "hidden"} overflow-y-auto p-5 ${theme === "light" ? "bg-black/50" : "bg-neutral-400/50"}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
