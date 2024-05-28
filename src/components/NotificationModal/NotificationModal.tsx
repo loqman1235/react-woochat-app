@@ -50,8 +50,8 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
               </button>
             )}
             <button
+              className="ml-auto rounded-full bg-muted p-1 text-2xl text-text-muted transition duration-300 hover:bg-muted-hover hover:text-text-foreground"
               onClick={onClose}
-              className="text-2xl text-text-muted transition duration-300 hover:text-text-foreground"
             >
               <MdClose />
             </button>
