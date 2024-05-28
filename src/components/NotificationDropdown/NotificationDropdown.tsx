@@ -18,7 +18,7 @@ const NotificationDropdown = ({ isOpen }: NotificationDropdownProps) => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className={`md:-w-[320px] invisible absolute right-0 top-full z-50 mt-2.5 w-full origin-top translate-y-3 rounded-md border border-border text-base text-text-foreground opacity-0 shadow-md transition-all duration-300 ease-[cubic-bezier(0.87,0,0.13,1)] ${isOpen && "!visible !translate-y-0 !opacity-100"} ${bgColor}`}
+      className={`invisible absolute right-0 top-full z-50 mt-2.5 min-w-[320px] origin-top translate-y-3 rounded-md border border-border text-base text-text-foreground opacity-0 shadow-md transition-all duration-300 ease-[cubic-bezier(0.87,0,0.13,1)] ${isOpen && "!visible !translate-y-0 !opacity-100"} ${bgColor}`}
     >
       {/* HEADER */}
       <div className="flex w-full items-center justify-between border-b border-b-border p-3">
