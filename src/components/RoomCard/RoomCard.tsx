@@ -87,7 +87,7 @@ const RoomCard = ({
           {/* INFO */}
           <div className="flex h-full flex-1 flex-col justify-between">
             <div className="flex flex-col gap-2">
-              <h3 className="flex items-center gap-2 text-sm font-bold capitalize text-text-foreground">
+              <h3 className="flex items-center gap-2 font-extrabold capitalize text-text-foreground">
                 {name}{" "}
                 {isPinned && (
                   <span
@@ -98,7 +98,7 @@ const RoomCard = ({
                   </span>
                 )}
               </h3>
-              <p className="mb-2 text-xs font-medium text-text-muted">
+              <p className="mb-2 text-sm font-medium text-text-muted">
                 {description}
               </p>
             </div>

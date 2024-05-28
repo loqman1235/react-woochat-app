@@ -1,4 +1,5 @@
 import useFetch from "@/hooks/useFetch";
+import api from "@/services/api";
 // import useSocket from "@/hooks/useSocket";
 import { NotificationType } from "@/types";
 import { createContext, useEffect, useState } from "react";
@@ -10,11 +11,17 @@ interface NotificationProvider {
 type NotificationContextType = {
   notifications: NotificationType[];
   setNotifications: React.Dispatch<React.SetStateAction<NotificationType[]>>;
+  createNotification: (
+    message: string,
+    type: string,
+    reveiverId: string,
+  ) => Promise<void>;
 };
 
 const NotificationContext = createContext<NotificationContextType>({
   notifications: [],
   setNotifications: () => {},
+  createNotification: async () => {},
 });
 
 const NotificationProvider = ({ children }: NotificationProvider) => {
@@ -24,20 +31,29 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
   }>("/notifications");
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
-  // useEffect(() => {
-  //   if (!socket) return;
+  const createNotification = async (
+    message: string,
+    type: string,
+    reveiverId: string,
+  ) => {
+    try {
+      const response = await api.post("/notifications", {
+        type,
+        message,
+        reveiverId,
+      });
 
-  //   socket.on("role_updated", (notification) => {
-  //     setNotifications((prevNotifications) => [
-  //       notification,
-  //       ...prevNotifications,
-  //     ]);
-  //   });
-
-  //   return () => {
-  //     socket?.off("role_updated");
-  //   };
-  // }, [socket]);
+      if (response.status === 201) {
+        console.log(response.data.notification);
+        // setNotifications((prevNotifications) => [
+        //   response.data.notification,
+        //   ...prevNotifications,
+        // ]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Fetch notifications
   useEffect(() => {
@@ -47,7 +63,9 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
   }, [notificationsResult]);
 
   return (
-    <NotificationContext.Provider value={{ notifications, setNotifications }}>
+    <NotificationContext.Provider
+      value={{ notifications, setNotifications, createNotification }}
+    >
       {children}
     </NotificationContext.Provider>
   );

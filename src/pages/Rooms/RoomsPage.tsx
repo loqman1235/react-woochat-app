@@ -65,7 +65,7 @@ const RoomsPage = () => {
 
       <div className="h-full w-[calc(100%-var(--main-menu-width))] flex-[3] overflow-y-auto bg-background p-2 py-5 md:p-5">
         <div className="mb-5 flex w-full items-center justify-between">
-          <h3 className="text-xl font-semibold text-text-foreground">Rooms</h3>
+          <h3 className="text-xl font-extrabold text-text-foreground">Rooms</h3>
 
           {user && user.role === "OWNER" && (
             <Button variant="primary" type="button" onClick={handleModal}>

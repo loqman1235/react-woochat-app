@@ -6,7 +6,8 @@ import { Role } from "@/types";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import { debugLog, getRoleIcon } from "@/utils";
+import { createNotification, debugLog, getRoleIcon } from "@/utils";
+// import useNotification from "@/hooks/useNotification";
 import useSocket from "@/hooks/useSocket";
 
 interface ManageRoleProps {
@@ -15,6 +16,7 @@ interface ManageRoleProps {
 
 const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
   const socket = useSocket();
+  // const { createNotification } = useNotification();
   const { currentUser, setCurrentUser } = useProfile();
   const [selectedRole, setSelectedRole] = useState<Role | undefined>(
     currentUser?.role,
@@ -28,6 +30,8 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!currentUser) return;
+
     try {
       setIsSubmitting(true);
       const response = await api.put(`/users/${currentUser?.id}`, {
@@ -40,22 +44,17 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
 
         setCurrentUser(updatedUser);
 
-        const notification = {
-          id: Math.random().toString(),
-          title: "Role Updated",
-          content: `You have been promoted into a ${updatedUser.role.toLowerCase()}`,
-          isRead: false,
-          isDeleted: false,
-          isSystem: true,
-          createdAt: new Date().toISOString(),
-        };
+        // add notification
 
-        //  Broadcast a notification to the user
-        socket?.emit("notification_send", {
-          id: updatedUser.id,
-          role: updatedUser.role,
-          notification,
-        });
+        const roleNotification = createNotification(
+          "ROLE_UPDATED",
+          currentUser.id,
+          true,
+        );
+
+        await api.post("/notifications", roleNotification);
+
+        socket?.emit("notification_send", roleNotification);
 
         toast.success("Role updated successfully");
       }

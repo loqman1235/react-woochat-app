@@ -127,8 +127,6 @@ const ProfileModal = () => {
           setUser(response.data.user);
           setItemToLocalStorage("user", JSON.stringify(response.data.user));
         }
-
-        console.log(response.data);
       } catch (error) {
         setIsCoverUploading(false);
         if (error instanceof AxiosError) {
@@ -167,11 +165,9 @@ const ProfileModal = () => {
     };
   }, [socket]);
 
-  const activeTabStyles = "bg-secondary !text-text-foreground";
+  const activeTabStyles = "bg-secondary !text-text-foreground !font-bold";
   const inactiveTabStyles =
-    "flex h-full cursor-pointer items-center px-5 text-text-muted transition duration-300 hover:text-text-foreground";
-
-  console.log(currentUser);
+    "flex h-full cursor-pointer items-center px-5 text-text-muted transition duration-300 hover:text-text-foreground font-semibold";
 
   return (
     // MODAL CONTAINER
@@ -243,12 +239,12 @@ const ProfileModal = () => {
                     <div>
                       {isOnline ? (
                         <span
-                          className="absolute bottom-2 right-2 h-4 w-4 rounded-full border-2 border-white bg-success"
+                          className="absolute bottom-2 right-2 h-3 w-3 animate-pulse rounded-full bg-success"
                           title="Online"
                         ></span>
                       ) : (
                         <span
-                          className="absolute bottom-2 right-2 h-4 w-4 rounded-full border-2 border-white bg-danger"
+                          className="absolute bottom-2 right-2 h-3 w-3 rounded-full  bg-danger"
                           title="Offline"
                         ></span>
                       )}
@@ -282,7 +278,7 @@ const ProfileModal = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-white">
+                  <h3 className="flex items-center gap-2 text-xl font-extrabold text-white drop-shadow">
                     {isOwnProfile ? user?.username : currentUser?.username}
                     <div className="flex items-center gap-1">
                       {currentUser?.verified && (
@@ -298,7 +294,7 @@ const ProfileModal = () => {
                 </div>
                 {/* MOOD */}
                 {user?.mood && (
-                  <p className="text-sm text-text-muted">
+                  <p className="text-base text-white drop-shadow">
                     {isOwnProfile ? user?.mood : currentUser?.mood}
                   </p>
                 )}

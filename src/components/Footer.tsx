@@ -20,7 +20,7 @@ const Footer = () => {
         <a
           href="https://www.facebook.com/loqman.axel.djefafla/"
           target="_blank"
-          className="font-semibold text-primary"
+          className="font-extrabold text-primary"
         >
           by Loqmane
         </a>

@@ -62,9 +62,10 @@ const Navbar = () => {
     }
   };
 
+  // Notification listener
   useEffect(() => {
     if (socket) {
-      socket.on("notification_send", ({ notification }) => {
+      socket.on("notification_send", (notification) => {
         setNotifications((prevNotifications) => [
           notification,
           ...prevNotifications,

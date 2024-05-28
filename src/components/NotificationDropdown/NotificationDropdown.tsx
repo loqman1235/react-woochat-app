@@ -1,6 +1,7 @@
 import { MdDelete, MdNotifications } from "react-icons/md";
 import NotificationItem from "./NotificationItem";
 import { useTheme } from "@/hooks/useTheme";
+import useNotification from "@/hooks/useNotification";
 
 interface NotificationDropdownProps {
   isOpen: boolean;
@@ -8,6 +9,9 @@ interface NotificationDropdownProps {
 
 const NotificationDropdown = ({ isOpen }: NotificationDropdownProps) => {
   const { theme } = useTheme();
+  const { notifications } = useNotification();
+
+  console.log(notifications, "notifications");
 
   const bgColor = theme === "light" ? "bg-foreground" : "bg-muted";
 
@@ -22,22 +26,28 @@ const NotificationDropdown = ({ isOpen }: NotificationDropdownProps) => {
           <span className="text-lg text-text-muted">
             <MdNotifications />
           </span>
-          <span className="text-sm font-semibold">Notifications</span>
+          <span className="text-sm font-bold">Notifications</span>
         </div>
 
-        <button className="text-lg text-danger">
-          <MdDelete />
-        </button>
+        {notifications.length > 0 && (
+          <button className="text-lg text-danger">
+            <MdDelete />
+          </button>
+        )}
       </div>
 
       {/* NOTIFICATIONS */}
-      <ul className="flex max-h-60 flex-col items-start overflow-y-auto px-1.5 py-2">
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
+
+      <ul className="flex max-h-60 flex-col items-start overflow-y-auto px-1.5">
+        {notifications.map((notification) => (
+          <NotificationItem key={notification.id} {...notification} />
+        ))}
+
+        {notifications.length === 0 && (
+          <li className="px-3 py-2 text-sm text-text-muted">
+            No notifications yet.
+          </li>
+        )}
       </ul>
     </div>
   );

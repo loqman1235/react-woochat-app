@@ -150,7 +150,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
             <MdArrowBack />
           </button>
           {roomName ? (
-            <h1 className="text-lg font-bold tracking-tight text-text-foreground">
+            <h1 className="text-lg font-extrabold tracking-tight text-text-foreground">
               {roomName}
             </h1>
           ) : (

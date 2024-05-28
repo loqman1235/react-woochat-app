@@ -146,7 +146,7 @@ const Message = ({
           >
             <span>{getRoleIcon(sender.role, "xs")}</span>
             <h5
-              className={`text-sm font-bold text-text-foreground ${animatedText}`}
+              className={`text-sm font-extrabold text-text-foreground ${animatedText}`}
             >
               {sender.username}
             </h5>
@@ -165,7 +165,11 @@ const Message = ({
             className={`w-fit rounded-full rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-full rounded-tr-none bg-primary text-white"}`}
           >
             {isMessageMarkedAsDeleted ? (
-              <p className="text-sm italic">Message has been deleted</p>
+              <p
+                className={`text-sm italic ${isOwnProfile ? "text-white" : "text-text-muted-2"}`}
+              >
+                Message has been deleted
+              </p>
             ) : (
               <p className="text-sm">{content}</p>
             )}

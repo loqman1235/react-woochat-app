@@ -15,12 +15,15 @@ interface AboutProfileProps {
 const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
   const { currentUser } = useProfile();
 
+  const listStyles =
+    "flex items-center border-b border-b-border py-3 last:border-none last:pb-0";
+
   return (
     <div
       className={`w-full p-5 text-sm text-text-foreground ${isOpen ? "block" : "hidden"}`}
     >
-      <ul className="flex items-center border-b border-b-border py-3 last:border-none last:pb-0">
-        <li className="flex w-1/2 items-center gap-2 font-medium">
+      <ul className={listStyles}>
+        <li className="flex w-1/2 items-center gap-2 font-bold">
           <span className="text-lg text-text-muted">
             <MdEmail />
           </span>
@@ -29,8 +32,8 @@ const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
         <li className="w-1/2">{currentUser?.email || "N/A"}</li>
       </ul>
 
-      <ul className="flex items-center border-b border-b-border py-3 last:border-none last:pb-0">
-        <li className="flex w-1/2 items-center gap-2 font-medium">
+      <ul className={listStyles}>
+        <li className="flex w-1/2 items-center gap-2 font-bold">
           <span className="text-lg text-text-muted">
             <MdTransgender />
           </span>
@@ -39,8 +42,8 @@ const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
         <li className="w-1/2 capitalize">{currentUser?.gender || "N/A"}</li>
       </ul>
 
-      <ul className="flex items-center border-b border-b-border py-3 last:border-none last:pb-0">
-        <li className="flex w-1/2 items-center gap-2 font-medium">
+      <ul className={listStyles}>
+        <li className="flex w-1/2 items-center gap-2 font-bold">
           <span className="text-lg text-text-muted">
             <MdPublic />
           </span>
@@ -60,8 +63,8 @@ const AboutProfile = ({ isOpen = false }: AboutProfileProps) => {
         </li>
       </ul>
 
-      <ul className="flex items-center border-b border-b-border py-2 last:border-none last:pb-0">
-        <li className="flex w-1/2 items-center gap-2 font-medium">
+      <ul className={listStyles}>
+        <li className="flex w-1/2 items-center gap-2 font-bold">
           <span className="text-lg text-text-muted">
             <MdCalendarMonth />
           </span>

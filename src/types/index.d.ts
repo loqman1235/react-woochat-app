@@ -52,14 +52,30 @@ type MessageType = {
   createdAt: string;
 };
 
+type NotificationEventType =
+  | "ROLE_UPDATED"
+  | "USER_FOLLOWED"
+  | "NEW_MESSAGE"
+  | "NEW_ROOM_CREATED"
+  | "ROOM_DELETED";
+
 type NotificationType = {
   id: string;
-  title: string;
-  content: string;
+  type: NotificationEventType;
   isRead: boolean;
-  createdAt: string;
   isDeleted: boolean;
   isSystem: boolean;
+  sender: User;
+  createdAt: string;
 };
 
-export { LoginForm, Role, User, Room, MessageType, NotificationType };
+export {
+  LoginForm,
+  Role,
+  User,
+  Room,
+  MessageType,
+  NotificationType,
+  NotificationEventType,
+  NotificationEventType,
+};

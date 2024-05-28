@@ -42,7 +42,7 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`flex w-fit items-center justify-center gap-2 rounded-md font-semibold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${buttonStyles} ${className} ${buttonSize[size]}`}
+      className={`flex w-fit items-center justify-center gap-2 rounded-md font-bold transition duration-300 disabled:!cursor-not-allowed disabled:opacity-50 ${buttonStyles} ${className} ${buttonSize[size]}`}
       disabled={isDisabled}
       {...props}
     >

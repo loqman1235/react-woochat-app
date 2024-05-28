@@ -50,7 +50,7 @@ const User = ({
             >
               {username}
             </li>
-            {mood && <li className="text-[11px] text-text-muted">{mood}</li>}
+            {mood && <li className="text-sm text-text-muted">{mood}</li>}
           </ul>
         </div>
         <div>

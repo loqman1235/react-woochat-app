@@ -18,9 +18,9 @@
   --color-foreground: #ffffff; /*f2f2f2*/
   --color-secondary: #5a5a5a;
   --color-muted: #353535;
-  --color-primary: #009688; /* 0084ff */
-  --color-primary-light: #52c7b8; /* 4d94ff */
-  --color-primary-hover: #00897b; /* 0069d9 */
+  --color-primary: #0084ff; /* 0084ff */
+  --color-primary-light: #4d94ff; /* 4d94ff */
+  --color-primary-hover: #0069d9; /* 0069d9 */
   --color-secondary: #ffffff;
   --color-text-foreground: #444444;
   --color-text-background: #ffffff;
@@ -64,7 +64,7 @@
 /* Light and Dark Mode */
 
 .light-mode {
-  --color-background: #f8f8f8;
+  --color-background: #f8f8f8; /*f1f1f1*/
   --color-foreground: #ffffff; /*f2f2f2*/
   --color-secondary: #e4e4e4;
   --color-secondary-hover: #dcdcdc;
@@ -93,7 +93,7 @@
 
 @layer base {
   html {
-    @apply h-screen scroll-smooth bg-background font-roboto text-text-foreground;
+    @apply h-screen scroll-smooth bg-background font-nunito-sans text-text-foreground;
   }
 
   /* SVG Icons */

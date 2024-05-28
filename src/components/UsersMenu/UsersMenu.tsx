@@ -60,9 +60,9 @@ const UsersMenu = ({ onlineUsers, isLoading }: UsersMenuProps) => {
         )}
         {staffMembers.length > 0 && (
           <div className="mb-5">
-            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-extrabold text-text-foreground">
               Staff{" "}
-              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                 {staffMembers.length}
               </span>
             </h2>
@@ -74,9 +74,9 @@ const UsersMenu = ({ onlineUsers, isLoading }: UsersMenuProps) => {
 
         {vipMembers.length > 0 && (
           <div className="mb-5">
-            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-extrabold text-text-foreground">
               VIP Members{" "}
-              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                 {vipMembers.length}
               </span>
             </h2>
@@ -88,9 +88,9 @@ const UsersMenu = ({ onlineUsers, isLoading }: UsersMenuProps) => {
 
         {users.length > 0 && (
           <div>
-            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-text-foreground">
+            <h2 className="mb-2 flex items-center gap-2 px-3 text-sm font-extrabold text-text-foreground">
               Users{" "}
-              <span className="rounded-full bg-primary px-2 py-px text-xs font-bold text-white">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                 {users.length}
               </span>
             </h2>

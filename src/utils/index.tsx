@@ -5,7 +5,7 @@ import {
   PremiumIcon,
   UserIcon,
 } from "@/components/icons";
-import { Role, User } from "@/types";
+import { NotificationEventType, Role, User } from "@/types";
 import moment from "moment";
 
 // Manage roles icons
@@ -119,6 +119,35 @@ const isUserOnline = (onlineUsersArr: User[], userId: string): boolean => {
   return onlineUsersIds.includes(userId);
 };
 
+// Function to format notification based on type
+const formatNotificationMessage = (type: NotificationEventType) => {
+  switch (type) {
+    case "ROLE_UPDATED":
+      return "Has updated your role";
+    case "USER_FOLLOWED":
+      return "Started following you";
+    case "NEW_MESSAGE":
+      return "Sent you a message";
+    case "NEW_ROOM_CREATED":
+      return "Created a new room";
+    case "ROOM_DELETED":
+      return "Deleted a room";
+  }
+};
+
+// Function that creates a new notification object
+const createNotification = (
+  type: NotificationEventType,
+  receiverId: string,
+  isSystem: boolean = false,
+) => {
+  return {
+    type,
+    receiverId,
+    isSystem: isSystem ? isSystem : false,
+  };
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -129,4 +158,6 @@ export {
   playSound,
   filterUsersByRole,
   isUserOnline,
+  formatNotificationMessage,
+  createNotification,
 };
