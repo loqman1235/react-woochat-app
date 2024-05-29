@@ -94,16 +94,27 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       }
     };
 
+    // Handle room deleted
     const handleRoomDeleted = (roomId: string) => {
       if (roomId === roomId) {
         setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
       }
     };
 
+    // Handle role update
+    const handleRoleUpdate = (receiver: User) => {
+      messages.forEach((message) => {
+        if (message.user.id === receiver.id) {
+          message.user.role = receiver.role;
+        }
+      });
+    };
+
     socket.on("online_room_users", handleOnlineUsers);
     socket.on("receive_room_message", handleReceiveRoomMessage);
     socket.on("delete_room", handleDeleteRoom);
     socket.on("room_deleted", handleRoomDeleted);
+    socket.on("role_updated", handleRoleUpdate);
 
     // Clean up the socket event listeners on component unmount
     return () => {
@@ -111,8 +122,9 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       socket.off("receive_room_message", handleReceiveRoomMessage);
       socket.off("delete_room", handleDeleteRoom);
       socket.off("room_deleted", handleRoomDeleted);
+      socket.off("role_updated", handleRoleUpdate);
     };
-  }, [isPlaying, navigate, setRooms, socket, user]);
+  }, [isPlaying, messages, navigate, setRooms, socket, user]);
 
   useEffect(() => {
     if (messagesData) {

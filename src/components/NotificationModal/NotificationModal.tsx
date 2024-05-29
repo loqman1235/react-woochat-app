@@ -11,9 +11,7 @@ interface NotificationModalProps {
 
 const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
   const { theme } = useTheme();
-  const { notifications } = useNotification();
-
-  console.log(notifications, "notifications");
+  const { notifications, deleteNotifications } = useNotification();
 
   const bgColor = theme === "light" ? "bg-foreground" : "bg-muted";
 
@@ -42,7 +40,10 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
 
           <div className="flex items-center gap-2">
             {notifications.length > 0 && (
-              <button className="text-lg text-danger">
+              <button
+                className="text-lg text-danger"
+                onClick={deleteNotifications}
+              >
                 <MdDelete />
               </button>
             )}
@@ -63,8 +64,8 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
           ))}
 
           {notifications.length === 0 && (
-            <li className="px-3 py-2 text-sm text-text-muted">
-              No notifications yet.
+            <li className="py-2 text-sm text-text-muted">
+              You have no notifications
             </li>
           )}
         </ul>

@@ -19,7 +19,7 @@ import Brand from "./shared/Brand";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
-import { debugLog, playSound } from "@/utils";
+import { debugLog, playSound, setItemToLocalStorage } from "@/utils";
 import useSocket from "@/hooks/useSocket";
 import useNotification from "@/hooks/useNotification";
 
@@ -37,10 +37,10 @@ const Navbar = () => {
     setUnreadNotificationsCount,
   } = useNotification();
   const { isPlaying } = useSound();
-  const { signoutUser, user } = useAuth();
+  const { signoutUser, user, setUser } = useAuth();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { toggleMainMenu } = useSidebarToggle();
-  const { setIsProfileOpen, setCurrentUser } = useProfile();
+  const { setIsProfileOpen, setCurrentUser, isProfileOpen } = useProfile();
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
     useState(false);
 
@@ -71,12 +71,30 @@ const Navbar = () => {
   // Notification listener
   useEffect(() => {
     if (socket) {
-      socket.on("notification_send", (notification) => {
+      socket.on("role_notification_send", ({ notification, receiver }) => {
         setNotifications((prevNotifications) => [
           notification,
           ...prevNotifications,
         ]);
         setUnreadNotificationsCount((prevCount) => prevCount + 1);
+
+        if (user?.id === receiver.id) {
+          setUser((prevUser) => {
+            if (!prevUser) {
+              return undefined;
+            }
+
+            return {
+              ...prevUser,
+              role: receiver.role,
+            };
+          });
+
+          setItemToLocalStorage(
+            "user",
+            JSON.stringify({ ...user, role: receiver.role }),
+          );
+        }
 
         if (isPlaying) {
           playSound(notificationSound);
@@ -85,9 +103,17 @@ const Navbar = () => {
     }
 
     return () => {
-      socket?.off("notification_send");
+      socket?.off("role_notification_send");
     };
-  }, [isPlaying, setNotifications, setUnreadNotificationsCount, socket]);
+  }, [
+    isPlaying,
+    setNotifications,
+    setUnreadNotificationsCount,
+    setUser,
+    socket,
+    user,
+    isProfileOpen,
+  ]);
 
   return (
     <>

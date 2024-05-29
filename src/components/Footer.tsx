@@ -3,12 +3,8 @@ import useSound from "@/hooks/useSound";
 import { MdMenu, MdVolumeOff, MdVolumeUp } from "react-icons/md";
 
 const Footer = () => {
-  const { setIsPlaying, isPlaying } = useSound();
+  const { isPlaying, toggleSound } = useSound();
   const { toggleUsersMenu } = useSidebarToggle();
-
-  const handleSoundToggle = () => {
-    setIsPlaying((prev) => !prev);
-  };
 
   console.log(isPlaying, "isPlaying");
 
@@ -26,7 +22,7 @@ const Footer = () => {
         </a>
       </p>
       <div className="flex h-full items-center gap-5">
-        <button onClick={handleSoundToggle}>
+        <button onClick={toggleSound}>
           {isPlaying ? <MdVolumeUp /> : <MdVolumeOff />}
         </button>
         <button

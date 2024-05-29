@@ -19,6 +19,7 @@ type NotificationContextType = {
     reveiverId: string,
   ) => Promise<void>;
   markNotificationsAsRead: () => Promise<void>;
+  deleteNotifications: () => Promise<void>;
 };
 
 const NotificationContext = createContext<NotificationContextType>({
@@ -28,6 +29,7 @@ const NotificationContext = createContext<NotificationContextType>({
   setUnreadNotificationsCount: () => {},
   createNotification: async () => {},
   markNotificationsAsRead: async () => {},
+  deleteNotifications: async () => {},
 });
 
 const NotificationProvider = ({ children }: NotificationProvider) => {
@@ -78,6 +80,17 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
     }
   };
 
+  // Delete notifications
+  const deleteNotifications = async () => {
+    try {
+      await api.delete("/notifications");
+      setNotifications([]);
+      setUnreadNotificationsCount(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Fetch notifications
   useEffect(() => {
     if (!notificationsResult) return;
@@ -99,6 +112,7 @@ const NotificationProvider = ({ children }: NotificationProvider) => {
         createNotification,
         markNotificationsAsRead,
         setUnreadNotificationsCount,
+        deleteNotifications,
       }}
     >
       {children}

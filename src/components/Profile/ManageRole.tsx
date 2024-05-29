@@ -53,7 +53,10 @@ const ManageRole = ({ isOpen = false }: ManageRoleProps) => {
 
         await api.post("/notifications", roleNotification);
 
-        socket?.emit("notification_send", roleNotification);
+        socket?.emit("role_notification_send", {
+          roleNotification,
+          receiver: updatedUser,
+        });
 
         toast.success("Role updated successfully");
       }
