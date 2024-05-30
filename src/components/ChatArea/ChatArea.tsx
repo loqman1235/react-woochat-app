@@ -6,6 +6,8 @@ import { MessageType, User } from "@/types";
 import useSocket from "@/hooks/useSocket";
 import { isUserOnline, playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
+import JoinsRoomSound from "@/assets/sounds/joins_room.mp3";
+import LeavesRoomSound from "@/assets/sounds/leaves_room.mp3";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -63,6 +65,30 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
   useEffect(() => {
     if (!socket) return;
 
+    // Bot message when someone joins a room
+    const handleUserJoinsRoom = (message: MessageType) => {
+      if (messages && messages.length > 0) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+        setNewMessageIds((prevIds) => [...prevIds, message.id]);
+
+        if (message.user.id !== user?.id && isPlaying) {
+          playSound(JoinsRoomSound);
+        }
+      }
+    };
+
+    // Bot message when someone leaves a room
+    const handleUserLeavesRoom = (message: MessageType) => {
+      if (messages && messages.length > 0) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+        // setNewMessageIds((prevIds) => [...prevIds, message.id]);
+
+        if (message.user.id !== user?.id && isPlaying) {
+          playSound(LeavesRoomSound);
+        }
+      }
+    };
+
     // Handle online users
     const handleOnlineUsers = ({ users }: { users: User[] }) => {
       setOnlineUsers(users);
@@ -110,6 +136,8 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       });
     };
 
+    socket.on("join_room", handleUserJoinsRoom);
+    socket.on("leave_room", handleUserLeavesRoom);
     socket.on("online_room_users", handleOnlineUsers);
     socket.on("receive_room_message", handleReceiveRoomMessage);
     socket.on("delete_room", handleDeleteRoom);
@@ -118,6 +146,8 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
 
     // Clean up the socket event listeners on component unmount
     return () => {
+      socket.off("join_room", handleUserJoinsRoom);
+      socket.off("leave_room", handleUserLeavesRoom);
       socket.off("online_room_users", handleOnlineUsers);
       socket.off("receive_room_message", handleReceiveRoomMessage);
       socket.off("delete_room", handleDeleteRoom);
@@ -182,26 +212,31 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
+              className={`${message.user.id === user?.id ? "origin-right" : "origin-left"}`}
               key={message.id}
               initial={
                 newMessageIds.includes(message.id)
-                  ? { opacity: 0, y: 50, scale: 0 }
+                  ? {
+                      opacity: 0,
+                      x: message.user.id === user?.id ? 50 : -50,
+                      scale: 0.8,
+                    }
                   : {}
               }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{
+                opacity: 0,
+                x: message.user.id === user?.id ? 50 : -50,
+                scale: 0.8,
+              }}
               transition={{
-                duration: 0.2,
+                duration: 0.1,
                 type: "spring",
-                stiffness: 260,
-                damping: 20,
+                stiffness: 240,
+                damping: 30,
               }}
             >
               <Message
-                // isGloballyOnline={isUserOnline(
-                //   globallyOnlineUsers,
-                //   message.user.id,
-                // )}
                 isOnlineInRoom={isUserOnline(onlineUsers, message.user.id)}
                 {...message}
                 isUserDropdownOpen={openDropdownId === message.id}

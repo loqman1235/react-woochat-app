@@ -185,7 +185,11 @@ const ProfileModal = () => {
         <div>
           <div className="relative h-[200px] w-full bg-secondary before:absolute before:inset-0 before:bg-black before:opacity-70 before:shadow">
             <img
-              src={user?.cover?.secure_url || "https://picsum.photos/1920/300"}
+              src={
+                currentUser?.cover && currentUser.cover.secure_url
+                  ? currentUser.cover.secure_url
+                  : "https://picsum.photos/1920/300"
+              }
               alt="cover"
               className="h-full w-full object-cover"
             />

@@ -21,11 +21,13 @@ import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import useSocket from "@/hooks/useSocket";
+import BotAvatar from "@/components/shared/BotAvatar";
 
 interface MessageProps extends MessageType {
   isOnlineInRoom: boolean;
   isUserDropdownOpen: boolean;
   toggleUserDropdown: () => void;
+  isBotMessage?: boolean;
 }
 
 const STAFF_ROLES = ["OWNER", "ADMIN", "MOD"];
@@ -39,6 +41,7 @@ const Message = ({
   createdAt,
   isUserDropdownOpen,
   toggleUserDropdown,
+  isBotMessage,
 }: MessageProps) => {
   // const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
   const socket = useSocket();
@@ -90,51 +93,57 @@ const Message = ({
       className={`flex w-full items-start gap-2 px-2 py-2 md:px-5 ${isOwnProfile && "flex-row-reverse"}`}
     >
       <div className="relative" onClick={toggleUserDropdown}>
-        <Avatar
-          src={sender.avatar?.secure_url || "/default_avatar.png"}
-          gender={sender.gender}
-          isBordered
-          size="md"
-          isOnline={isOnlineInRoom}
-        />
-        <Dropdown
-          isOpen={isUserDropdownOpen}
-          position={isOwnProfile ? "right" : "left"}
-        >
-          {!isOwnProfile && (
-            <>
-              <DropdownItem icon={<MdEmail />} text="Private" />{" "}
-              <DropdownItem icon={<MdPersonAdd />} text="Send Request" />
-            </>
-          )}
-          <DropdownItem
-            icon={<MdAccountCircle />}
-            text="View Profile"
-            handleClick={() => {
-              setIsProfileOpen(true);
-              setCurrentUser(sender);
-            }}
+        {isBotMessage ? (
+          <BotAvatar size="md" />
+        ) : (
+          <Avatar
+            src={sender.avatar?.secure_url || "/default_avatar.png"}
+            gender={sender.gender}
+            isBordered
+            size="md"
+            isOnline={isOnlineInRoom}
           />
-
-          {/* Kick */}
-          {user &&
-            STAFF_ROLES.includes(user?.role) &&
-            sender.role !== "OWNER" &&
-            !isOwnProfile && (
+        )}
+        {!isBotMessage && (
+          <Dropdown
+            isOpen={isUserDropdownOpen}
+            position={isOwnProfile ? "right" : "left"}
+          >
+            {!isOwnProfile && (
               <>
-                <DropdownItem
-                  icon={<MdLogout />}
-                  text={`Kick ${sender?.username}`}
-                  bgColor="danger"
-                />
-                <DropdownItem
-                  icon={<MdBlock />}
-                  text={`Ban ${sender?.username}`}
-                  bgColor="danger"
-                />
+                <DropdownItem icon={<MdEmail />} text="Private" />{" "}
+                <DropdownItem icon={<MdPersonAdd />} text="Send Request" />
               </>
             )}
-        </Dropdown>
+            <DropdownItem
+              icon={<MdAccountCircle />}
+              text="View Profile"
+              handleClick={() => {
+                setIsProfileOpen(true);
+                setCurrentUser(sender);
+              }}
+            />
+
+            {/* Kick */}
+            {user &&
+              STAFF_ROLES.includes(user?.role) &&
+              sender.role !== "OWNER" &&
+              !isOwnProfile && (
+                <>
+                  <DropdownItem
+                    icon={<MdLogout />}
+                    text={`Kick ${sender?.username}`}
+                    bgColor="danger"
+                  />
+                  <DropdownItem
+                    icon={<MdBlock />}
+                    text={`Ban ${sender?.username}`}
+                    bgColor="danger"
+                  />
+                </>
+              )}
+          </Dropdown>
+        )}
       </div>
 
       <div className="flex-[1]">
@@ -168,7 +177,7 @@ const Message = ({
           className={`group flex items-center gap-1 ${isOwnProfile && "flex-row-reverse justify-start"}`}
         >
           <div
-            className={`w-fit rounded-full rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-full rounded-tr-none bg-primary text-white"}`}
+            className={`w-fit rounded-3xl rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-3xl rounded-tr-none bg-primary text-white"}`}
           >
             {isMessageMarkedAsDeleted ? (
               <p
@@ -187,7 +196,7 @@ const Message = ({
             />
           )} */}
           </div>
-          {!isMessageMarkedAsDeleted && (
+          {!isMessageMarkedAsDeleted && !isBotMessage && (
             <button
               className="relative text-xl text-text-muted-2 opacity-0 transition duration-300 hover:text-text-foreground group-hover:opacity-100"
               onClick={toggleMessageOptionsDropdown}

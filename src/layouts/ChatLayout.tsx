@@ -22,8 +22,10 @@ const ChatLayout = () => {
   useEffect(() => {
     if (!socket || !roomId || !user) return;
 
+    if (roomResult?.room.name === undefined) return;
+
     // Join the room and set up event listeners
-    socket.emit("join_room", { user, roomId });
+    socket.emit("join_room", { user, roomId, roomName: roomResult?.room.name });
 
     const handleOnlineUsers = ({ users }: { users: User[] }) => {
       // console.log("Online room users", users);
@@ -35,9 +37,13 @@ const ChatLayout = () => {
     // Clean up the socket event listeners on component unmount
     return () => {
       socket.off("online_room_users", handleOnlineUsers);
-      socket.emit("leave_room", { user, roomId });
+      socket.emit("leave_room", {
+        user,
+        roomId,
+        roomName: roomResult?.room.name,
+      });
     };
-  }, [socket, roomId, user]);
+  }, [socket, roomId, user, roomResult?.room.name]);
 
   return (
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
