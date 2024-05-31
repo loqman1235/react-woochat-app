@@ -1,5 +1,5 @@
 // import { MdFlag, MdThumbUp } from "react-icons/md";
-import { formatDate, getRoleIcon } from "@/utils";
+import { formatDate, getRoleIcon, parseUrls } from "@/utils";
 import Avatar from "@/components/shared/Avatar";
 import { Dropdown, DropdownItem } from "@/components/shared/Dropdown";
 import {
@@ -186,7 +186,10 @@ const Message = ({
                 Message has been deleted
               </p>
             ) : (
-              <p className="text-sm">{content}</p>
+              <p
+                className="text-sm"
+                dangerouslySetInnerHTML={{ __html: parseUrls(content) }}
+              ></p>
             )}
 
             {/* {media && (

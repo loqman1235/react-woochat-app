@@ -6,8 +6,6 @@ import { MessageType, User } from "@/types";
 import useSocket from "@/hooks/useSocket";
 import { isUserOnline, playSound } from "@/utils";
 import MessageReceivedSound from "@/assets/sounds/message_received.mp3";
-import JoinsRoomSound from "@/assets/sounds/joins_room.mp3";
-import LeavesRoomSound from "@/assets/sounds/leaves_room.mp3";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -72,7 +70,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
         setNewMessageIds((prevIds) => [...prevIds, message.id]);
 
         if (message.user.id !== user?.id && isPlaying) {
-          playSound(JoinsRoomSound);
+          playSound(MessageReceivedSound);
         }
       }
     };
@@ -84,7 +82,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
         // setNewMessageIds((prevIds) => [...prevIds, message.id]);
 
         if (message.user.id !== user?.id && isPlaying) {
-          playSound(LeavesRoomSound);
+          playSound(MessageReceivedSound);
         }
       }
     };

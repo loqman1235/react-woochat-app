@@ -7,6 +7,7 @@ import {
 } from "@/components/icons";
 import { NotificationEventType, Role, User } from "@/types";
 import moment from "moment";
+import DOMPurify from "dompurify";
 
 // Manage roles icons
 const getRoleIcon = (role: string, size: "xs" | "sm" | "md" | "lg" = "sm") => {
@@ -148,6 +149,22 @@ const createNotification = (
   };
 };
 
+const parseUrls = (msg: string) => {
+  const urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
+  const urlsArr = msg.split(" ").filter((w) => w.match(urlRegex));
+
+  return msg
+    .split(" ")
+    .map((word) =>
+      !urlsArr.includes(word)
+        ? word
+        : `<a class="underline" target="_blank" href="${DOMPurify.sanitize(word)}">${DOMPurify.sanitize(word)}</a>`,
+    )
+    .join(" ");
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -160,4 +177,5 @@ export {
   isUserOnline,
   formatNotificationMessage,
   createNotification,
+  parseUrls,
 };
