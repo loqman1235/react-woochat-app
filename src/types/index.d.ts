@@ -46,7 +46,11 @@ type Room = {
 
 type MessageType = {
   id: string;
-  content: string;
+  content?: string;
+  files?: {
+    id: string;
+    secure_url: string;
+  }[];
   user: User;
   isDeleted?: boolean;
   createdAt: string;

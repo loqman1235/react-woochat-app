@@ -37,6 +37,7 @@ const Message = ({
   user: sender,
   isOnlineInRoom,
   content,
+  files,
   isDeleted,
   createdAt,
   isUserDropdownOpen,
@@ -186,18 +187,31 @@ const Message = ({
                 Message has been deleted
               </p>
             ) : (
-              <p
-                className="text-sm"
-                dangerouslySetInnerHTML={{ __html: parseUrls(content) }}
-              ></p>
+              content && (
+                <p
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ __html: parseUrls(content) }}
+                ></p>
+              )
             )}
 
-            {/* {media && (
-            <img
-              src={media}
-              className="mt-2 h-[200px] w-full rounded-md object-cover md:w-[300px]"
-            />
-          )} */}
+            {/* Files here */}
+            {!isMessageMarkedAsDeleted && files && (
+              <div className="flex gap-2">
+                {files.map((file) => (
+                  <div
+                    key={file.id}
+                    className="relative h-40 w-40 overflow-hidden rounded-xl bg-foreground shadow-sm"
+                  >
+                    <img
+                      src={file.secure_url}
+                      alt={file.secure_url}
+                      className="h-full w-full cursor-pointer object-cover transition duration-300 hover:scale-105"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           {!isMessageMarkedAsDeleted && !isBotMessage && (
             <button
