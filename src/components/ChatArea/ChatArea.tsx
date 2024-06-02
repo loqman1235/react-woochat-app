@@ -36,7 +36,6 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
   const { data: messagesData, isLoading } = useFetch<{
     messages: MessageType[];
   }>(`/messages/room/${roomId}`);
-  const [lastChangeWasAddition, setLastChangeWasAddition] = useState(true);
 
   const navigate = useNavigate();
 
@@ -54,13 +53,13 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
   };
 
   useEffect(() => {
-    if (messagesContainerRef.current && lastChangeWasAddition) {
+    if (messagesContainerRef.current) {
       messagesContainerRef.current.scroll({
         top: messagesContainerRef.current.scrollHeight,
         behavior: "smooth",
       });
     }
-  }, [lastChangeWasAddition, messages]);
+  }, [messages]);
 
   useEffect(() => {
     if (!socket) return;
@@ -70,7 +69,6 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       if (messages && messages.length > 0) {
         setMessages((prevMessages) => [...prevMessages, message]);
         setNewMessageIds((prevIds) => [...prevIds, message.id]);
-        setLastChangeWasAddition(true);
 
         if (message.user.id !== user?.id && isPlaying) {
           playSound(MessageReceivedSound);
@@ -83,7 +81,6 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       if (messages && messages.length > 0) {
         setMessages((prevMessages) => [...prevMessages, message]);
         setNewMessageIds((prevIds) => [...prevIds, message.id]);
-        setLastChangeWasAddition(true);
 
         if (message.user.id !== user?.id && isPlaying) {
           playSound(MessageReceivedSound);
@@ -100,22 +97,10 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
     const handleReceiveRoomMessage = (data: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       setNewMessageIds((prevIds) => [...prevIds, data.id]);
-      setLastChangeWasAddition(true);
 
       if (data.user.id !== user?.id && isPlaying) {
         playSound(MessageReceivedSound);
       }
-    };
-
-    // Handle update room message
-    const handleUpdateRoomMessage = (data: MessageType) => {
-      setMessages((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === data.id ? { ...message, files: data.files } : message,
-        ),
-      );
-
-      setLastChangeWasAddition(false);
     };
 
     // Handle room deletion
@@ -154,7 +139,6 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
     socket.on("leave_room", handleUserLeavesRoom);
     socket.on("online_room_users", handleOnlineUsers);
     socket.on("receive_room_message", handleReceiveRoomMessage);
-    socket.on("receive_room_message_update", handleUpdateRoomMessage);
     socket.on("delete_room", handleDeleteRoom);
     socket.on("room_deleted", handleRoomDeleted);
     socket.on("role_updated", handleRoleUpdate);
@@ -165,7 +149,6 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       socket.off("leave_room", handleUserLeavesRoom);
       socket.off("online_room_users", handleOnlineUsers);
       socket.off("receive_room_message", handleReceiveRoomMessage);
-      socket.off("receive_room_message_update", handleUpdateRoomMessage);
       socket.off("delete_room", handleDeleteRoom);
       socket.off("room_deleted", handleRoomDeleted);
       socket.off("role_updated", handleRoleUpdate);
