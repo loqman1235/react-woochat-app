@@ -11,9 +11,6 @@ import {
   MdSend,
 } from "react-icons/md";
 
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-
 interface ChatInputProps {
   roomId?: string;
 }
@@ -145,27 +142,15 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
                 <div key={file.file.name} className="flex items-center gap-2">
                   {file.file.type.startsWith("image/") ? (
                     <div className="relative h-20 w-20 overflow-hidden rounded-xl border border-border">
-                      <div className="absolute left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-                        <span className="h-8 w-8">
-                          <CircularProgressbar
-                            value={file.progress}
-                            styles={buildStyles({
-                              pathColor: "#0084ff",
-                              strokeLinecap: "round",
-                              pathTransitionDuration: 0.5,
-                            })}
-                          />
-                        </span>
-                      </div>
                       <img
                         src={URL.createObjectURL(file.file)}
                         alt={file.file.name}
-                        className={`h-full w-full object-cover ${file.progress > 0 ? "opacity-50" : "opacity-100"}`}
+                        className={`h-full w-full object-cover ${file.progress > 0 && "animate-pulse"}`}
                       />
 
                       {!isSubmitting && (
                         <button
-                          className="absolute right-1 top-1 -z-40 flex items-center justify-center rounded-full bg-danger p-px text-xs text-white transition duration-300"
+                          className="absolute right-1 top-1 z-30 flex items-center justify-center rounded-full bg-danger p-px text-xs text-white transition duration-300"
                           onClick={() =>
                             setFiles(files.filter((_, i) => i !== index))
                           }
