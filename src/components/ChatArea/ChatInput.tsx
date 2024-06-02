@@ -145,7 +145,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
                 <div key={file.file.name} className="flex items-center gap-2">
                   {file.file.type.startsWith("image/") ? (
                     <div className="relative h-20 w-20 overflow-hidden rounded-xl border border-border">
-                      <div className="absolute left-1/2 top-1/2 z-50 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+                      <div className="absolute left-1/2 top-1/2 z-30 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
                         <span className="h-8 w-8">
                           <CircularProgressbar
                             value={file.progress}
