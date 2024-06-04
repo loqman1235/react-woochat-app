@@ -229,7 +229,10 @@ const Message = ({
               >
                 <MdMoreHoriz />
 
-                <Dropdown isOpen={isMessageOptionsOpen} position="left">
+                <Dropdown
+                  isOpen={isMessageOptionsOpen}
+                  position={isOwnProfile ? "left" : "right"}
+                >
                   {isOwnProfile ? (
                     <>
                       <DropdownItem
