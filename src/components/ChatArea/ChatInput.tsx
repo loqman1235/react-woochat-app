@@ -73,8 +73,6 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
           },
         });
 
-        console.log("Uploaded files");
-
         setFiles([]);
         uploadedFiles = response.data.uploadedFiles;
       }
