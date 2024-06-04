@@ -96,12 +96,12 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
           files: uploadedFiles,
         };
 
+        setContent("");
+        setFiles([]);
+
         if (socket) {
           socket.emit("send_room_message", message);
         }
-
-        setContent("");
-        setFiles([]);
       }
     } catch (error) {
       setIsSubmitting(false);

@@ -229,10 +229,7 @@ const Message = ({
               >
                 <MdMoreHoriz />
 
-                <Dropdown
-                  isOpen={isMessageOptionsOpen}
-                  position={isOwnProfile ? "right" : "left"}
-                >
+                <Dropdown isOpen={isMessageOptionsOpen} position="left">
                   {isOwnProfile ? (
                     <>
                       <DropdownItem
@@ -283,7 +280,7 @@ const Message = ({
           <img
             src={previewImageUrl}
             alt="image"
-            className="max-h-[480px] max-w-full object-contain"
+            className="max-h-[480px] max-w-full object-contain shadow-2xl"
           />
         </div>
         <div>
