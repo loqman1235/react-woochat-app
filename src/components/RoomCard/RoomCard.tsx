@@ -15,6 +15,8 @@ import { Modal } from "../shared/Modal";
 import Button from "../shared/Button";
 import useRoom from "@/hooks/useRoom";
 import useSocket from "@/hooks/useSocket";
+import UpdateRoomForm from "../Forms/UpdateRoomForm";
+import useFetch from "@/hooks/useFetch";
 
 interface RoomCardProps extends Room {
   totalMembers: number;
@@ -30,9 +32,12 @@ const RoomCard = ({
 }: RoomCardProps) => {
   const socket = useSocket();
   const { user } = useAuth();
-  const { deleteRoom, toggleRoomPin, setRooms } = useRoom();
+  const { deleteRoom, toggleRoomPin, setRooms, getRoom } = useRoom();
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { data: roomResult } = useFetch<{ room: Room }>(`/rooms/${id}`);
+  const room = getRoom(id);
 
   // Toggle options dropdown
   const toggleOptionsDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,6 +48,11 @@ const RoomCard = ({
   // Toggle remove modal
   const toggleRemoveModal = () => {
     setShowRemoveModal((prev: boolean) => !prev);
+  };
+
+  // Toggle update modal
+  const toggleUpdateModal = () => {
+    setIsUpdateModalOpen((prev: boolean) => !prev);
   };
 
   const handleDeleteRoom = () => {
@@ -62,6 +72,14 @@ const RoomCard = ({
       socket.off("delete_room");
     };
   }, [setRooms, socket]);
+
+  useEffect(() => {
+    if (roomResult && roomResult.room) {
+      setRooms((prevRooms) =>
+        prevRooms.map((room) => (room.id === id ? roomResult.room : room)),
+      );
+    }
+  }, [id, roomResult, setRooms]);
 
   return (
     <>
@@ -125,7 +143,11 @@ const RoomCard = ({
                   icon={<MdPushPin />}
                   handleClick={() => toggleRoomPin(id)}
                 />
-                <DropdownItem text={`Edit "${name}"`} icon={<MdEdit />} />
+                <DropdownItem
+                  text={`Edit "${name}"`}
+                  icon={<MdEdit />}
+                  handleClick={toggleUpdateModal}
+                />
                 <DropdownItem
                   text={`Delete "${name}"`}
                   icon={<MdDelete />}
@@ -157,6 +179,20 @@ const RoomCard = ({
             </Button>
           </div>
         </div>
+      </Modal>
+
+      {/* Update room modal */}
+      <Modal
+        title={`Edit "${name}"`}
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+      >
+        <UpdateRoomForm
+          handleCloseModal={setIsUpdateModalOpen}
+          roomId={id}
+          name={room?.name || ""}
+          description={room?.description || ""}
+        />
       </Modal>
     </>
   );

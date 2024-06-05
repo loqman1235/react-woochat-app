@@ -12,6 +12,9 @@ type RoomContextType = {
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
   deleteRoom: (roomId: string) => void;
   toggleRoomPin: (roomId: string) => void;
+  pinnedRooms: Room[];
+  unpinnedRooms: Room[];
+  getRoom: (roomId: string) => Room | undefined;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setError?: React.Dispatch<React.SetStateAction<string | null>>;
 };
@@ -26,6 +29,9 @@ export const RoomContext = createContext<RoomContextType>({
   deleteRoom: () => {},
   toggleRoomPin: () => {},
   addRoom: () => {},
+  getRoom: () => undefined,
+  pinnedRooms: [],
+  unpinnedRooms: [],
   isLoading: true,
   error: null,
 });
@@ -73,6 +79,14 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
     }
   };
 
+  // Pinned rooms
+  const pinnedRooms = rooms.filter((room) => room.isPinned);
+
+  // Unpinned rooms
+  const unpinnedRooms = rooms.filter((room) => !room.isPinned);
+
+  const getRoom = (roomId: string) => rooms.find((room) => room.id === roomId);
+
   // Fetch rooms
   useEffect(() => {
     // Fetch rooms
@@ -89,7 +103,7 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
       }
     };
     if (rooms.length === 0) fetchRooms();
-  }, [rooms]);
+  }, [rooms, setRooms]);
 
   return (
     <RoomContext.Provider
@@ -103,6 +117,9 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
         addRoom,
         deleteRoom,
         toggleRoomPin,
+        pinnedRooms,
+        unpinnedRooms,
+        getRoom,
       }}
     >
       {children}

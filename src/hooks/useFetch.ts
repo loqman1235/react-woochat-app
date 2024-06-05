@@ -9,10 +9,19 @@ import { AxiosError } from "axios";
 const useFetch = <T>(
   url: string,
   id?: string,
-): { data: T | null; isLoading: boolean; error: string | null } => {
+): {
+  data: T | null;
+  isLoading: boolean;
+  error: string | null;
+  refetch: () => void;
+} => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [fetchCount, setFetchCount] = useState(0);
+
+  const refetch = () => setFetchCount((count) => count + 1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,12 +48,13 @@ const useFetch = <T>(
     };
 
     fetchData();
-  }, [url, id]);
+  }, [url, id, fetchCount]);
 
   return {
     data,
     isLoading,
     error,
+    refetch,
   };
 };
 

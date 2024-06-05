@@ -6,8 +6,6 @@ const Footer = () => {
   const { isPlaying, toggleSound } = useSound();
   const { toggleUsersMenu } = useSidebarToggle();
 
-  console.log(isPlaying, "isPlaying");
-
   return (
     <footer className="fixed bottom-0 z-40 flex h-12 w-full items-center justify-between gap-5 border-t border-t-border bg-foreground px-2 text-2xl text-text-foreground md:px-5">
       {/* COPYRIGHT */}

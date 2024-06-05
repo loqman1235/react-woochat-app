@@ -16,11 +16,8 @@ import { Room } from "@/types";
 const RoomsPage = () => {
   const socket = useSocket();
   const { user } = useAuth();
-  const { rooms, isLoading, error, setRooms } = useRoom();
+  const { isLoading, error, setRooms, pinnedRooms, unpinnedRooms } = useRoom();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const pinnedRooms = rooms.filter((room) => room.isPinned);
-  const unpinnedRooms = rooms.filter((room) => !room.isPinned);
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -36,7 +33,7 @@ const RoomsPage = () => {
       roomId: string;
       totalMembers: number;
     }) => {
-      console.log("online_users", { roomId, totalMembers });
+      // console.log("online_users", { roomId, totalMembers });
 
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
@@ -50,12 +47,22 @@ const RoomsPage = () => {
       setRooms((prevRooms) => [newRoom, ...prevRooms]);
     };
 
+    const handleUpdateRoom = (updatedRoom: Room) => {
+      setRooms((prevRooms) =>
+        prevRooms.map((room) =>
+          room.id === updatedRoom.id ? updatedRoom : room,
+        ),
+      );
+    };
+
     socket.on("online_room_users", handleOnlineUsers);
     socket.on("create_room", handleCreateRoom);
+    socket.on("update_room", handleUpdateRoom);
 
     return () => {
       socket.off("online_room_users", handleOnlineUsers);
       socket.off("create_room", handleCreateRoom);
+      socket.off("update_room", handleUpdateRoom);
     };
   }, [socket, setRooms]);
 

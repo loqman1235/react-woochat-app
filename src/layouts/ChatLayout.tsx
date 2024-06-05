@@ -18,6 +18,10 @@ const ChatLayout = () => {
     `/rooms/${roomId}`,
   );
 
+  const [updatedRoomName, setUpdatedRoomName] = useState<string | undefined>(
+    "",
+  );
+
   // Connect to the socket and join the room
   useEffect(() => {
     if (!socket || !roomId || !user) return;
@@ -32,23 +36,34 @@ const ChatLayout = () => {
       setOnlineUsers(users.filter((u) => u.id !== user.id));
     };
 
+    // Handle update room
+    const handleUpdateRoomName = (updatedRoom: Room) => {
+      const newRoomName = updatedRoom.name;
+      setUpdatedRoomName(newRoomName);
+    };
+
     socket.on("online_room_users", handleOnlineUsers);
+    socket.on("update_room", handleUpdateRoomName);
 
     // Clean up the socket event listeners on component unmount
     return () => {
       socket.off("online_room_users", handleOnlineUsers);
+      socket.off("update_room", handleUpdateRoomName);
       socket.emit("leave_room", {
         user,
         roomId,
         roomName: roomResult?.room.name,
       });
     };
-  }, [socket, roomId, user, roomResult?.room.name]);
+  }, [socket, roomId, user, roomResult]);
 
   return (
     <main className="relative top-[48px] flex h-[calc(100vh-48px-48px)] w-full items-center overflow-hidden">
       <MainMenu />
-      <ChatArea roomId={roomId || ""} roomName={roomResult?.room.name} />
+      <ChatArea
+        roomId={roomId || ""}
+        roomName={updatedRoomName ? updatedRoomName : roomResult?.room.name}
+      />
       <UsersMenu onlineUsers={onlineUsers} isLoading={isLoading} />
       <ChatWindow />
     </main>
