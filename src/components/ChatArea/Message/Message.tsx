@@ -189,7 +189,7 @@ const Message = ({
             className={`group flex items-center gap-1 ${isOwnProfile && "flex-row-reverse justify-start"}`}
           >
             <div
-              className={`w-fit rounded-3xl rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-3xl rounded-tr-none bg-primary text-white"} break-all`}
+              className={`w-fit rounded-3xl rounded-tl-none bg-foreground p-4 text-text-foreground shadow-sm ${isOwnProfile && "!rounded-tl-3xl rounded-tr-none bg-primary text-white"} break-words`}
             >
               {isMessageMarkedAsDeleted ? (
                 <p
