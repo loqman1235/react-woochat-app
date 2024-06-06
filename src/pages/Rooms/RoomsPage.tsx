@@ -12,6 +12,7 @@ import CreateRoomForm from "@/components/Forms/CreateRoomForm";
 import useRoom from "@/hooks/useRoom";
 import useSocket from "@/hooks/useSocket";
 import { Room } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
 
 const RoomsPage = () => {
   const socket = useSocket();
@@ -92,30 +93,50 @@ const RoomsPage = () => {
           </div>
         )}
 
-        {pinnedRooms.length > 0 && (
-          <div className="mb-5 grid w-full grid-cols-1 gap-5 border-b border-b-border pb-5 md:grid-cols-2">
-            {pinnedRooms.map((room) => (
-              <RoomCard
-                key={room.id}
-                {...room}
-                totalMembers={room.totalMembers || 0}
-              />
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {pinnedRooms.length > 0 && (
+            <div className="mb-5 grid w-full grid-cols-1 gap-5 border-b border-b-border pb-5 md:grid-cols-2">
+              {pinnedRooms.map((room) => (
+                <motion.div
+                  key={room.id}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <RoomCard
+                    key={room.id}
+                    {...room}
+                    totalMembers={room.totalMembers || 0}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          )}
 
-        {unpinnedRooms.length > 0 && (
-          <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
-            {unpinnedRooms.map((room) => (
-              <RoomCard
-                key={room.id}
-                {...room}
-                totalMembers={room.totalMembers || 0}
-              />
-            ))}
-          </div>
-        )}
-        <div className="w-full  text-text-muted">{error && error}</div>
+          {unpinnedRooms.length > 0 && (
+            <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 ">
+              {unpinnedRooms.map((room) => (
+                <motion.div
+                  key={room.id}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <RoomCard
+                    key={room.id}
+                    {...room}
+                    totalMembers={room.totalMembers || 0}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          )}
+          <div className="w-full  text-text-muted">{error && error}</div>
+        </AnimatePresence>
       </div>
 
       {/* Create room modal */}

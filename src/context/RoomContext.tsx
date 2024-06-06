@@ -1,3 +1,4 @@
+import useSocket from "@/hooks/useSocket";
 import api from "@/services/api";
 import { Room } from "@/types";
 import { AxiosError } from "axios";
@@ -33,6 +34,7 @@ export const RoomContext = createContext<RoomContextType>({
 });
 
 export const RoomProvider = ({ children }: RoomProviderProps) => {
+  const socket = useSocket();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,6 +63,7 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
     try {
       const response = await api.patch(`/rooms/${roomId}/pin`);
       if (response.status === 200) {
+        socket?.emit("pin_unpin_room", response.data.room);
         setRooms((prevRooms) =>
           prevRooms.map((room) =>
             room.id === roomId ? { ...room, isPinned: !room.isPinned } : room,
@@ -97,6 +100,27 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
     };
     if (rooms.length === 0) fetchRooms();
   }, [rooms, setRooms]);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handlePinUnpinRoom = (room: Room) => {
+      const roomId = room.id;
+
+      setRooms((prevRooms) =>
+        prevRooms.map((prevRoom) =>
+          prevRoom.id === roomId
+            ? { ...prevRoom, isPinned: room.isPinned }
+            : prevRoom,
+        ),
+      );
+    };
+
+    socket.on("pin_unpin_room", handlePinUnpinRoom);
+
+    return () => {
+      socket.off("pin_unpin_room", handlePinUnpinRoom);
+    };
+  }, [socket]);
 
   return (
     <RoomContext.Provider
