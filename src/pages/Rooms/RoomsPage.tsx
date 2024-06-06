@@ -16,8 +16,11 @@ import { Room } from "@/types";
 const RoomsPage = () => {
   const socket = useSocket();
   const { user } = useAuth();
-  const { isLoading, error, setRooms, pinnedRooms, unpinnedRooms } = useRoom();
+  const { isLoading, error, setRooms, rooms } = useRoom();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const pinnedRooms = rooms.filter((room) => room.isPinned);
+  const unpinnedRooms = rooms.filter((room) => !room.isPinned);
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);

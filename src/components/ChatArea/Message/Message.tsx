@@ -216,6 +216,7 @@ const Message = ({
                         alt={file.secure_url}
                         className="max-h-80 max-w-full cursor-pointer overflow-hidden rounded-xl object-cover"
                         onClick={() => handleImagePreview(file.secure_url)}
+                        loading="lazy"
                       />
                     </div>
                   ))}

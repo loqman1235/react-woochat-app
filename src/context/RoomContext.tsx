@@ -12,8 +12,6 @@ type RoomContextType = {
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
   deleteRoom: (roomId: string) => void;
   toggleRoomPin: (roomId: string) => void;
-  pinnedRooms: Room[];
-  unpinnedRooms: Room[];
   getRoom: (roomId: string) => Room | undefined;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setError?: React.Dispatch<React.SetStateAction<string | null>>;
@@ -30,8 +28,6 @@ export const RoomContext = createContext<RoomContextType>({
   toggleRoomPin: () => {},
   addRoom: () => {},
   getRoom: () => undefined,
-  pinnedRooms: [],
-  unpinnedRooms: [],
   isLoading: true,
   error: null,
 });
@@ -79,12 +75,6 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
     }
   };
 
-  // Pinned rooms
-  const pinnedRooms = rooms.filter((room) => room.isPinned);
-
-  // Unpinned rooms
-  const unpinnedRooms = rooms.filter((room) => !room.isPinned);
-
   const getRoom = (roomId: string) => rooms.find((room) => room.id === roomId);
 
   // Fetch rooms
@@ -93,7 +83,10 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
     const fetchRooms = async () => {
       try {
         const response = await api.get<{ rooms: Room[] }>("/rooms");
-        if (response.status === 200) setRooms(response.data.rooms);
+        if (response.status === 200) {
+          console.log("Fetched rooms:", response.data.rooms); // Log the fetched rooms
+          setRooms(response.data.rooms);
+        }
       } catch (error) {
         if (error instanceof AxiosError) {
           setError(error.response?.data.message);
@@ -117,8 +110,6 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
         addRoom,
         deleteRoom,
         toggleRoomPin,
-        pinnedRooms,
-        unpinnedRooms,
         getRoom,
       }}
     >
