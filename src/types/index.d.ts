@@ -42,6 +42,8 @@ type Room = {
   };
   isPrivate: boolean;
   isPinned: boolean;
+  joinedUsers: User[];
+  kickedUsers: User[];
 };
 
 type MessageType = {

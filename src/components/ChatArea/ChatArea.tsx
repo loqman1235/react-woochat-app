@@ -135,6 +135,13 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       });
     };
 
+    // Handle kick user
+    const handleKickUser = async ({ userId }: { userId: string }) => {
+      if (userId === user?.id) {
+        navigate("/");
+      }
+    };
+
     socket.on("join_room", handleUserJoinsRoom);
     socket.on("leave_room", handleUserLeavesRoom);
     socket.on("online_room_users", handleOnlineUsers);
@@ -142,6 +149,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
     socket.on("delete_room", handleDeleteRoom);
     socket.on("room_deleted", handleRoomDeleted);
     socket.on("role_updated", handleRoleUpdate);
+    socket.on("kick_user", handleKickUser);
 
     // Clean up the socket event listeners on component unmount
     return () => {
@@ -152,6 +160,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       socket.off("delete_room", handleDeleteRoom);
       socket.off("room_deleted", handleRoomDeleted);
       socket.off("role_updated", handleRoleUpdate);
+      socket.off("kick_user", handleKickUser);
     };
   }, [isPlaying, messages, navigate, setRooms, socket, user]);
 
@@ -184,25 +193,29 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       >
         {/* ROOM NAME */}
         <div className="sticky top-0 z-30 mb-5 flex h-12 w-full items-center gap-2 border-b border-b-border bg-foreground p-2 md:px-5">
-          <button
-            className="text-lg text-text-muted transition duration-300 hover:text-text-foreground"
-            onClick={() => navigate("/")}
-          >
-            <MdArrowBack />
-          </button>
-          {roomName ? (
-            <h1 className="text-lg font-extrabold tracking-tight text-text-foreground">
-              {roomName}
-            </h1>
-          ) : (
-            <Skeleton
-              width={100}
-              height={16}
-              baseColor={baseColor}
-              highlightColor={highlightColor}
-              borderRadius={20}
-            />
-          )}
+          <div className="flex items-center gap-2">
+            {roomName ? (
+              <>
+                <button
+                  className="text-lg text-text-muted transition duration-300 hover:text-text-foreground"
+                  onClick={() => navigate("/")}
+                >
+                  <MdArrowBack />
+                </button>
+                <h1 className="text-lg font-extrabold tracking-tight text-text-foreground">
+                  {roomName}
+                </h1>
+              </>
+            ) : (
+              <Skeleton
+                width={100}
+                height={16}
+                baseColor={baseColor}
+                highlightColor={highlightColor}
+                borderRadius={20}
+              />
+            )}
+          </div>
         </div>
 
         {/* Loading */}
@@ -240,6 +253,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
                 {...message}
                 isUserDropdownOpen={openDropdownId === message.id}
                 toggleUserDropdown={() => toggleDropdown(message.id)}
+                roomId={roomId}
               />
             </motion.div>
           ))}

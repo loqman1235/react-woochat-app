@@ -165,6 +165,11 @@ const parseUrls = (msg: string) => {
     .join(" ");
 };
 
+// Check if user is staff
+const isStaff = (role: Role) => {
+  return role === "OWNER" || role === "ADMIN" || role === "MOD";
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -178,4 +183,5 @@ export {
   formatNotificationMessage,
   createNotification,
   parseUrls,
+  isStaff,
 };

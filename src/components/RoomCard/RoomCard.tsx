@@ -3,11 +3,13 @@ import {
   MdDelete,
   MdEdit,
   MdImage,
+  MdLogout,
   MdMoreVert,
   MdPeople,
+  MdPeopleAlt,
   MdPushPin,
 } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Dropdown, DropdownItem } from "../shared/Dropdown";
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
@@ -17,6 +19,9 @@ import useRoom from "@/hooks/useRoom";
 import useSocket from "@/hooks/useSocket";
 import UpdateRoomForm from "../Forms/UpdateRoomForm";
 import useFetch from "@/hooks/useFetch";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import api from "@/services/api";
 
 interface RoomCardProps extends Room {
   totalMembers: number;
@@ -38,6 +43,37 @@ const RoomCard = ({
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const { data: roomResult } = useFetch<{ room: Room }>(`/rooms/${id}`);
   const room = getRoom(id);
+  const navigate = useNavigate();
+
+  const isUserJoined =
+    room && room.joinedUsers && room.joinedUsers.some((u) => u.id === user?.id);
+
+  const isUserKicked =
+    room && room.kickedUsers && room.kickedUsers.some((u) => u.id === user?.id);
+
+  console.log(`Did user join ${room?.name}`, isUserJoined);
+
+  const handleJoiningRoom = async () => {
+    if (isUserKicked) {
+      toast.error("You have been kicked from this room");
+      return;
+    }
+
+    if (isUserJoined) {
+      navigate(`/rooms/${id}`);
+    } else {
+      try {
+        const response = await api.post(`/rooms/${id}/join`);
+        if (response.status === 201) {
+          navigate(`/rooms/${id}`);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
+      }
+    }
+  };
 
   // Toggle options dropdown
   const toggleOptionsDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -83,9 +119,12 @@ const RoomCard = ({
 
   return (
     <>
-      <Link
-        to={`/rooms/${id}`}
-        className="flex items-center gap-3 rounded-xl bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          handleJoiningRoom();
+        }}
+        className="flex cursor-pointer items-center gap-3 rounded-xl bg-foreground p-3 shadow transition duration-300 hover:bg-muted"
       >
         {/* ROOM IMAGE */}
         {roomImage && roomImage.secure_url ? (
@@ -128,37 +167,51 @@ const RoomCard = ({
             )}
           </div>
           {/* OPTIONS */}
-          {user?.role === "OWNER" && (
-            <div className="relative">
-              <button
-                className="text-2xl text-text-muted-2 transition duration-300 hover:text-text-foreground"
-                onClick={toggleOptionsDropdown}
-              >
-                <MdMoreVert />
-              </button>
 
-              <Dropdown isOpen={showOptionsDropdown}>
-                <DropdownItem
-                  text={`${isPinned ? "Unpin" : "Pin"} "${name}"`}
-                  icon={<MdPushPin />}
-                  handleClick={() => toggleRoomPin(id)}
-                />
-                <DropdownItem
-                  text={`Edit "${name}"`}
-                  icon={<MdEdit />}
-                  handleClick={toggleUpdateModal}
-                />
-                <DropdownItem
-                  text={`Delete "${name}"`}
-                  icon={<MdDelete />}
-                  bgColor="danger"
-                  handleClick={toggleRemoveModal}
-                />
-              </Dropdown>
-            </div>
-          )}
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="text-2xl text-text-muted-2 transition duration-300 hover:text-text-foreground"
+              onClick={toggleOptionsDropdown}
+            >
+              <MdMoreVert />
+            </button>
+
+            <Dropdown isOpen={showOptionsDropdown}>
+              {user?.role === "OWNER" && (
+                <>
+                  <DropdownItem
+                    text={`${isPinned ? "Unpin" : "Pin"} "${name}"`}
+                    icon={<MdPushPin />}
+                    handleClick={() => toggleRoomPin(id)}
+                  />
+                  <DropdownItem
+                    text="Members"
+                    icon={<MdPeopleAlt />}
+                    handleClick={() => console.log("Users")}
+                  />
+                  <DropdownItem
+                    text={`Edit "${name}"`}
+                    icon={<MdEdit />}
+                    handleClick={toggleUpdateModal}
+                  />
+                  <DropdownItem
+                    text={`Delete "${name}"`}
+                    icon={<MdDelete />}
+                    bgColor="danger"
+                    handleClick={toggleRemoveModal}
+                  />
+                </>
+              )}
+              <DropdownItem
+                text={`Leave "${name}"`}
+                bgColor="danger"
+                icon={<MdLogout />}
+                handleClick={() => console.log("Leave")}
+              />
+            </Dropdown>
+          </div>
         </div>
-      </Link>
+      </div>
 
       {/* Remove Room Modal */}
       <Modal isOpen={showRemoveModal} onClose={() => setShowRemoveModal(false)}>
@@ -194,6 +247,11 @@ const RoomCard = ({
           description={room?.description || ""}
         />
       </Modal>
+
+      {/* Room members model */}
+      {/* <Modal title={`"${room?.name}" Members`} isOpen onClose={() => {}}>
+        Hello
+      </Modal> */}
     </>
   );
 };

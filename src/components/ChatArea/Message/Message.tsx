@@ -24,12 +24,14 @@ import api from "@/services/api";
 import useSocket from "@/hooks/useSocket";
 import BotAvatar from "@/components/shared/BotAvatar";
 import { useTheme } from "@/hooks/useTheme";
+import { toast } from "react-toastify";
 
 interface MessageProps extends MessageType {
   isOnlineInRoom: boolean;
   isUserDropdownOpen: boolean;
   toggleUserDropdown: () => void;
   isBotMessage?: boolean;
+  roomId: string;
 }
 
 const STAFF_ROLES = ["OWNER", "ADMIN", "MOD"];
@@ -45,6 +47,7 @@ const Message = ({
   isUserDropdownOpen,
   toggleUserDropdown,
   isBotMessage,
+  roomId,
 }: MessageProps) => {
   // const { setCurrentUser, setIsChatWindowOpen } = useChatWindow();
   const { theme } = useTheme();
@@ -66,6 +69,22 @@ const Message = ({
     sender.role === "PREMIUM"
       ? "animated-text"
       : null;
+
+  // Handle kick user
+  const handleKickUser = async () => {
+    if (!roomId || !sender.id) return;
+
+    try {
+      const response = await api.post(`/rooms/${roomId}/kick/${sender.id}`);
+
+      if (response.status === 200) {
+        socket?.emit("kick_user", { roomId, userId: sender.id });
+        toast.success("User kicked successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleImagePreview = (url: string) => {
     setPreviewImageUrl(url);
@@ -146,6 +165,7 @@ const Message = ({
                       icon={<MdLogout />}
                       text={`Kick ${sender?.username}`}
                       bgColor="danger"
+                      handleClick={handleKickUser}
                     />
                     <DropdownItem
                       icon={<MdBlock />}
