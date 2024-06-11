@@ -125,6 +125,8 @@ const formatNotificationMessage = (type: NotificationEventType) => {
   switch (type) {
     case "ROLE_UPDATED":
       return "Has updated your role";
+    case "USER_KICKED":
+      return "Has kicked you out for breaking rules";
     case "USER_FOLLOWED":
       return "Started following you";
     case "NEW_MESSAGE":

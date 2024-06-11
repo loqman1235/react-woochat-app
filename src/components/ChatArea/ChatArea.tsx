@@ -142,6 +142,18 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       }
     };
 
+    // Handle kick user bot message
+    const handleKickUserBotMessage = (message: MessageType) => {
+      if (messages && messages.length > 0) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+        setNewMessageIds((prevIds) => [...prevIds, message.id]);
+
+        if (message.user.id !== user?.id && isPlaying) {
+          playSound(MessageReceivedSound);
+        }
+      }
+    };
+
     socket.on("join_room", handleUserJoinsRoom);
     socket.on("leave_room", handleUserLeavesRoom);
     socket.on("online_room_users", handleOnlineUsers);
@@ -150,6 +162,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
     socket.on("room_deleted", handleRoomDeleted);
     socket.on("role_updated", handleRoleUpdate);
     socket.on("kick_user", handleKickUser);
+    socket.on("kick_user_bot_message", handleKickUserBotMessage);
 
     // Clean up the socket event listeners on component unmount
     return () => {
@@ -161,6 +174,7 @@ const ChatArea = ({ roomId, roomName }: ChatAreaProps) => {
       socket.off("room_deleted", handleRoomDeleted);
       socket.off("role_updated", handleRoleUpdate);
       socket.off("kick_user", handleKickUser);
+      socket.off("kick_user_bot_message", handleKickUserBotMessage);
     };
   }, [isPlaying, messages, navigate, setRooms, socket, user]);
 

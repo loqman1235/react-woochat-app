@@ -63,7 +63,8 @@ type NotificationEventType =
   | "USER_FOLLOWED"
   | "NEW_MESSAGE"
   | "NEW_ROOM_CREATED"
-  | "ROOM_DELETED";
+  | "ROOM_DELETED"
+  | "USER_KICKED";
 
 type NotificationType = {
   id: string;

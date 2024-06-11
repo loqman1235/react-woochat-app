@@ -1,5 +1,10 @@
 // import { MdFlag, MdThumbUp } from "react-icons/md";
-import { formatDate, getRoleIcon, parseUrls } from "@/utils";
+import {
+  createNotification,
+  formatDate,
+  getRoleIcon,
+  parseUrls,
+} from "@/utils";
 import Avatar from "@/components/shared/Avatar";
 import { Dropdown, DropdownItem } from "@/components/shared/Dropdown";
 import {
@@ -78,7 +83,20 @@ const Message = ({
       const response = await api.post(`/rooms/${roomId}/kick/${sender.id}`);
 
       if (response.status === 200) {
-        socket?.emit("kick_user", { roomId, userId: sender.id });
+        const kickNotification = createNotification(
+          "USER_KICKED",
+          sender.id,
+          true,
+        );
+
+        await api.post("/notifications", kickNotification);
+
+        socket?.emit("kicked_notification_send", {
+          kickNotification,
+          receiver: sender,
+        });
+
+        socket?.emit("kick_user", { roomId, sender });
         toast.success("User kicked successfully");
       }
     } catch (error) {

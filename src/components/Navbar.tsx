@@ -100,10 +100,41 @@ const Navbar = () => {
           playSound(notificationSound);
         }
       });
+
+      socket.on("kicked_notification_send", ({ notification, receiver }) => {
+        setNotifications((prevNotifications) => [
+          notification,
+          ...prevNotifications,
+        ]);
+        setUnreadNotificationsCount((prevCount) => prevCount + 1);
+
+        if (user?.id === receiver.id) {
+          setUser((prevUser) => {
+            if (!prevUser) {
+              return undefined;
+            }
+
+            return {
+              ...prevUser,
+              receiver,
+            };
+          });
+
+          setItemToLocalStorage(
+            "user",
+            JSON.stringify({ ...user, role: receiver.role }),
+          );
+        }
+
+        if (isPlaying) {
+          playSound(notificationSound);
+        }
+      });
     }
 
     return () => {
       socket?.off("role_notification_send");
+      socket?.off("kicked_notification_send");
     };
   }, [
     isPlaying,
