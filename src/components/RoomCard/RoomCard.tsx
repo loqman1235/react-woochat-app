@@ -22,6 +22,8 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import api from "@/services/api";
+import RoomMembers from "./RoomMembers";
+import { isStaff } from "@/utils";
 
 interface RoomCardProps extends Room {
   totalMembers: number;
@@ -34,12 +36,15 @@ const RoomCard = ({
   totalMembers,
   description,
   isPinned,
+  joinedUsers,
+  kickedUsers,
 }: RoomCardProps) => {
   const socket = useSocket();
   const { user } = useAuth();
   const { deleteRoom, toggleRoomPin, setRooms, getRoom } = useRoom();
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const [showRoomMembersModal, setShowRoomMembersModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const { data: roomResult } = useFetch<{ room: Room }>(`/rooms/${id}`);
   const room = getRoom(id);
@@ -73,6 +78,11 @@ const RoomCard = ({
         }
       }
     }
+  };
+
+  // Toggle Room Members Modal
+  const toggleRoomMembersModal = () => {
+    setShowRoomMembersModal((prev) => !prev);
   };
 
   // Toggle options dropdown
@@ -187,7 +197,7 @@ const RoomCard = ({
                   <DropdownItem
                     text="Members"
                     icon={<MdPeopleAlt />}
-                    handleClick={() => console.log("Users")}
+                    handleClick={toggleRoomMembersModal}
                   />
                   <DropdownItem
                     text={`Edit "${name}"`}
@@ -249,9 +259,15 @@ const RoomCard = ({
       </Modal>
 
       {/* Room members model */}
-      {/* <Modal title={`"${room?.name}" Members`} isOpen onClose={() => {}}>
-        Hello
-      </Modal> */}
+      {user && isStaff(user?.role) && (
+        <Modal
+          title={`Members of "${name}"`}
+          isOpen={showRoomMembersModal}
+          onClose={() => setShowRoomMembersModal(false)}
+        >
+          <RoomMembers members={joinedUsers} kickedMembers={kickedUsers} />
+        </Modal>
+      )}
     </>
   );
 };
