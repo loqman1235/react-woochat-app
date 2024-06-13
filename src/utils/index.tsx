@@ -172,6 +172,20 @@ const isStaff = (role: Role) => {
   return role === "OWNER" || role === "ADMIN" || role === "MOD";
 };
 
+// Format Roles
+const formatRole = (role: Role) => {
+  switch (role) {
+    case "OWNER":
+      return "Owner";
+    case "ADMIN":
+      return "Admin";
+    case "MOD":
+      return "Moderator";
+    default:
+      return "User";
+  }
+};
+
 export {
   getRoleIcon,
   getItemFromLocalStorage,
@@ -186,4 +200,5 @@ export {
   createNotification,
   parseUrls,
   isStaff,
+  formatRole,
 };

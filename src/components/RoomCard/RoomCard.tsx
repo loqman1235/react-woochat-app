@@ -259,13 +259,17 @@ const RoomCard = ({
       </Modal>
 
       {/* Room members model */}
-      {user && isStaff(user?.role) && (
+      {id && user && isStaff(user?.role) && (
         <Modal
           title={`Members of "${name}"`}
           isOpen={showRoomMembersModal}
           onClose={() => setShowRoomMembersModal(false)}
         >
-          <RoomMembers members={joinedUsers} kickedMembers={kickedUsers} />
+          <RoomMembers
+            members={joinedUsers}
+            kickedMembers={kickedUsers}
+            roomId={id}
+          />
         </Modal>
       )}
     </>
