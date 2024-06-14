@@ -114,8 +114,41 @@ const RoomCard = ({
       setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
     });
 
+    socket.on("unkick_user", ({ roomId, userId }) => {
+      setRooms((rooms) => {
+        return rooms.map((room) => {
+          if (room.id === roomId) {
+            return {
+              ...room,
+              kickedUsers: room.kickedUsers.filter((u) => u.id !== userId),
+            };
+          }
+          return room;
+        });
+      });
+    });
+
+    socket.on("kick_user", ({ roomId, user }) => {
+      if (!user) return;
+
+      // change kickedUsers
+      setRooms((rooms) => {
+        return rooms.map((room) => {
+          if (room.id === roomId) {
+            return {
+              ...room,
+              kickedUsers: [...room.kickedUsers, user],
+            };
+          }
+          return room;
+        });
+      });
+    });
+
     return () => {
       socket.off("delete_room");
+      socket.off("unkick_user");
+      socket.off("kick_user");
     };
   }, [setRooms, socket]);
 
@@ -187,29 +220,36 @@ const RoomCard = ({
             </button>
 
             <Dropdown isOpen={showOptionsDropdown}>
-              {user?.role === "OWNER" && (
+              {user && isStaff(user?.role) && (
                 <>
-                  <DropdownItem
-                    text={`${isPinned ? "Unpin" : "Pin"} "${name}"`}
-                    icon={<MdPushPin />}
-                    handleClick={() => toggleRoomPin(id)}
-                  />
+                  {user?.role === "OWNER" && (
+                    <DropdownItem
+                      text={`${isPinned ? "Unpin" : "Pin"} "${name}"`}
+                      icon={<MdPushPin />}
+                      handleClick={() => toggleRoomPin(id)}
+                    />
+                  )}
+
                   <DropdownItem
                     text="Members"
                     icon={<MdPeopleAlt />}
                     handleClick={toggleRoomMembersModal}
                   />
-                  <DropdownItem
-                    text={`Edit "${name}"`}
-                    icon={<MdEdit />}
-                    handleClick={toggleUpdateModal}
-                  />
-                  <DropdownItem
-                    text={`Delete "${name}"`}
-                    icon={<MdDelete />}
-                    bgColor="danger"
-                    handleClick={toggleRemoveModal}
-                  />
+                  {user && user.role === "OWNER" && (
+                    <>
+                      <DropdownItem
+                        text={`Edit "${name}"`}
+                        icon={<MdEdit />}
+                        handleClick={toggleUpdateModal}
+                      />
+                      <DropdownItem
+                        text={`Delete "${name}"`}
+                        icon={<MdDelete />}
+                        bgColor="danger"
+                        handleClick={toggleRemoveModal}
+                      />
+                    </>
+                  )}
                 </>
               )}
               <DropdownItem

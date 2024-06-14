@@ -1,6 +1,6 @@
 import { User } from "@/types";
 import Avatar from "../shared/Avatar";
-import { formatRole, getRoleIcon } from "@/utils";
+import { createNotification, formatRole, getRoleIcon } from "@/utils";
 import {
   MdAccountCircle,
   MdLogout,
@@ -12,6 +12,8 @@ import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import useProfile from "@/hooks/useProfile";
 import { handleKickUser, handleUnkickUser } from "@/services/room";
+import useSocket from "@/hooks/useSocket";
+import api from "@/services/api";
 
 interface RoomMembersProps {
   roomId: string;
@@ -19,10 +21,18 @@ interface RoomMembersProps {
   kickedMembers: User[];
 }
 
-const RoomMembers = ({ members, kickedMembers, roomId }: RoomMembersProps) => {
+const RoomMembers = ({
+  members,
+  kickedMembers: initialKickedMembers,
+  roomId,
+}: RoomMembersProps) => {
+  const socket = useSocket();
   const { user } = useAuth();
   const { setIsProfileOpen, setCurrentUser } = useProfile();
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [kickedMembers, setKickedMembers] =
+    useState<User[]>(initialKickedMembers);
+
   const isMemberKicked = (member: User) => {
     return kickedMembers.some((kickedMember) => kickedMember.id === member.id);
   };
@@ -30,6 +40,40 @@ const RoomMembers = ({ members, kickedMembers, roomId }: RoomMembersProps) => {
   // Toggle Members dropdown
   const toggleMembersDropdown = (id: string) => {
     setOpenDropdownId((prevId) => (prevId === id ? null : id));
+  };
+
+  const kickUser = async (memberId: string) => {
+    await handleKickUser(memberId, roomId);
+    const kickedMember = members.find((member) => member.id === memberId);
+    if (kickedMember) {
+      setKickedMembers([...kickedMembers, kickedMember]);
+    }
+
+    socket?.emit("kick_user", { roomId, sender: kickedMember });
+
+    const kickNotification = createNotification("USER_KICKED", memberId, true);
+
+    await api.post("/notifications", kickNotification);
+
+    socket?.emit("kicked_notification_send", {
+      kickNotification,
+      receiver: kickedMember,
+    });
+
+    setOpenDropdownId(null);
+  };
+
+  const unkickUser = async (memberId: string) => {
+    await handleUnkickUser(memberId, roomId);
+    setKickedMembers(kickedMembers.filter((member) => member.id !== memberId));
+
+    const unkickedMember = kickedMembers.find(
+      (member) => member.id === memberId,
+    );
+
+    socket?.emit("unkick_user", { roomId, sender: unkickedMember });
+
+    setOpenDropdownId(null);
   };
 
   return (
@@ -93,14 +137,14 @@ const RoomMembers = ({ members, kickedMembers, roomId }: RoomMembersProps) => {
                     text={`Unkick ${member?.username}`}
                     icon={<MdLogout />}
                     bgColor="danger"
-                    handleClick={() => handleUnkickUser(member.id, roomId)}
+                    handleClick={() => unkickUser(member.id)}
                   />
                 ) : (
                   <DropdownItem
                     text={`Kick ${member?.username}`}
                     icon={<MdLogout />}
                     bgColor="danger"
-                    handleClick={() => handleKickUser(member.id, roomId)}
+                    handleClick={() => kickUser(member.id)}
                   />
                 )}
                 <DropdownItem
